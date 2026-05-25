@@ -4,6 +4,36 @@ $page = $_GET['page'] ?? 'dashboard';
 
 switch ($page) {
 
+    case 'posts':
+        require_once '../Controllers/admin/PostController.php';
+        $controller = new PostController();
+        $controller->index();
+        break;
+
+    case 'post-create':
+        require_once '../Controllers/admin/PostController.php';
+        $controller = new PostController();
+        $controller->create();
+        break;
+
+    case 'post-edit':
+        require_once '../Controllers/admin/PostController.php';
+        $controller = new PostController();
+        $controller->edit();
+        break;
+
+    case 'post-delete':
+        require_once '../Controllers/admin/PostController.php';
+        $controller = new PostController();
+        $controller->delete();
+        break;
+
+    case 'comments':
+        require_once '../Controllers/admin/CommentController.php';
+        $controller = new CommentController();
+        $controller->index();
+        break;
+
    
     default:
 
