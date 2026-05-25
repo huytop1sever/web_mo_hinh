@@ -1,0 +1,35 @@
+project/
+│
+├── admin/
+│   ├── index.php
+│   └── pages/
+│       ├── dashboard.php
+│       ├── products.php
+│       ├── users.php
+│       └── orders.php
+│
+├── client/
+│   ├── index.php
+│   └── pages/
+│       ├── home.php
+│       ├── products.php
+│       ├── cart.php
+│       └── checkout.php
+│
+├── views/
+│   ├── admin/
+│   │   ├── header.php
+│   │   ├── sidebar.php
+│   │   └── footer.php
+│   │
+│   └── client/
+│       ├── header.php
+│       └── footer.php
+│
+├── assets/
+│   ├── css/
+│   ├── js/
+│   └── images/
+│
+└── config/
+    └── config.php
