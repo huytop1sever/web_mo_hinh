@@ -1,35 +1,51 @@
 project/
 │
 ├── admin/
-│   ├── index.php
-│   └── pages/
-│       ├── dashboard.php
-│       ├── products.php
-│       ├── users.php
-│       └── orders.php
+│   └── index.php
 │
 ├── client/
-│   ├── index.php
-│   └── pages/
+│   └── index.php
+│
+├── controllers/
+│   ├── admin/
+│   │   ├── ProductController.php
+│   │   ├── UserController.php
+│   │   └── OrderController.php
+│   │
+│   └── client/
+│       ├── HomeController.php
+│       ├── ProductController.php
+│       ├── CartController.php
+│       └── CheckoutController.php
+│
+├── models/
+│   ├── Product.php
+│   ├── User.php
+│   └── Order.php
+│
+├── views/
+│   ├── admin/
+│   │   ├── layouts/
+│   │   │   ├── header.php
+│   │   │   ├── sidebar.php
+│   │   │   └── footer.php
+│   │   │
+│   │   ├── dashboard.php
+│   │   ├── products.php
+│   │   ├── users.php
+│   │   └── orders.php
+│   │
+│   └── client/
+│       ├── layouts/
+│       │   ├── header.php
+│       │   └── footer.php
+│       │
 │       ├── home.php
 │       ├── products.php
 │       ├── cart.php
 │       └── checkout.php
 │
-├── views/
-│   ├── admin/
-│   │   ├── header.php
-│   │   ├── sidebar.php
-│   │   └── footer.php
-│   │
-│   └── client/
-│       ├── header.php
-│       └── footer.php
+├── config/
+│   └── config.php
 │
-├── assets/
-│   ├── css/
-│   ├── js/
-│   └── images/
-│
-└── config/
-    └── config.php
+└── assets/
