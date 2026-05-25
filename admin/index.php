@@ -10,6 +10,18 @@ switch ($page) {
         $controller->index();
         break;
 
+    case 'users':
+        require_once '../Controllers/admin/UserController.php';
+        $controller = new UserController();
+        $controller->index();
+        break;
+
+    case 'orders':
+        require_once '../Controllers/admin/OrderController.php';
+        $controller = new OrderController();
+        $controller->index();
+        break;
+
     case 'post-create':
         require_once '../Controllers/admin/PostController.php';
         $controller = new PostController();
@@ -34,7 +46,7 @@ switch ($page) {
         $controller->index();
         break;
 
-   
+
     default:
 
         require_once '../Controllers/admin/DashboardController.php';
