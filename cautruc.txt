@@ -1,5 +1,6 @@
 WEB_MO_HINH/
 │
+<<<<<<< HEAD
 ├── assets/                 # CSS, JS, images
 │
 ├── config/
@@ -71,3 +72,54 @@ WEB_MO_HINH/
 ├── index.php               # Route client
 │
 └── .htaccess
+=======
+├── admin/
+│   └── index.php
+│
+├── client/
+│   └── index.php
+│
+├── controllers/
+│   ├── admin/
+│   │   ├── ProductController.php
+│   │   ├── UserController.php
+│   │   └── OrderController.php
+│   │
+│   └── client/
+│       ├── HomeController.php
+│       ├── ProductController.php
+│       ├── CartController.php
+│       └── CheckoutController.php
+│
+├── models/
+│   ├── Product.php
+│   ├── User.php
+│   └── Order.php
+│
+├── views/
+│   ├── admin/
+│   │   ├── layouts/
+│   │   │   ├── header.php
+│   │   │   ├── sidebar.php
+│   │   │   └── footer.php
+│   │   │
+│   │   ├── dashboard.php
+│   │   ├── products.php
+│   │   ├── users.php
+│   │   └── orders.php
+│   │
+│   └── client/
+│       ├── layouts/
+│       │   ├── header.php
+│       │   └── footer.php
+│       │
+│       ├── home.php
+│       ├── products.php
+│       ├── cart.php
+│       └── checkout.php
+│
+├── config/
+│   └── config.php
+│
+└── assets/
+>>>>>>> 6b013a5384ca0b0c06afb7d05584ad47ddaf5234
