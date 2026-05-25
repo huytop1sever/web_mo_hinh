@@ -1,13 +1,14 @@
-project/
+WEB_MO_HINH/
 │
-├── admin/
-│   └── index.php
+├── assets/                 # CSS, JS, images
 │
-├── client/
-│   └── index.php
+├── config/
+│   └── database.php        # Kết nối database
 │
-├── controllers/
+├── Controllers/
+│   │
 │   ├── admin/
+│   │   ├── DashboardController.php
 │   │   ├── ProductController.php
 │   │   ├── UserController.php
 │   │   └── OrderController.php
@@ -18,34 +19,55 @@ project/
 │       ├── CartController.php
 │       └── CheckoutController.php
 │
-├── models/
+├── Models/
 │   ├── Product.php
 │   ├── User.php
-│   └── Order.php
+│   ├── Order.php
+│   └── Category.php
 │
-├── views/
+├── Views/
+│   │
 │   ├── admin/
 │   │   ├── layouts/
 │   │   │   ├── header.php
 │   │   │   ├── sidebar.php
+│   │   │   ├── navbar.php
 │   │   │   └── footer.php
 │   │   │
-│   │   ├── dashboard.php
-│   │   ├── products.php
-│   │   ├── users.php
-│   │   └── orders.php
+│   │   ├── dashboard/
+│   │   │   └── index.php
+│   │   │
+│   │   ├── products/
+│   │   │   ├── index.php
+│   │   │   ├── create.php
+│   │   │   └── edit.php
+│   │   │
+│   │   ├── users/
+│   │   └── orders/
 │   │
 │   └── client/
 │       ├── layouts/
 │       │   ├── header.php
+│       │   ├── navbar.php
 │       │   └── footer.php
 │       │
-│       ├── home.php
-│       ├── products.php
-│       ├── cart.php
-│       └── checkout.php
+│       ├── home/
+│       │   └── index.php
+│       │
+│       ├── products/
+│       │   ├── index.php
+│       │   └── detail.php
+│       │
+│       ├── cart/
+│       └── checkout/
 │
-├── config/
-│   └── config.php
+├── routes/
+│   ├── admin.php
+│   └── client.php
 │
-└── assets/
+├── admin/
+│   └── index.php           # Route admin
+│
+├── index.php               # Route client
+│
+└── .htaccess
