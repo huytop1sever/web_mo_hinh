@@ -234,12 +234,30 @@ ul {
     padding: 20px;
 }
 
+.form-box {
+    width: min(100%, 780px);
+    margin: 18px auto 0;
+    padding: 0;
+    overflow: hidden;
+}
+
 .box-title {
     margin-bottom: 18px;
 }
 
+.form-box .box-title {
+    margin-bottom: 0;
+    padding: 22px 28px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
 .box-title h2 {
     font-size: 20px;
+}
+
+.form-box .box-title h2 {
+    font-size: 22px;
 }
 
 .btn-primary {
@@ -259,6 +277,75 @@ ul {
 
 .btn-primary i {
     font-size: 20px;
+}
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 0 14px;
+    border-radius: 8px;
+    background: #e5e7eb;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.form-container {
+    display: grid;
+    gap: 20px;
+    max-width: none;
+    padding: 28px;
+}
+
+.form-group {
+    display: grid;
+    gap: 9px;
+}
+
+.form-group label {
+    color: #374151;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    min-height: 46px;
+    padding: 11px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #fff;
+    color: #111827;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #f59e0b;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.16);
+}
+
+.form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-top: 8px;
+    border-top: 1px solid #f3f4f6;
 }
 
 .table-wrapper {

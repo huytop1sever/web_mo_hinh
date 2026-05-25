@@ -5,7 +5,11 @@
         <span>Phantom</span>
     </div>
 
-    <?php $currentPage = $_GET['page'] ?? 'dashboard'; ?>
+    <?php
+    $currentPage = $_GET['act'] ?? $_GET['page'] ?? 'dashboard';
+    $isCategoryPage = in_array($currentPage, ['categories', 'category-add', 'category-edit', 'category-store', 'category-update']);
+    $isProductPage = in_array($currentPage, ['products', 'product-add', 'product-edit', 'product-store', 'product-update']);
+    ?>
 
     <ul class="menu">
 
@@ -17,14 +21,14 @@
         </li>
 
         <li>
-            <a href="index.php?page=categories" class="<?= $currentPage === 'categories' ? 'active' : '' ?>">
+            <a href="index.php?page=categories" class="<?= $isCategoryPage ? 'active' : '' ?>">
                 <i class='bx bxs-category'></i>
                 <span>Danh mục</span>
             </a>
         </li>
 
         <li>
-            <a href="index.php?page=products" class="<?= $currentPage === 'products' ? 'active' : '' ?>">
+            <a href="index.php?page=products" class="<?= $isProductPage ? 'active' : '' ?>">
                 <i class='bx bxs-box'></i>
                 <span>Sản phẩm</span>
             </a>
