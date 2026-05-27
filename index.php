@@ -13,11 +13,13 @@ switch ($page) {
         break;
 
     case 'cart':
-        (new CartController())->index();
-        break;
+    $controller = new CartController();
+    $controller->index();
+    break;
 
     case 'checkout':
-        (new CheckoutController())->index();
+        $controller = new CheckoutController();
+        $controller->index();
         break;
 
     default:
