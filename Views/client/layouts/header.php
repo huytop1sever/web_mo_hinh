@@ -123,7 +123,7 @@
 
                     </a>
 
-                    <a href="#"
+                    <a href="index.php?page=cart"
                         class="position-relative me-4 my-auto">
 
                         <i class="fa fa-shopping-bag fa-2x text-primary"></i>
