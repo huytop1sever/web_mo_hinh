@@ -3,8 +3,9 @@
 require_once 'Controllers/client/HomeController.php';
 require_once 'Controllers/client/CartController.php';
 require_once 'Controllers/client/CheckoutController.php';
-require_once 'Controllers/client/AuthController.php';
 require_once 'Controllers/client/ProductController.php';
+
+require_once 'Controllers/AuthController.php';
 
 
 $page = $_GET['page'] ?? 'home';

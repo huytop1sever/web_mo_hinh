@@ -6,11 +6,11 @@ $products = $products ?? [];
 
 <div class="box">
     <div class="box-title">
-        <h2>Danh sach san pham</h2>
+        <h2>Danh sách sản phẩm</h2>
 
-        <a href="index.php?act=product-add" class="btn-primary">
+        <a href="index.php?page=product-add" class="btn-primary">
             <i class='bx bx-plus'></i>
-            <span>Them san pham</span>
+            <span>Thêm sản phẩm</span>
         </a>
     </div>
 
@@ -19,37 +19,74 @@ $products = $products ?? [];
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Ten san pham</th>
-                    <th>Danh muc</th>
-                    <th>Gia</th>
-                    <th>Ton kho</th>
-                    <th>Trang thai</th>
-                    <th>Thao tac</th>
+                    <th>Tên sản phẩm</th>
+                    <th class="product-image-col">Ảnh</th>
+                    <th>Danh mục</th>
+                    <th class="product-price-col">Giá</th>
+                    <th class="product-stock-col">Tồn kho</th>
+                    <th class="product-status-col">Trạng thái</th>
+                    <th class="product-action-col">Thao tác</th>
                 </tr>
             </thead>
+
             <tbody>
                 <?php foreach ($products as $product): ?>
                     <tr>
                         <td>#<?= $product['id'] ?></td>
-                        <td><?= $product['name'] ?></td>
-                        <td><?= $product['category'] ?></td>
-                        <td><?= number_format($product['price'], 0, ',', '.') ?>d</td>
-                        <td><?= $product['stock'] ?></td>
+
+                        <td class="product-name">
+                            <?= $product['name'] ?>
+                        </td>
+
                         <td>
-                            <span class="status <?= $product['status'] === 'Het hang' || $product['status'] === 'Hết hàng' ? 'cancelled' : ($product['status'] === 'Sap het' || $product['status'] === 'Sắp hết' ? 'pending' : 'confirmed') ?>">
+                            <img
+                                src="<?= $product['image'] ?>"
+                                alt="<?= $product['name'] ?>"
+                                class="product-thumb">
+                        </td>
+
+                        <td><?= $product['category'] ?></td>
+
+                        <td><?= number_format($product['price'], 0, ',', '.') ?>đ</td>
+
+                        <td><?= $product['stock'] ?></td>
+
+                        <td>
+                            <span class="status <?= $product['status'] === 'Hết hàng'
+                                                        ? 'cancelled'
+                                                        : ($product['status'] === 'Sắp hết'
+                                                            ? 'pending'
+                                                            : 'confirmed') ?>">
                                 <?= $product['status'] ?>
                             </span>
                         </td>
+
                         <td>
                             <div class="table-actions">
-                                <a href="index.php?act=product-edit&id=<?= $product['id'] ?>" class="action-btn edit" title="Sua">
+                                <a href="index.php?page=product-edit&id=<?= $product['id'] ?>"
+                                    class="action-btn edit">
                                     <i class='bx bx-edit'></i>
+                                </a>
+
+                                <a href="index.php?page=product-delete&id=<?= $product['id'] ?>"
+                                    class="action-btn delete"
+                                    onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">
+                                    <i class='bx bx-trash'></i>
                                 </a>
                             </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>
+
+                <?php if (empty($products)): ?>
+                    <tr>
+                        <td colspan="8" style="text-align: center;">
+                            Chưa có sản phẩm nào
+                        </td>
+                    </tr>
+                <?php endif; ?>
             </tbody>
+
         </table>
     </div>
 </div>

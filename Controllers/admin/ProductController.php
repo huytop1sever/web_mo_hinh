@@ -10,6 +10,7 @@ class ProductController
         $products = [
             [
                 'id' => 1,
+                'image' => 'https://images.unsplash.com/photo-1633475794222-610e4ac29a04?auto=format&fit=crop&w=300&q=80',
                 'name' => 'Mô hình Gundam RX-78-2',
                 'category' => 'Gundam',
                 'price' => 1250000,
@@ -18,6 +19,7 @@ class ProductController
             ],
             [
                 'id' => 2,
+                'image' => 'https://images.unsplash.com/photo-1618336753974-aae8e04506aa?auto=format&fit=crop&w=300&q=80',
                 'name' => 'Figure Luffy Gear 5',
                 'category' => 'Anime Figure',
                 'price' => 890000,
@@ -26,6 +28,7 @@ class ProductController
             ],
             [
                 'id' => 3,
+                'image' => 'https://images.unsplash.com/photo-1608889825205-eebdb9fc5806?auto=format&fit=crop&w=300&q=80',
                 'name' => 'Mô hình Iron Man Mark 85',
                 'category' => 'Marvel',
                 'price' => 1590000,
@@ -34,6 +37,7 @@ class ProductController
             ],
             [
                 'id' => 4,
+                'image' => 'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?auto=format&fit=crop&w=300&q=80',
                 'name' => 'Pokemon Pikachu PVC',
                 'category' => 'Pokemon',
                 'price' => 320000,
@@ -68,8 +72,15 @@ class ProductController
         $title = 'Chỉnh sửa sản phẩm';
         $pageTitle = 'Sửa sản phẩm';
 
-        // Giả lập dữ liệu
-        $product = ['id' => $id, 'name' => 'Sản phẩm mẫu', 'price' => 100000, 'stock' => 10, 'status' => 'Đang bán'];
+        $product = [
+            'id' => $id,
+            'image' => 'https://images.unsplash.com/photo-1618336753974-aae8e04506aa?auto=format&fit=crop&w=300&q=80',
+            'name' => 'Sản phẩm mẫu',
+            'category' => 'Anime Figure',
+            'price' => 100000,
+            'stock' => 10,
+            'status' => 'Đang bán',
+        ];
 
         include_once __DIR__ . '/../../Views/admin/layouts/header.php';
         include_once __DIR__ . '/../../Views/admin/layouts/sidebar.php';
@@ -79,17 +90,20 @@ class ProductController
     }
 
     public function store()
-    {
-        header('Location: index.php?act=products');
-    }
+{
+    header('Location: index.php?page=products');
+    exit;
+}
 
-    public function update()
-    {
-        header('Location: index.php?act=products');
-    }
+public function update()
+{
+    header('Location: index.php?page=products');
+    exit;
+}
 
-    public function delete($id)
-    {
-        header('Location: index.php?act=products');
-    }
+public function delete($id)
+{
+    header('Location: index.php?page=products');
+    exit;
+}
 }

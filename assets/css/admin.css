@@ -482,3 +482,58 @@ td {
 .menu-user-link:hover {
     background: #2563eb !important;
 }
+
+
+/* ===== PRODUCT TABLE ===== */
+
+.product-thumb {
+    width: 70px;
+    height: 70px;
+    min-width: 70px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid #e5e7eb;
+    display: block;
+}
+
+.product-name {
+    font-weight: 600;
+    color: #111827;
+    min-width: 260px;
+}
+
+.product-image-col {
+    width: 100px;
+}
+
+.product-action-col {
+    width: 120px;
+}
+
+.product-status-col {
+    width: 130px;
+}
+
+.product-stock-col {
+    width: 100px;
+}
+
+.product-price-col {
+    width: 140px;
+}
+
+.table-wrapper table tbody tr {
+    height: 90px;
+}
+
+.table-wrapper table tbody td {
+    vertical-align: middle;
+}
+
+.form-product-preview {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
