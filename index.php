@@ -25,6 +25,11 @@ switch ($page) {
         $controller->index();
         break;
 
+    case 'product-detail':
+        $controller = new ProductController();
+        $controller->detail();
+        break;
+
     case 'checkout':
         $controller = new CheckoutController();
         $controller->index();

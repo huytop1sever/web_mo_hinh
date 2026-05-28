@@ -1,70 +1,43 @@
 <?php
 require_once 'Views/client/layouts/Header.php';
 ?>
+
         <!-- Hero Start -->
-        <div class="container-fluid py-5 mb-5 hero-header">
-            <div class="container py-5">
+        <div class="container-fluid anime-hero py-5 mb-5">
+            <div class="container">
                 <div class="row g-5 align-items-center">
 
-                    <div class="col-md-12 col-lg-7">
-                        <h4 class="mb-3 text-secondary">Mô hình Anime chính hãng</h4>
+                    <div class="col-lg-7">
+                        <span class="anime-hero-badge">Bộ sưu tập mới</span>
 
-                        <h1 class="mb-5 display-3 text-primary">
-                            Bộ sưu tập Figure cao cấp
+                        <h1 class="display-4 text-primary mb-4">
+                            Figure Anime chính hãng cho người sưu tầm
                         </h1>
 
-                        <div class="position-relative mx-auto">
-                            <input
-                                class="form-control border-2 border-secondary w-75 py-3 px-4 rounded-pill"
-                                type="text"
-                                placeholder="Tìm kiếm mô hình...">
+                        <p class="anime-hero-text">
+                            Săn các mẫu Luffy, Goku, Naruto, Gojo và nhiều nhân vật nổi bật với hộp đẹp,
+                            ảnh thật và giao hàng toàn quốc.
+                        </p>
 
-                            <button
-                                type="submit"
-                                class="btn btn-primary border-2 border-secondary py-3 px-4 position-absolute rounded-pill text-white h-100"
-                                style="top: 0; right: 25%;">
-                                Tìm kiếm
-                            </button>
+                        <div class="anime-hero-actions">
+                            <a href="index.php?page=product" class="btn btn-primary rounded-pill text-white px-4 py-3">
+                                Xem sản phẩm
+                            </a>
+
+                            <a href="index.php?page=product-detail&id=1" class="btn border border-secondary rounded-pill text-primary px-4 py-3">
+                                Mẫu nổi bật
+                            </a>
                         </div>
                     </div>
 
-                    <div class="col-md-12 col-lg-5">
-                        <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
+                    <div class="col-lg-5">
+                        <div class="anime-hero-showcase">
+                            <img src="assets/client/img/luffy-gear-5.jpg" alt="Figure Luffy Gear 5">
 
-                            <div class="carousel-inner" role="listbox">
-
-                                <div class="carousel-item active rounded">
-                                    <img
-                                        src="assets/client/img/hero-img-1.png"
-                                        class="img-fluid w-100 h-100 bg-secondary rounded"
-                                        alt="Mô hình Anime">
-
-                                    <a href="#" class="btn px-4 py-2 text-white rounded">
-                                        Anime Figure
-                                    </a>
-                                </div>
-
-                                <div class="carousel-item rounded">
-                                    <img
-                                        src="assets/client/img/hero-img-2.jpg"
-                                        class="img-fluid w-100 h-100 rounded"
-                                        alt="Mô hình sưu tầm">
-
-                                    <a href="#" class="btn px-4 py-2 text-white rounded">
-                                        Nendoroid
-                                    </a>
-                                </div>
-
+                            <div class="anime-hero-price">
+                                <span>Hot deal</span>
+                                <strong>2.500.000đ</strong>
                             </div>
-
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon"></span>
-                            </button>
-
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselId" data-bs-slide="next">
-                                <span class="carousel-control-next-icon"></span>
-                            </button>
-
                         </div>
                     </div>
 
@@ -182,12 +155,12 @@ require_once 'Views/client/layouts/Header.php';
 
                                 <?php
                                 $products = [
-                                    ['img' => 'fruite-item-1.jpg', 'cat' => 'One Piece', 'name' => 'Luffy Gear 5', 'price' => '2.500.000đ'],
+                                    ['img' => 'luffy-gear-5.jpg', 'cat' => 'One Piece', 'name' => 'Luffy Gear 5', 'price' => '2.500.000đ'],
                                     ['img' => 'fruite-item-2.jpg', 'cat' => 'Naruto', 'name' => 'Naruto Uzumaki', 'price' => '1.850.000đ'],
-                                    ['img' => 'fruite-item-3.jpg', 'cat' => 'Dragon Ball', 'name' => 'Son Goku', 'price' => '2.200.000đ'],
-                                    ['img' => 'fruite-item-4.jpg', 'cat' => 'Demon Slayer', 'name' => 'Tanjiro Kamado', 'price' => '1.650.000đ'],
-                                    ['img' => 'fruite-item-5.jpg', 'cat' => 'Jujutsu Kaisen', 'name' => 'Gojo Satoru', 'price' => '2.900.000đ'],
-                                    ['img' => 'fruite-item-6.jpg', 'cat' => 'Attack On Titan', 'name' => 'Levi Ackerman', 'price' => '2.750.000đ'],
+                                    ['img' => 'fruite-item-3.webp', 'cat' => 'Dragon Ball', 'name' => 'Son Goku', 'price' => '2.200.000đ'],
+                                    ['img' => 'fruite-item-4.webp', 'cat' => 'Demon Slayer', 'name' => 'Tanjiro Kamado', 'price' => '1.650.000đ'],
+                                    ['img' => 'fruite-item-5.webp', 'cat' => 'Jujutsu Kaisen', 'name' => 'Gojo Satoru', 'price' => '2.900.000đ'],
+                                    ['img' => 'fruite-item-6.webp', 'cat' => 'Attack On Titan', 'name' => 'Levi Ackerman', 'price' => '2.750.000đ'],
                                     ['img' => 'best-product-1.jpg', 'cat' => 'Nendoroid', 'name' => 'Nendoroid Anime', 'price' => '950.000đ'],
                                     ['img' => 'best-product-2.jpg', 'cat' => 'PVC Figure', 'name' => 'PVC Collection', 'price' => '1.200.000đ'],
                                 ];
@@ -320,57 +293,7 @@ require_once 'Views/client/layouts/Header.php';
         <!-- Product End -->
 
 
-        <!-- Banner Start -->
-        <div class="container-fluid banner bg-secondary my-5">
-            <div class="container py-5">
-                <div class="row g-4 align-items-center">
-
-                    <div class="col-lg-6">
-                        <div class="py-4">
-                            <h1 class="display-3 text-white">
-                                Khuyến mãi Figure Anime
-                            </h1>
-
-                            <p class="fw-normal display-3 text-dark mb-4">
-                                Giảm giá đặc biệt
-                            </p>
-
-                            <p class="mb-4 text-dark">
-                                Nhiều mẫu mô hình Anime, Manga, Nendoroid đang có ưu đãi hấp dẫn.
-                            </p>
-
-                            <a href="#" class="banner-btn btn border-2 border-white rounded-pill text-dark py-3 px-5">
-                                Mua ngay
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="position-relative">
-                            <img
-                                src="assets/client/img/baner-1.png"
-                                class="img-fluid w-100 rounded"
-                                alt="Khuyến mãi Figure">
-
-                            <div
-                                class="d-flex align-items-center justify-content-center bg-white rounded-circle position-absolute"
-                                style="width:140px;height:140px;top:0;left:0;">
-
-                                <h1 style="font-size:70px;">30</h1>
-
-                                <div class="d-flex flex-column">
-                                    <span class="h2 mb-0">%</span>
-                                    <span class="h4 text-muted mb-0">OFF</span>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <!-- Banner End -->
+       
 
 
         <!-- Bestseller Start -->
@@ -388,12 +311,12 @@ require_once 'Views/client/layouts/Header.php';
 
                     <?php
                     $bestProducts = [
-                        ['img' => 'best-product-1.jpg', 'name' => 'Luffy Wano Figure', 'price' => '1.990.000đ'],
-                        ['img' => 'best-product-2.jpg', 'name' => 'Naruto Sage Mode', 'price' => '2.150.000đ'],
-                        ['img' => 'best-product-3.jpg', 'name' => 'Gojo Satoru Figure', 'price' => '2.800.000đ'],
-                        ['img' => 'best-product-4.jpg', 'name' => 'Goku Ultra Instinct', 'price' => '2.600.000đ'],
-                        ['img' => 'best-product-5.jpg', 'name' => 'Levi Ackerman', 'price' => '2.350.000đ'],
-                        ['img' => 'best-product-6.jpg', 'name' => 'Tanjiro Kamado', 'price' => '1.750.000đ'],
+                        ['img' => 'luffy-gear-5.jpg', 'name' => 'Luffy Wano Figure', 'price' => '1.990.000đ'],
+                        ['img' => 'fruite-item-2.jpg', 'name' => 'Naruto Sage Mode', 'price' => '2.150.000đ'],
+                        ['img' => 'fruite-item-5.webp', 'name' => 'Gojo Satoru Figure', 'price' => '2.800.000đ'],
+                        ['img' => 'fruite-item-3.webp', 'name' => 'Goku Ultra Instinct', 'price' => '2.600.000đ'],
+                        ['img' => 'fruite-item-6.webp', 'name' => 'Levi Ackerman', 'price' => '2.350.000đ'],
+                        ['img' => 'fruite-item-4.webp', 'name' => 'Tanjiro Kamado', 'price' => '1.750.000đ'],
                     ];
 
                     foreach ($bestProducts as $item) {

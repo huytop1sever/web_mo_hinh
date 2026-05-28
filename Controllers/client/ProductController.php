@@ -6,4 +6,9 @@ class ProductController
     {
         require_once 'Views/client/product/index.php';
     }
+
+    public function detail()
+    {
+        require_once 'Views/client/product/detail.php';
+    }
 }

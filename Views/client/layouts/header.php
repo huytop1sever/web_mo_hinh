@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>ASM Figure Store</title>
+    <title>Phantom</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
     <!-- Bootstrap -->
@@ -35,7 +35,7 @@
 
                 <small class="text-white">
                     <i class="fas fa-envelope me-2 text-warning"></i>
-                    support@asmfigure.com
+                    support@phantomfigure.com
                 </small>
 
             </div>
@@ -59,7 +59,7 @@
 
             <a href="index.php" class="navbar-brand">
                 <h1 class="text-primary display-6 mb-0">
-                    ASM Figure
+                    Phantom
                 </h1>
             </a>
 
