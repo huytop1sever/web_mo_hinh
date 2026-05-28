@@ -4,6 +4,7 @@ require_once 'Controllers/client/HomeController.php';
 require_once 'Controllers/client/CartController.php';
 require_once 'Controllers/client/CheckoutController.php';
 require_once 'Controllers/client/AuthController.php';
+require_once 'Controllers/client/ProductController.php';
 
 
 $page = $_GET['page'] ?? 'home';
@@ -16,6 +17,11 @@ switch ($page) {
 
     case 'cart':
         $controller = new CartController();
+        $controller->index();
+        break;
+
+    case 'product':
+        $controller = new ProductController();
         $controller->index();
         break;
 

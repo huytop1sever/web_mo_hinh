@@ -83,7 +83,7 @@
                         Trang chủ
                     </a>
 
-                    <a href="#"
+                    <a href="index.php?page=product"
                         class="nav-item nav-link">
                         Sản phẩm
                     </a>
