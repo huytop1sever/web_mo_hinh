@@ -11,7 +11,7 @@ require_once 'Views/client/layouts/Header.php';
                         <span class="anime-hero-badge">Bộ sưu tập mới</span>
 
                         <h1 class="display-4 text-primary mb-4">
-                            Figure Anime chính hãng cho người sưu tầm
+                            Phantom chính hãng cho người sưu tầm
                         </h1>
 
                         <p class="anime-hero-text">

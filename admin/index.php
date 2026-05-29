@@ -93,7 +93,16 @@ switch ($page) {
         $controller->update();
 
         break;
+    
+    case 'category-delete':
 
+    require_once '../Controllers/admin/CategoryController.php';
+
+    $controller = new CategoryController();
+    $controller->delete($_GET['id'] ?? 0);
+
+    break;
+    
     case 'posts':
         require_once '../Controllers/admin/PostController.php';
         $controller = new PostController();

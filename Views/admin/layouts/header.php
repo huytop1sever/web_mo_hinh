@@ -7,13 +7,16 @@
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-   <link rel="stylesheet" href="/assets/css/admin.css">
-<link rel="stylesheet" href="/assets/css/admin/users.css">
-<link rel="stylesheet" href="/assets/css/admin/orders.css">
+    <link rel="stylesheet" href="/assets/admin/css/admin.css">
+    <link rel="stylesheet" href="/assets/admin/css/users.css">
+    <link rel="stylesheet" href="/assets/admin/css/orders.css">
+    <link rel="stylesheet" href="/assets/admin/css/posts.css">
+    <link rel="stylesheet" href="/assets/admin/css/category.css">
+    <link rel="stylesheet" href="/assets/admin/css/product-form.css">
 
 
     <?php if (!empty($css)): ?>
-        <link rel="stylesheet" href="../assets/css/admin/<?= $css ?>.css">
+        <link rel="stylesheet" href="../assets/admin/css/<?= $css ?>.css">
     <?php endif; ?>
 
 </head>

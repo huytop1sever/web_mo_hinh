@@ -97,10 +97,12 @@ class CategoryController
         header('Location: index.php?act=categories');
     }
 
+
     public function delete($id)
     {
-        // Logic xóa danh mục thực tế (ví dụ: DELETE FROM categories WHERE id = $id)
-        // Sau khi xóa, chuyển hướng về trang danh sách
-        header('Location: index.php?act=categories');
+        // xử lý xóa
+
+        header('Location: index.php?page=categories');
+        exit;
     }
 }

@@ -1,0 +1,154 @@
+.posts-page {
+    width: 100%;
+}
+
+.posts-page .box {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    padding: 24px;
+}
+
+.posts-page .box-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.posts-page .box-title h2 {
+    font-size: 24px;
+    color: #111827;
+    margin-bottom: 6px;
+}
+
+.posts-page .box-title p {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.posts-page .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 10px;
+    background: #f59e0b;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.posts-page .btn-primary:hover {
+    background: #d97706;
+}
+
+.posts-page .btn-primary i {
+    font-size: 20px;
+}
+
+.post-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.post-form .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-form .form-group.full {
+    grid-column: 1 / -1;
+}
+
+.post-form .form-group label {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #374151;
+}
+
+.post-form .form-group label span {
+    color: #ef4444;
+}
+
+.post-form .form-group input,
+.post-form .form-group select,
+.post-form .form-group textarea {
+    width: 100%;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 13px 14px;
+    font-size: 14px;
+    color: #111827;
+    outline: none;
+    background: #fff;
+    transition: 0.25s;
+}
+
+.post-form .form-group textarea {
+    min-height: 220px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.post-form .form-group input:focus,
+.post-form .form-group select:focus,
+.post-form .form-group textarea:focus {
+    border-color: #f59e0b;
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.14);
+}
+
+.post-form .form-group.error input,
+.post-form .form-group.error select,
+.post-form .form-group.error textarea {
+    border-color: #ef4444;
+}
+
+.post-form .error-message {
+    min-height: 18px;
+    margin-top: 6px;
+    font-size: 13px;
+    color: #ef4444;
+}
+
+.post-form .form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4px;
+}
+
+@media(max-width: 768px) {
+    .posts-page .box {
+        padding: 16px;
+    }
+
+    .posts-page .box-title {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .post-form {
+        grid-template-columns: 1fr;
+    }
+
+    .post-form .form-actions {
+        justify-content: stretch;
+    }
+
+    .post-form .form-actions .btn-primary {
+        width: 100%;
+    }
+}

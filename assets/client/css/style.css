@@ -183,10 +183,68 @@
 
 /*** Hero Header ***/
 .anime-hero {
+    position: relative;
+    overflow: hidden;
     margin-top: 152px;
+    background: url(../img/banner.jpg) center center/cover no-repeat;
+}
+
+.anime-hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:1;
+
     background:
-        linear-gradient(105deg, rgba(255, 255, 255, .96) 0%, rgba(255, 248, 232, .92) 52%, rgba(129, 196, 8, .18) 100%),
-        url(../img/banner-fruits.jpg) center/cover no-repeat;
+    linear-gradient(
+        90deg,
+        rgba(255,255,255,.08) 0%,
+        rgba(255,255,255,.12) 35%,
+        rgba(255,255,255,.25) 50%,
+        rgba(255,255,255,.15) 70%,
+        rgba(255,255,255,0) 100%
+    );
+}
+
+.anime-hero::after{
+    display:none;
+}
+
+.anime-hero .container {
+    position: relative;
+    z-index: 3;
+}
+
+.anime-hero-showcase {
+    position: relative;
+    max-width: 520px;
+    margin-left: auto;
+    z-index: 5;
+}
+
+
+
+.anime-hero-showcase img {
+    width: 100%;
+    height: 430px;
+    object-fit: cover;
+    border: 10px solid #fff;
+    border-radius: 10px;
+    box-shadow: 0 25px 60px rgba(0,0,0,.35);
+}
+.anime-hero h1 {
+    color: #81c408;
+    font-size: 72px;
+    line-height: 1.08;
+    font-weight: 800;
+    text-shadow:
+        0 3px 12px rgba(255,255,255,.8);
+}
+
+.anime-hero-text {
+    color: #374151;
+    font-size: 18px;
+    line-height: 1.9;
 }
 
 .anime-hero-badge {
@@ -202,7 +260,7 @@
 .anime-hero-text {
     max-width: 620px;
     margin-bottom: 28px;
-    color: #555;
+    color: #ffffff;
     font-size: 18px;
     line-height: 1.8;
 }
@@ -211,21 +269,6 @@
     display: flex;
     flex-wrap: wrap;
     gap: 14px;
-}
-
-.anime-hero-showcase {
-    position: relative;
-    max-width: 430px;
-    margin-left: auto;
-}
-
-.anime-hero-showcase img {
-    width: 100%;
-    height: 360px;
-    object-fit: cover;
-    border: 8px solid var(--bs-white);
-    border-radius: 8px;
-    box-shadow: 0 24px 55px rgba(0, 0, 0, .18);
 }
 
 .anime-hero-price {

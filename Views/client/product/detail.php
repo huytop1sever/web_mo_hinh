@@ -15,7 +15,7 @@ $products = [
 
 $id = (int)($_GET['id'] ?? 1);
 $product = $products[$id] ?? $products[1];
-$gallery = [$product['img'], 'single-item.jpg', 'best-product-4.jpg'];
+$gallery = [$product['img'], 'goku.jpg', 'goku1.jpg'];
 ?>
 
 <main class="product-detail-page">

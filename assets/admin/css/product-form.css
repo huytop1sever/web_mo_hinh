@@ -1,0 +1,224 @@
+.product-form-box {
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+.product-form-box .box-title {
+    margin-bottom: 25px;
+}
+
+.product-form-box .box-title h2 {
+    margin-bottom: 6px;
+    font-size: 26px;
+}
+
+.product-form-box .box-title p {
+    color: #777;
+    font-size: 14px;
+}
+
+.product-form-box .form-container {
+    background: #fff;
+}
+
+.product-form-box .form-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 0.9fr;
+    gap: 28px;
+}
+
+.product-form-box .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.product-form-box .form-group {
+    margin-bottom: 18px;
+}
+
+.product-form-box .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.product-form-box .form-group label span {
+    color: #e74c3c;
+}
+
+.product-form-box .form-group input,
+.product-form-box .form-group select {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    outline: none;
+    font-size: 15px;
+    transition: 0.25s;
+    background: #fff;
+}
+
+.product-form-box .form-group input:focus,
+.product-form-box .form-group select:focus {
+    border-color: #6c5ce7;
+    box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.12);
+}
+
+.product-form-box .form-group.error input,
+.product-form-box .form-group.error select {
+    border-color: #e74c3c;
+}
+
+.product-form-box .error-message {
+    display: block;
+    min-height: 18px;
+    margin-top: 6px;
+    font-size: 13px;
+    color: #e74c3c;
+}
+
+.product-form-box .upload-box {
+    width: 100%;
+    min-height: 310px;
+    border: 2px dashed #bbb;
+    border-radius: 18px;
+    background: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    transition: 0.25s;
+}
+
+.product-form-box .upload-box:hover {
+    border-color: #6c5ce7;
+    background: #f5f3ff;
+}
+
+.product-form-box .upload-box input {
+    display: none;
+}
+
+.product-form-box .upload-content {
+    text-align: center;
+    padding: 20px;
+}
+
+.product-form-box .upload-content i {
+    font-size: 56px;
+    color: #6c5ce7;
+    margin-bottom: 10px;
+}
+
+.product-form-box .upload-content h3 {
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.product-form-box .upload-content p {
+    color: #777;
+    font-size: 14px;
+}
+
+.product-form-box #previewImage {
+    display: none;
+    width: 100%;
+    height: 100%;
+    min-height: 310px;
+    object-fit: cover;
+}
+
+.product-form-box .upload-box.has-image {
+    border-style: solid;
+    border-color: #6c5ce7;
+}
+
+.product-form-box .upload-box.has-image .upload-content {
+    display: none;
+}
+
+.product-form-box .upload-box.has-image #previewImage {
+    display: block;
+}
+
+.product-form-box .image-error {
+    margin-top: 8px;
+}
+
+.product-form-box .image-note {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #777;
+}
+
+.product-form-box .form-actions {
+    margin-top: 28px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.product-form-box .btn-primary,
+.product-form-box .btn-secondary {
+    min-width: 135px;
+    height: 44px;
+    border-radius: 12px;
+    border: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.product-form-box .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 14px;
+    border-radius: 8px;
+    background: #f59e0b;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: .25s;
+}
+
+.product-form-box .btn-primary:hover {
+    background: #d97706;
+}
+
+.product-form-box .btn-secondary {
+    background: #f1f1f1;
+    color: #333;
+}
+
+.product-form-box .btn-secondary:hover {
+    background: #e2e2e2;
+}
+
+@media (max-width: 768px) {
+    .product-form-box .form-grid,
+    .product-form-box .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .product-form-box .form-actions {
+        flex-direction: column;
+    }
+
+    .product-form-box .btn-primary,
+    .product-form-box .btn-secondary {
+        width: 100%;
+    }
+}

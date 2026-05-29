@@ -40,9 +40,6 @@
                         </td>
                         <td>
                             <div class="table-actions">
-                                <a href="#" class="action-btn edit" title="Sua">
-                                    <i class='bx bx-edit'></i>
-                                </a>
 
                                 <a href="#" class="action-btn delete" title="Xoa">
                                     <i class='bx bx-trash'></i>

@@ -1,9 +1,10 @@
 <div class="box">
     <div class="box-title">
-        <h2>Danh sach danh muc</h2>
-        <a href="index.php?act=category-add" class="btn-primary">
+        <h2>Danh sách danh mục</h2>
+
+        <a href="index.php?page=category-add" class="btn-primary">
             <i class='bx bx-plus'></i>
-            <span>Them danh muc</span>
+            <span>Thêm danh mục</span>
         </a>
     </div>
 
@@ -34,9 +35,20 @@
                         </td>
                         <td>
                             <div class="table-actions">
-                                <a href="index.php?act=category-edit&id=<?= $category['id'] ?>" class="action-btn edit" title="Sua">
+
+                                <a href="index.php?page=category-edit&id=<?= $category['id'] ?>"
+                                    class="action-btn edit"
+                                    title="Sửa">
                                     <i class='bx bx-edit'></i>
                                 </a>
+
+                                <a href="index.php?page=category-delete&id=<?= $category['id'] ?>"
+                                    class="action-btn delete"
+                                    title="Xóa"
+                                    onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục này?')">
+                                    <i class='bx bx-trash'></i>
+                                </a>
+
                             </div>
                         </td>
                     </tr>
@@ -45,3 +57,20 @@
         </table>
     </div>
 </div>
+<script>
+function confirmDelete(id) {
+    Swal.fire({
+        title: 'Xóa danh mục?',
+        text: 'Dữ liệu sẽ không thể khôi phục!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Xóa',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href =
+                'index.php?page=category-delete&id=' + id;
+        }
+    });
+}
+</script>

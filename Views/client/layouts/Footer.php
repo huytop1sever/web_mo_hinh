@@ -80,7 +80,7 @@
                     </h4>
 
                     <p class="mb-4">
-                        ASM Figure Store chuyên cung cấp mô hình Anime,
+                        Phantom chuyên cung cấp mô hình Anime,
                         Manga, Figure, Nendoroid và các sản phẩm sưu tầm
                         chính hãng với mức giá tốt nhất.
                     </p>
@@ -158,7 +158,7 @@
                     </p>
 
                     <p>
-                        Email: support@asmfigure.com
+                        Email: support@phantomfigure.com
                     </p>
 
                     <p>
