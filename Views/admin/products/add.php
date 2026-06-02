@@ -27,6 +27,12 @@
                     <small class="error-message"></small>
                 </div>
 
+                <div class="form-group">
+                    <label for="description">Mô tả sản phẩm</label>
+                    <textarea name="description" id="description" rows="5" placeholder="Nhập mô tả chi tiết sản phẩm..."></textarea>
+                    <small class="error-message"></small>
+                </div>
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="price">Giá <span>*</span></label>
@@ -76,7 +82,7 @@
                 Lưu sản phẩm
             </button>
 
-            <a href="index.php?act=products" class="btn-secondary">
+            <a href="index.php?page=products" class="btn-secondary">
                 Hủy bỏ
             </a>
         </div>

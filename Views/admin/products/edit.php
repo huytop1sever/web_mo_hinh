@@ -6,6 +6,7 @@ $product = $product ?? [
     'name' => '',
     'category' => 'Gundam',
     'price' => 0,
+    'description' => '',
     'stock' => 0,
     'status' => 'Đang bán',
 ];
@@ -36,11 +37,17 @@ $product = $product ?? [
                     <label for="category">Danh mục <span>*</span></label>
                     <select name="category" id="category">
                         <option value="">-- Chọn danh mục --</option>
-                        <option value="Gundam" <?= ($product['category'] ?? '') === 'Gundam' ? 'selected' : '' ?>>Gundam</option>
-                        <option value="Anime Figure" <?= ($product['category'] ?? '') === 'Anime Figure' ? 'selected' : '' ?>>Anime Figure</option>
-                        <option value="Marvel" <?= ($product['category'] ?? '') === 'Marvel' ? 'selected' : '' ?>>Marvel</option>
-                        <option value="Pokemon" <?= ($product['category'] ?? '') === 'Pokemon' ? 'selected' : '' ?>>Pokemon</option>
+                        <option value="Gundam" <?= $product['category'] === 'Gundam' ? 'selected' : '' ?>>Gundam</option>
+                        <option value="Anime Figure" <?= $product['category'] === 'Anime Figure' ? 'selected' : '' ?>>Anime Figure</option>
+                        <option value="Marvel" <?= $product['category'] === 'Marvel' ? 'selected' : '' ?>>Marvel</option>
+                        <option value="Pokemon" <?= $product['category'] === 'Pokemon' ? 'selected' : '' ?>>Pokemon</option>
                     </select>
+                    <small class="error-message"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Mô tả sản phẩm</label>
+                    <textarea name="description" id="description" rows="5" placeholder="Nhập mô tả chi tiết sản phẩm..."><?= $product['description'] ?></textarea>
                     <small class="error-message"></small>
                 </div>
 
@@ -94,7 +101,7 @@ $product = $product ?? [
                 Cập nhật
             </button>
 
-            <a href="index.php?act=products" class="btn-secondary">
+            <a href="index.php?page=products" class="btn-secondary">
                 Hủy bỏ
             </a>
         </div>
