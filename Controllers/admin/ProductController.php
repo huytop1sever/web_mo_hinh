@@ -10,10 +10,11 @@ class ProductController
         $products = [
             [
                 'id' => 1,
-                'image' => 'https://images.unsplash.com/photo-1633475794222-610e4ac29a04?auto=format&fit=crop&w=300&q=80',
+                'image' => '../../assets/client/img/goku.jpg',
                 'name' => 'Mô hình Gundam RX-78-2',
                 'category' => 'Gundam',
                 'price' => 1250000,
+                'description' => 'Mô hình Gundam RX-78-2 tỉ lệ đẹp, chi tiết sắc nét, phù hợp để trưng bày hoặc sưu tầm.',
                 'stock' => 18,
                 'status' => 'Đang bán',
             ],
@@ -23,6 +24,7 @@ class ProductController
                 'name' => 'Figure Luffy Gear 5',
                 'category' => 'Anime Figure',
                 'price' => 890000,
+                'description' => 'Figure Luffy Gear 5 thiết kế nổi bật, màu sắc bắt mắt, thích hợp cho fan One Piece.',
                 'stock' => 25,
                 'status' => 'Đang bán',
             ],
@@ -32,6 +34,7 @@ class ProductController
                 'name' => 'Mô hình Iron Man Mark 85',
                 'category' => 'Marvel',
                 'price' => 1590000,
+                'description' => 'Mô hình Iron Man Mark 85 phong cách mạnh mẽ, chi tiết giáp đẹp, phù hợp trưng bày bàn làm việc.',
                 'stock' => 9,
                 'status' => 'Sắp hết',
             ],
@@ -41,6 +44,7 @@ class ProductController
                 'name' => 'Pokemon Pikachu PVC',
                 'category' => 'Pokemon',
                 'price' => 320000,
+                'description' => 'Mô hình Pikachu PVC nhỏ gọn, đáng yêu, phù hợp làm quà tặng hoặc trang trí góc học tập.',
                 'stock' => 0,
                 'status' => 'Hết hàng',
             ],
@@ -63,7 +67,9 @@ class ProductController
         include_once __DIR__ . '/../../Views/admin/layouts/header.php';
         include_once __DIR__ . '/../../Views/admin/layouts/sidebar.php';
         include_once __DIR__ . '/../../Views/admin/layouts/navbar.php';
+
         include_once __DIR__ . '/../../Views/admin/products/add.php';
+
         include_once __DIR__ . '/../../Views/admin/layouts/footer.php';
     }
 
@@ -78,6 +84,7 @@ class ProductController
             'name' => 'Sản phẩm mẫu',
             'category' => 'Anime Figure',
             'price' => 100000,
+            'description' => 'Đây là mô tả sản phẩm mẫu dùng để hiển thị trong giao diện chỉnh sửa sản phẩm.',
             'stock' => 10,
             'status' => 'Đang bán',
         ];
@@ -85,25 +92,27 @@ class ProductController
         include_once __DIR__ . '/../../Views/admin/layouts/header.php';
         include_once __DIR__ . '/../../Views/admin/layouts/sidebar.php';
         include_once __DIR__ . '/../../Views/admin/layouts/navbar.php';
+
         include_once __DIR__ . '/../../Views/admin/products/edit.php';
+
         include_once __DIR__ . '/../../Views/admin/layouts/footer.php';
     }
 
     public function store()
-{
-    header('Location: index.php?page=products');
-    exit;
-}
+    {
+        header('Location: index.php?page=products');
+        exit;
+    }
 
-public function update()
-{
-    header('Location: index.php?page=products');
-    exit;
-}
+    public function update()
+    {
+        header('Location: index.php?page=products');
+        exit;
+    }
 
-public function delete($id)
-{
-    header('Location: index.php?page=products');
-    exit;
-}
+    public function delete($id)
+    {
+        header('Location: index.php?page=products');
+        exit;
+    }
 }

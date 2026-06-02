@@ -22,6 +22,7 @@ $products = $products ?? [];
                     <th>Tên sản phẩm</th>
                     <th class="product-image-col">Ảnh</th>
                     <th>Danh mục</th>
+                    <th>Mô tả</th>
                     <th class="product-price-col">Giá</th>
                     <th class="product-stock-col">Tồn kho</th>
                     <th class="product-status-col">Trạng thái</th>
@@ -46,6 +47,10 @@ $products = $products ?? [];
                         </td>
 
                         <td><?= $product['category'] ?></td>
+
+                        <td class="product-description">
+                            <?= mb_strimwidth($product['description'], 0, 80, '...') ?>
+                        </td>
 
                         <td><?= number_format($product['price'], 0, ',', '.') ?>đ</td>
 
@@ -80,13 +85,12 @@ $products = $products ?? [];
 
                 <?php if (empty($products)): ?>
                     <tr>
-                        <td colspan="8" style="text-align: center;">
+                        <td colspan="9" style="text-align: center;">
                             Chưa có sản phẩm nào
                         </td>
                     </tr>
                 <?php endif; ?>
             </tbody>
-
         </table>
     </div>
 </div>

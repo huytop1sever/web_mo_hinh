@@ -222,3 +222,27 @@
         width: 100%;
     }
 }
+
+.form-group textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 12px 15px;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    resize: vertical;
+    font-size: 14px;
+    font-family: inherit;
+    transition: 0.3s;
+}
+
+.form-group textarea:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.product-description {
+    max-width: 250px;
+    white-space: normal;
+    line-height: 1.5;
+}
