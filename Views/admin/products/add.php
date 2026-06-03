@@ -27,6 +27,30 @@
                             </option>
                         <?php endforeach; ?>
                     </select>
+<<<<<<< HEAD
+=======
+                    <small class="error-message"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Mô tả sản phẩm</label>
+                    <textarea name="description" id="description" rows="5" placeholder="Nhập mô tả chi tiết sản phẩm..."></textarea>
+                    <small class="error-message"></small>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="price">Giá <span>*</span></label>
+                        <input type="number" name="price" id="price" min="0" placeholder="Nhập giá">
+                        <small class="error-message"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="stock">Tồn kho <span>*</span></label>
+                        <input type="number" name="stock" id="stock" min="0" placeholder="Số lượng">
+                        <small class="error-message"></small>
+                    </div>
+>>>>>>> db531e74fedf0048d3cf07ab08e028f6e8dddbae
                 </div>
 
                 <div class="form-group">
@@ -90,8 +114,14 @@
         </div>
 
         <div class="form-actions">
-            <button type="submit" class="btn-primary">Lưu sản phẩm</button>
-            <a href="index.php?page=products" class="btn-secondary">Quay lại</a>
+            <button type="submit" class="btn-primary">
+                <i class='bx bx-save'></i>
+                Lưu sản phẩm
+            </button>
+
+            <a href="index.php?page=products" class="btn-secondary">
+                Hủy bỏ
+            </a>
         </div>
     </form>
 </div>

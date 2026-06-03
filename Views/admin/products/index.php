@@ -19,10 +19,17 @@
                     <th>Ảnh</th>
                     <th>Danh mục</th>
                     <th>Mô tả</th>
+<<<<<<< HEAD
                     <th>Giá từ</th>
                     <th>Tồn kho</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
+=======
+                    <th class="product-price-col">Giá</th>
+                    <th class="product-stock-col">Tồn kho</th>
+                    <th class="product-status-col">Trạng thái</th>
+                    <th class="product-action-col">Thao tác</th>
+>>>>>>> db531e74fedf0048d3cf07ab08e028f6e8dddbae
                 </tr>
             </thead>
 
@@ -42,6 +49,10 @@
                         </td>
 
                         <td><?= htmlspecialchars($product['category']) ?></td>
+
+                        <td class="product-description">
+                            <?= mb_strimwidth($product['description'], 0, 80, '...') ?>
+                        </td>
 
                         <td class="product-description">
                             <?= mb_strimwidth($product['description'], 0, 80, '...') ?>
@@ -78,7 +89,13 @@
 
                 <?php if (empty($products)): ?>
                     <tr>
+<<<<<<< HEAD
                         <td colspan="9" style="text-align:center;">Chưa có sản phẩm nào</td>
+=======
+                        <td colspan="9" style="text-align: center;">
+                            Chưa có sản phẩm nào
+                        </td>
+>>>>>>> db531e74fedf0048d3cf07ab08e028f6e8dddbae
                     </tr>
                 <?php endif; ?>
             </tbody>

@@ -1,7 +1,16 @@
 <?php
-$product = $product ?? [];
-$variants = $variants ?? [];
-$categories = $categories ?? [];
+
+$product = $product ?? [
+    'id' => '',
+    'image' => '',
+    'name' => '',
+    'category' => 'Gundam',
+    'price' => 0,
+    'description' => '',
+    'stock' => 0,
+    'status' => 'Đang bán',
+];
+
 ?>
 
 <div class="box product-form-box">
@@ -12,7 +21,7 @@ $categories = $categories ?? [];
     <form action="index.php?page=product-update" method="post" class="product-form">
         <input type="hidden" name="id" value="<?= $product['id'] ?>">
 
-        <div class="form-group">
+                <div class="form-group">
             <label>Tên sản phẩm</label>
             <input type="text" name="title" value="<?= htmlspecialchars($product['title']) ?>" required>
         </div>
