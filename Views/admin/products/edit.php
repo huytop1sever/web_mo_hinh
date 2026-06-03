@@ -1,109 +1,106 @@
 <?php
-
-$product = $product ?? [
-    'id' => '',
-    'image' => '',
-    'name' => '',
-    'category' => 'Gundam',
-    'price' => 0,
-    'description' => '',
-    'stock' => 0,
-    'status' => 'Đang bán',
-];
-
+$product = $product ?? [];
+$variants = $variants ?? [];
+$categories = $categories ?? [];
 ?>
 
-<div class="box form-box product-form-box">
+<div class="box product-form-box">
     <div class="box-title">
-        <div>
-            <h2>Sửa sản phẩm</h2>
-            <p>Cập nhật thông tin sản phẩm mô hình</p>
-        </div>
+        <h2>Sửa sản phẩm</h2>
     </div>
 
-    <form action="index.php?page=product-update" method="POST" enctype="multipart/form-data" class="form-container" id="productForm" data-mode="edit">
+    <form action="index.php?page=product-update" method="post" class="product-form">
         <input type="hidden" name="id" value="<?= $product['id'] ?>">
-        <input type="hidden" name="old_image" value="<?= $product['image'] ?>">
 
-        <div class="form-grid">
-            <div class="form-left">
-                <div class="form-group">
-                    <label for="name">Tên sản phẩm <span>*</span></label>
-                    <input type="text" name="name" id="name" value="<?= $product['name'] ?>" placeholder="VD: Luffy Gear 5 Figure">
-                    <small class="error-message"></small>
-                </div>
-
-                <div class="form-group">
-                    <label for="category">Danh mục <span>*</span></label>
-                    <select name="category" id="category">
-                        <option value="">-- Chọn danh mục --</option>
-                        <option value="Gundam" <?= $product['category'] === 'Gundam' ? 'selected' : '' ?>>Gundam</option>
-                        <option value="Anime Figure" <?= $product['category'] === 'Anime Figure' ? 'selected' : '' ?>>Anime Figure</option>
-                        <option value="Marvel" <?= $product['category'] === 'Marvel' ? 'selected' : '' ?>>Marvel</option>
-                        <option value="Pokemon" <?= $product['category'] === 'Pokemon' ? 'selected' : '' ?>>Pokemon</option>
-                    </select>
-                    <small class="error-message"></small>
-                </div>
-
-                <div class="form-group">
-                    <label for="description">Mô tả sản phẩm</label>
-                    <textarea name="description" id="description" rows="5" placeholder="Nhập mô tả chi tiết sản phẩm..."><?= $product['description'] ?></textarea>
-                    <small class="error-message"></small>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="price">Giá <span>*</span></label>
-                        <input type="number" name="price" id="price" min="0" value="<?= $product['price'] ?>" placeholder="Nhập giá">
-                        <small class="error-message"></small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="stock">Tồn kho <span>*</span></label>
-                        <input type="number" name="stock" id="stock" min="0" value="<?= $product['stock'] ?>" placeholder="Số lượng">
-                        <small class="error-message"></small>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="status">Trạng thái <span>*</span></label>
-                    <select name="status" id="status">
-                        <option value="">-- Chọn trạng thái --</option>
-                        <option value="Đang bán" <?= $product['status'] === 'Đang bán' ? 'selected' : '' ?>>Đang bán</option>
-                        <option value="Sắp hết" <?= $product['status'] === 'Sắp hết' ? 'selected' : '' ?>>Sắp hết</option>
-                        <option value="Hết hàng" <?= $product['status'] === 'Hết hàng' ? 'selected' : '' ?>>Hết hàng</option>
-                    </select>
-                    <small class="error-message"></small>
-                </div>
-            </div>
-
-            <div class="form-right">
-                <label for="image" class="upload-box <?= !empty($product['image']) ? 'has-image' : '' ?>" id="uploadBox">
-                    <input type="file" name="image" id="image" accept="image/*">
-
-                    <div class="upload-content" id="uploadContent">
-                        <i class='bx bx-image-add'></i>
-                        <h3>Đổi ảnh sản phẩm</h3>
-                        <p>Chọn file JPG, PNG, WEBP</p>
-                    </div>
-
-                    <img src="<?= $product['image'] ?>" alt="<?= $product['name'] ?>" id="previewImage">
-                </label>
-
-                <small class="error-message image-error"></small>
-                <p class="image-note">Không chọn ảnh mới thì giữ nguyên ảnh hiện tại.</p>
-            </div>
+        <div class="form-group">
+            <label>Tên sản phẩm</label>
+            <input type="text" name="title" value="<?= htmlspecialchars($product['title']) ?>" required>
         </div>
 
-        <div class="form-actions">
-            <button type="submit" class="btn-primary">
-                <i class='bx bx-save'></i>
-                Cập nhật
-            </button>
+        <div class="form-group">
+            <label>Danh mục</label>
+            <select name="category_id" required>
+                <?php foreach ($categories as $category): ?>
+                    <option value="<?= $category['id'] ?>"
+                        <?= $category['id'] == $product['category_id'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($category['name']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
 
-            <a href="index.php?page=products" class="btn-secondary">
-                Hủy bỏ
-            </a>
+        <div class="form-group">
+            <label>Ảnh sản phẩm</label>
+            <input type="text" name="image" value="<?= htmlspecialchars($product['image']) ?>">
+        </div>
+
+        <div class="form-group">
+            <label>Mô tả ngắn</label>
+            <textarea name="description" rows="3"><?= htmlspecialchars($product['description']) ?></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Nội dung chi tiết</label>
+            <textarea name="content" rows="5"><?= htmlspecialchars($product['content']) ?></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Trạng thái</label>
+            <select name="status">
+                <option value="1" <?= $product['status'] == 1 ? 'selected' : '' ?>>Hiển thị</option>
+                <option value="0" <?= $product['status'] == 0 ? 'selected' : '' ?>>Ẩn</option>
+            </select>
+        </div>
+
+        <h3>Biến thể sản phẩm</h3>
+
+        <div id="variant-list">
+            <?php foreach ($variants as $variant): ?>
+                <div class="variant-item">
+                    <input type="text" name="variant_name[]" value="<?= htmlspecialchars($variant['variant_name']) ?>" required>
+                    <input type="text" name="sku[]" value="<?= htmlspecialchars($variant['sku']) ?>">
+                    <input type="number" name="price[]" value="<?= $variant['price'] ?>" required>
+                    <input type="number" name="sale_price[]" value="<?= $variant['sale_price'] ?>">
+                    <input type="number" name="stock[]" value="<?= $variant['stock'] ?>" required>
+                    <input type="text" name="variant_image[]" value="<?= htmlspecialchars($variant['image']) ?>">
+
+                    <select name="variant_status[]">
+                        <option value="1" <?= $variant['status'] == 1 ? 'selected' : '' ?>>Đang bán</option>
+                        <option value="0" <?= $variant['status'] == 0 ? 'selected' : '' ?>>Ẩn</option>
+                    </select>
+
+                    <button type="button" class="btn-delete-variant" onclick="this.parentElement.remove()">Xóa</button>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <button type="button" class="btn-secondary" onclick="addVariant()">+ Thêm biến thể</button>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Cập nhật</button>
+            <a href="index.php?page=products" class="btn-secondary">Quay lại</a>
         </div>
     </form>
 </div>
+
+<script>
+function addVariant() {
+    const html = `
+        <div class="variant-item">
+            <input type="text" name="variant_name[]" placeholder="Tên biến thể" required>
+            <input type="text" name="sku[]" placeholder="SKU">
+            <input type="number" name="price[]" placeholder="Giá" required>
+            <input type="number" name="sale_price[]" placeholder="Giá sale">
+            <input type="number" name="stock[]" placeholder="Tồn kho" required>
+            <input type="text" name="variant_image[]" placeholder="Ảnh biến thể">
+            <select name="variant_status[]">
+                <option value="1">Đang bán</option>
+                <option value="0">Ẩn</option>
+            </select>
+            <button type="button" class="btn-delete-variant" onclick="this.parentElement.remove()">Xóa</button>
+        </div>
+    `;
+
+    document.getElementById('variant-list').insertAdjacentHTML('beforeend', html);
+}
+</script>

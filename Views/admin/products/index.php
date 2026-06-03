@@ -1,8 +1,4 @@
-<?php
-
-$products = $products ?? [];
-
-?>
+<?php $products = $products ?? []; ?>
 
 <div class="box">
     <div class="box-title">
@@ -20,13 +16,13 @@ $products = $products ?? [];
                 <tr>
                     <th>ID</th>
                     <th>Tên sản phẩm</th>
-                    <th class="product-image-col">Ảnh</th>
+                    <th>Ảnh</th>
                     <th>Danh mục</th>
                     <th>Mô tả</th>
-                    <th class="product-price-col">Giá</th>
-                    <th class="product-stock-col">Tồn kho</th>
-                    <th class="product-status-col">Trạng thái</th>
-                    <th class="product-action-col">Thao tác</th>
+                    <th>Giá từ</th>
+                    <th>Tồn kho</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
                 </tr>
             </thead>
 
@@ -36,17 +32,16 @@ $products = $products ?? [];
                         <td>#<?= $product['id'] ?></td>
 
                         <td class="product-name">
-                            <?= $product['name'] ?>
+                            <?= htmlspecialchars($product['name']) ?>
                         </td>
 
                         <td>
-                            <img
-                                src="<?= $product['image'] ?>"
-                                alt="<?= $product['name'] ?>"
-                                class="product-thumb">
+                            <img src="<?= htmlspecialchars($product['image']) ?>"
+                                 alt="<?= htmlspecialchars($product['name']) ?>"
+                                 class="product-thumb">
                         </td>
 
-                        <td><?= $product['category'] ?></td>
+                        <td><?= htmlspecialchars($product['category']) ?></td>
 
                         <td class="product-description">
                             <?= mb_strimwidth($product['description'], 0, 80, '...') ?>
@@ -58,10 +53,8 @@ $products = $products ?? [];
 
                         <td>
                             <span class="status <?= $product['status'] === 'Hết hàng'
-                                                        ? 'cancelled'
-                                                        : ($product['status'] === 'Sắp hết'
-                                                            ? 'pending'
-                                                            : 'confirmed') ?>">
+                                ? 'cancelled'
+                                : ($product['status'] === 'Sắp hết' ? 'pending' : 'confirmed') ?>">
                                 <?= $product['status'] ?>
                             </span>
                         </td>
@@ -69,13 +62,13 @@ $products = $products ?? [];
                         <td>
                             <div class="table-actions">
                                 <a href="index.php?page=product-edit&id=<?= $product['id'] ?>"
-                                    class="action-btn edit">
+                                   class="action-btn edit">
                                     <i class='bx bx-edit'></i>
                                 </a>
 
                                 <a href="index.php?page=product-delete&id=<?= $product['id'] ?>"
-                                    class="action-btn delete"
-                                    onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">
+                                   class="action-btn delete"
+                                   onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">
                                     <i class='bx bx-trash'></i>
                                 </a>
                             </div>
@@ -85,9 +78,7 @@ $products = $products ?? [];
 
                 <?php if (empty($products)): ?>
                     <tr>
-                        <td colspan="9" style="text-align: center;">
-                            Chưa có sản phẩm nào
-                        </td>
+                        <td colspan="9" style="text-align:center;">Chưa có sản phẩm nào</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
