@@ -93,16 +93,16 @@ switch ($page) {
         $controller->update();
 
         break;
-    
+
     case 'category-delete':
 
-    require_once '../Controllers/admin/CategoryController.php';
+        require_once '../Controllers/admin/CategoryController.php';
 
-    $controller = new CategoryController();
-    $controller->delete($_GET['id'] ?? 0);
+        $controller = new CategoryController();
+        $controller->delete($_GET['id'] ?? 0);
 
-    break;
-    
+        break;
+
     case 'posts':
         require_once '../Controllers/admin/PostController.php';
         $controller = new PostController();
@@ -119,6 +119,12 @@ switch ($page) {
         require_once '../Controllers/admin/OrderController.php';
         $controller = new OrderController();
         $controller->index();
+        break;
+
+    case 'order-detail':
+        require_once '../Controllers/admin/OrderController.php';
+        $controller = new OrderController();
+        $controller->detail();
         break;
 
     case 'post-create':
