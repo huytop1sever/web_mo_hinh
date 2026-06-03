@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
     const productForm = document.getElementById('productForm');
-    if (!productForm) return;
+
+    if (!productForm) {
+        return;
+    }
 
     const imageInput = document.getElementById('image');
     const previewImage = document.getElementById('previewImage');
@@ -8,27 +11,52 @@ document.addEventListener('DOMContentLoaded', function () {
     const imageError = document.querySelector('.image-error');
 
     function setError(input, message) {
+        if (!input) {
+            return;
+        }
+
         const formGroup = input.closest('.form-group');
 
-        if (formGroup) {
-            formGroup.classList.add('error');
-            formGroup.querySelector('.error-message').innerText = message;
+        if (!formGroup) {
+            return;
+        }
+
+        formGroup.classList.add('error');
+
+        const errorMessage = formGroup.querySelector('.error-message');
+
+        if (errorMessage) {
+            errorMessage.innerText = message;
         }
     }
 
     function clearError(input) {
+        if (!input) {
+            return;
+        }
+
         const formGroup = input.closest('.form-group');
 
-        if (formGroup) {
-            formGroup.classList.remove('error');
-            formGroup.querySelector('.error-message').innerText = '';
+        if (!formGroup) {
+            return;
+        }
+
+        formGroup.classList.remove('error');
+
+        const errorMessage = formGroup.querySelector('.error-message');
+
+        if (errorMessage) {
+            errorMessage.innerText = '';
         }
     }
 
-    if (imageInput) {
+    if (imageInput && previewImage && uploadBox) {
         imageInput.addEventListener('change', function () {
             const file = this.files[0];
-            imageError.innerText = '';
+
+            if (imageError) {
+                imageError.innerText = '';
+            }
 
             if (!file) {
                 previewImage.src = '';
@@ -36,21 +64,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
+            const validTypes = [
+                'image/jpeg',
+                'image/png',
+                'image/webp',
+                'image/jpg'
+            ];
 
             if (!validTypes.includes(file.type)) {
-                imageError.innerText = 'Ảnh phải là JPG, PNG hoặc WEBP';
+                if (imageError) {
+                    imageError.innerText = 'Ảnh phải là JPG, PNG hoặc WEBP';
+                }
+
                 this.value = '';
-                uploadBox.classList.remove('has-image');
                 previewImage.src = '';
+                uploadBox.classList.remove('has-image');
                 return;
             }
 
             if (file.size > 2 * 1024 * 1024) {
-                imageError.innerText = 'Ảnh không được vượt quá 2MB';
+                if (imageError) {
+                    imageError.innerText = 'Ảnh không được vượt quá 2MB';
+                }
+
                 this.value = '';
-                uploadBox.classList.remove('has-image');
                 previewImage.src = '';
+                uploadBox.classList.remove('has-image');
                 return;
             }
 
@@ -62,46 +101,47 @@ document.addEventListener('DOMContentLoaded', function () {
     productForm.addEventListener('submit', function (e) {
         let isValid = true;
 
-        const name = document.getElementById('name');
-        const category = document.getElementById('category');
-        const price = document.getElementById('price');
-        const stock = document.getElementById('stock');
-        const status = document.getElementById('status');
+        const title = document.getElementById('title');
+        const category = document.getElementById('category_id');
+        const description = document.getElementById('description');
+        const content = document.getElementById('content');
 
-        [name, category, price, stock, status].forEach(clearError);
+        [title, category, description, content].forEach(function (input) {
+            clearError(input);
+        });
 
         if (imageError) {
             imageError.innerText = '';
         }
 
-        if (name.value.trim() === '') {
-            setError(name, 'Vui lòng nhập tên sản phẩm');
+        if (title && title.value.trim() === '') {
+            setError(title, 'Vui lòng nhập tên sản phẩm');
             isValid = false;
         }
 
-        if (category.value === '') {
+        if (category && category.value === '') {
             setError(category, 'Vui lòng chọn danh mục');
             isValid = false;
         }
 
-        if (price.value === '' || Number(price.value) < 0) {
-            setError(price, 'Giá phải lớn hơn hoặc bằng 0');
+        if (description && description.value.trim() === '') {
+            setError(description, 'Vui lòng nhập mô tả sản phẩm');
             isValid = false;
         }
 
-        if (stock.value === '' || Number(stock.value) < 0) {
-            setError(stock, 'Tồn kho phải lớn hơn hoặc bằng 0');
-            isValid = false;
-        }
-
-        if (status.value === '') {
-            setError(status, 'Vui lòng chọn trạng thái');
+        if (content && content.value.trim() === '') {
+            setError(content, 'Vui lòng nhập nội dung chi tiết');
             isValid = false;
         }
 
         const isCreatePage = productForm.dataset.mode === 'create';
 
-        if (isCreatePage && imageInput && imageInput.files.length === 0) {
+        if (
+            isCreatePage &&
+            imageInput &&
+            imageInput.files.length === 0 &&
+            imageError
+        ) {
             imageError.innerText = 'Vui lòng chọn ảnh sản phẩm';
             isValid = false;
         }
