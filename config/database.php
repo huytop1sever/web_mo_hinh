@@ -4,30 +4,31 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-
 try {
 
-    // Thông tin kết nối
     $servername = "103.57.220.210";
     $username   = "oaljdfoghosting_KhanhDuy";
     $password   = "wAzyJ~>^Y]p3607";
     $dbname     = "oaljdfoghosting_WebMoHinh";
     $port       = 3306;
 
-    // Kết nối MySQL
-    $conn = new mysqli(
-        $servername,
+    $conn = new PDO(
+        "mysql:host=$servername;port=$port;dbname=$dbname;charset=utf8mb4",
         $username,
-        $password,
-        $dbname,
-        $port
+        $password
     );
 
-    // UTF8
-    $conn->set_charset("utf8mb4");
+    $conn->setAttribute(
+        PDO::ATTR_ERRMODE,
+        PDO::ERRMODE_EXCEPTION
+    );
 
-} catch (Exception $e) {
+    $conn->setAttribute(
+        PDO::ATTR_DEFAULT_FETCH_MODE,
+        PDO::FETCH_ASSOC
+    );
+
+} catch (PDOException $e) {
 
     die(
         "<h2 style='color:red'>
