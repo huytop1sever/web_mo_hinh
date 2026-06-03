@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../../Models/Product.php';
+require_once '../Models/Product.php';
 
 class ProductController
 {
@@ -12,13 +12,13 @@ class ProductController
         $productModel = new Product();
         $products = $productModel->getAll();
 
-        include_once __DIR__ . '/../../Views/admin/layouts/header.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/sidebar.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/navbar.php';
+        include_once '../Views/admin/layouts/header.php';
+        include_once '../Views/admin/layouts/sidebar.php';
+        include_once '../Views/admin/layouts/navbar.php';
 
-        include_once __DIR__ . '/../../Views/admin/products/index.php';
+        include_once '../Views/admin/products/index.php';
 
-        include_once __DIR__ . '/../../Views/admin/layouts/footer.php';
+        include_once '../Views/admin/layouts/footer.php';
     }
 
     public function add()
@@ -29,13 +29,13 @@ class ProductController
         $productModel = new Product();
         $categories = $productModel->getCategories();
 
-        include_once __DIR__ . '/../../Views/admin/layouts/header.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/sidebar.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/navbar.php';
+        include_once '../Views/admin/layouts/header.php';
+        include_once '../Views/admin/layouts/sidebar.php';
+        include_once '../Views/admin/layouts/navbar.php';
 
-        include_once __DIR__ . '/../../Views/admin/products/add.php';
+        include_once '../Views/admin/products/add.php';
 
-        include_once __DIR__ . '/../../Views/admin/layouts/footer.php';
+        include_once '../Views/admin/layouts/footer.php';
     }
 
     public function store()
@@ -65,13 +65,13 @@ class ProductController
         $product = $productModel->find($id);
         $categories = $productModel->getCategories();
 
-        include_once __DIR__ . '/../../Views/admin/layouts/header.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/sidebar.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/navbar.php';
+        include_once '../Views/admin/layouts/header.php';
+        include_once '../Views/admin/layouts/sidebar.php';
+        include_once '../Views/admin/layouts/navbar.php';
 
-        include_once __DIR__ . '/../../Views/admin/products/edit.php';
+        include_once '../Views/admin/products/edit.php';
 
-        include_once __DIR__ . '/../../Views/admin/layouts/footer.php';
+        include_once '../Views/admin/layouts/footer.php';
     }
 
     public function update()
@@ -80,7 +80,7 @@ class ProductController
 
         $oldProduct = $productModel->find($_POST['id']);
 
-        $_POST['image'] = $oldProduct['image'];
+        $_POST['image'] = $oldProduct['image'] ?? '';
 
         if (!empty($_FILES['image']['name'])) {
             $_POST['image'] = $this->uploadImage();
@@ -103,7 +103,7 @@ class ProductController
 
     private function uploadImage()
     {
-        $uploadDir = __DIR__ . '/../../uploads/products/';
+        $uploadDir = '../uploads/products/';
 
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);

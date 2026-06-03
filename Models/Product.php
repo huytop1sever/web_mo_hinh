@@ -1,15 +1,13 @@
 <?php
 
-require_once '../config/database.php';
-
 class Product
 {
-    private $conn;
+    private $pdo;
 
     public function __construct()
     {
         global $conn;
-        $this->conn = $conn;
+        $this->pdo = $conn;
     }
 
     public function getAll()
@@ -22,30 +20,29 @@ class Product
                 p.description,
                 p.content,
                 p.category_id,
+                p.created_at,
                 c.name AS category
             FROM products p
             LEFT JOIN categories c ON p.category_id = c.id
             ORDER BY p.id DESC
         ";
 
-        $result = $this->conn->query($sql);
+        $stmt = $this->pdo->query($sql);
 
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return $stmt->fetchAll();
     }
 
     public function getCategories()
     {
         $sql = "SELECT * FROM categories ORDER BY id DESC";
 
-        $result = $this->conn->query($sql);
+        $stmt = $this->pdo->query($sql);
 
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return $stmt->fetchAll();
     }
 
     public function find($id)
     {
-        $id = (int)$id;
-
         $sql = "
             SELECT 
                 p.id,
@@ -58,61 +55,68 @@ class Product
                 c.name AS category
             FROM products p
             LEFT JOIN categories c ON p.category_id = c.id
-            WHERE p.id = $id
+            WHERE p.id = :id
         ";
 
-        $result = $this->conn->query($sql);
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
 
-        return $result->fetch_assoc();
+        return $stmt->fetch();
     }
 
     public function create($data)
     {
-        $title = $this->conn->real_escape_string($data['title']);
-        $description = $this->conn->real_escape_string($data['description']);
-        $content = $this->conn->real_escape_string($data['content']);
-        $image = $this->conn->real_escape_string($data['image']);
-        $category_id = (int)$data['category_id'];
-
         $sql = "
             INSERT INTO products 
             (title, description, content, image, category_id, created_at, updated_at)
             VALUES 
-            ('$title', '$description', '$content', '$image', $category_id, NOW(), NOW())
+            (:title, :description, :content, :image, :category_id, NOW(), NOW())
         ";
 
-        return $this->conn->query($sql);
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->bindValue(':title', $data['title']);
+        $stmt->bindValue(':description', $data['description']);
+        $stmt->bindValue(':content', $data['content']);
+        $stmt->bindValue(':image', $data['image']);
+        $stmt->bindValue(':category_id', $data['category_id'], PDO::PARAM_INT);
+
+        return $stmt->execute();
     }
 
     public function update($data)
     {
-        $id = (int)$data['id'];
-        $title = $this->conn->real_escape_string($data['title']);
-        $description = $this->conn->real_escape_string($data['description']);
-        $content = $this->conn->real_escape_string($data['content']);
-        $image = $this->conn->real_escape_string($data['image']);
-        $category_id = (int)$data['category_id'];
-
         $sql = "
             UPDATE products SET
-                title = '$title',
-                description = '$description',
-                content = '$content',
-                image = '$image',
-                category_id = $category_id,
+                title = :title,
+                description = :description,
+                content = :content,
+                image = :image,
+                category_id = :category_id,
                 updated_at = NOW()
-            WHERE id = $id
+            WHERE id = :id
         ";
 
-        return $this->conn->query($sql);
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->bindValue(':id', $data['id'], PDO::PARAM_INT);
+        $stmt->bindValue(':title', $data['title']);
+        $stmt->bindValue(':description', $data['description']);
+        $stmt->bindValue(':content', $data['content']);
+        $stmt->bindValue(':image', $data['image']);
+        $stmt->bindValue(':category_id', $data['category_id'], PDO::PARAM_INT);
+
+        return $stmt->execute();
     }
 
     public function delete($id)
     {
-        $id = (int)$id;
+        $sql = "DELETE FROM products WHERE id = :id";
 
-        $sql = "DELETE FROM products WHERE id = $id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 
-        return $this->conn->query($sql);
+        return $stmt->execute();
     }
 }
