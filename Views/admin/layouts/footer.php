@@ -9,6 +9,8 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../assets/admin/js/category.js"></script>
+<script src="../assets/admin/js/users.js"></script>
+<script src="../assets/admin/js/orders.js"></script>
 
 <?php if (
     ($_GET['page'] ?? '') === 'product-add' ||

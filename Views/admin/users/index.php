@@ -1,115 +1,121 @@
+<?php $users = $users ?? []; ?>
+
+<?php if (isset($_GET['msg'])): ?>
+
+<div id="toast" class="toast-message">
+    <?php
+    switch ($_GET['msg']) {
+        case 'locked':
+            echo "🔒 Khóa tài khoản thành công";
+            break;
+
+        case 'unlocked':
+            echo "🔓 Mở khóa tài khoản thành công";
+            break;
+
+        case 'deleted':
+            echo "🗑️ Xóa tài khoản thành công";
+            break;
+
+        case 'error':
+            echo "❌ Có lỗi xảy ra";
+            break;
+    }
+    ?>
+</div>
+
+<?php endif; ?>
+
 <div class="users-page">
 
     <div class="box">
 
         <div class="box-title">
-
             <h2>Quản lý người dùng</h2>
-
-            <button class="btn-primary" onclick="openUserModal()">
-                <i class='bx bx-plus'></i>
-                Thêm user
-            </button>
-
         </div>
 
         <div class="table-wrapper">
 
             <table>
-
                 <thead>
-
                     <tr>
                         <th>ID</th>
                         <th>Họ tên</th>
                         <th>Email</th>
+                        <th>Số điện thoại</th>
                         <th>Vai trò</th>
                         <th>Trạng thái</th>
                         <th>Hành động</th>
                     </tr>
-
                 </thead>
 
                 <tbody>
+                    <?php foreach ($users as $user): ?>
+                        <tr>
+                            <td>#U<?= $user['id'] ?></td>
 
-                    <tr>
+                            <td><?= htmlspecialchars($user['name'] ?? '') ?></td>
 
-                        <td>#U001</td>
+                            <td><?= htmlspecialchars($user['email'] ?? '') ?></td>
 
-                        <td>Nguyễn Văn A</td>
+                            <td><?= htmlspecialchars($user['phone'] ?? '') ?></td>
 
-                        <td>admin@gmail.com</td>
+                            <td>
+                                <span class="role <?= strtolower($user['role'] ?? 'user') ?>">
+                                    <?= ucfirst($user['role'] ?? 'user') ?>
+                                </span>
+                            </td>
 
-                        <td>
-                            <span class="role admin">
-                                Admin
-                            </span>
-                        </td>
+                            <td>
+                                <?php if ($user['status'] == 1): ?>
+                                    <span class="status confirmed">Hoạt động</span>
+                                <?php else: ?>
+                                    <span class="status cancelled">Đã khóa</span>
+                                <?php endif; ?>
+                            </td>
 
-                        <td>
-                            <span class="status confirmed">
-                                Hoạt động
-                            </span>
-                        </td>
+                            <td>
+                                <div class="table-actions">
 
-                        <td>
+                                    <?php if ($user['status'] == 1): ?>
+                                        <a 
+                                            class="action-btn lock"
+                                            href="index.php?page=user-lock&id=<?= $user['id'] ?>"
+                                            onclick="return openConfirmModal(this, 'lock')"
+                                        >
+                                            <i class='bx bx-lock-alt'></i>
+                                        </a>
+                                    <?php else: ?>
+                                        <a 
+                                            class="action-btn unlock"
+                                            href="index.php?page=user-unlock&id=<?= $user['id'] ?>"
+                                            onclick="return openConfirmModal(this, 'unlock')"
+                                        >
+                                            <i class='bx bx-lock-open-alt'></i>
+                                        </a>
+                                    <?php endif; ?>
 
-                            <div class="table-actions">
+                                    <a 
+                                        class="action-btn delete"
+                                        href="index.php?page=user-delete&id=<?= $user['id'] ?>"
+                                        onclick="return openConfirmModal(this, 'delete')"
+                                    >
+                                        <i class='bx bx-trash'></i>
+                                    </a>
 
-                                <button class="action-btn edit" onclick="openUserModal()">
-                                    <i class='bx bx-edit'></i>
-                                </button>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
 
-                                <button class="action-btn lock" onclick="openLockModal()">
-                                    <i class='bx bx-lock-alt'></i>
-                                </button>
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>#U002</td>
-
-                        <td>Trần Văn B</td>
-
-                        <td>staff@gmail.com</td>
-
-                        <td>
-                            <span class="role staff">
-                                Staff
-                            </span>
-                        </td>
-
-                        <td>
-                            <span class="status cancelled">
-                                Đã khóa
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <div class="table-actions">
-
-                                <button class="action-btn edit" onclick="openUserModal()">
-                                    <i class='bx bx-edit'></i>
-                                </button>
-
-                                <button class="action-btn unlock" onclick="openUnlockModal()">
-                                    <i class='bx bx-lock-open-alt'></i>
-                                </button>
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-
+                    <?php if (empty($users)): ?>
+                        <tr>
+                            <td colspan="7" style="text-align:center;">
+                                Chưa có người dùng
+                            </td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
-
             </table>
 
         </div>
@@ -118,154 +124,28 @@
 
 </div>
 
-<!-- USER MODAL -->
-
-<div class="modal" id="userModal">
-
-    <div class="modal-box">
-
-        <div class="modal-header">
-
-            <h3>Thông tin người dùng</h3>
-
-            <button class="modal-close" onclick="closeUserModal()">
-                <i class='bx bx-x'></i>
-            </button>
-
-        </div>
-
-        <form class="user-form">
-
-            <div class="form-group">
-                <label>Họ tên</label>
-                <input type="text" placeholder="Nhập họ tên">
-            </div>
-
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" placeholder="Nhập email">
-            </div>
-
-            <div class="form-group">
-                <label>Số điện thoại</label>
-                <input type="text" placeholder="Nhập số điện thoại">
-            </div>
-
-            <div class="form-group">
-                <label>Vai trò</label>
-
-                <select>
-
-                    <option>Admin</option>
-                    <option>Staff</option>
-                    <option>User</option>
-
-                </select>
-
-            </div>
-
-            <div class="form-actions">
-
-                <button type="button" class="btn-cancel" onclick="closeUserModal()">
-                    Hủy
-                </button>
-
-                <button type="submit" class="btn-save">
-                    Lưu
-                </button>
-
-            </div>
-
-        </form>
-
-    </div>
-
-</div>
-
-<!-- LOCK MODAL -->
-
-<div class="modal" id="lockModal">
+<div class="modal" id="confirmModal">
 
     <div class="confirm-modal">
 
-        <i class='bx bx-lock-alt'></i>
+        <i id="confirmIcon" class='bx bx-help-circle'></i>
 
-        <h3>Khóa tài khoản?</h3>
+        <h3 id="confirmTitle">Xác nhận</h3>
 
-        <p>User sẽ không thể đăng nhập hệ thống.</p>
+        <p id="confirmText">Bạn có chắc muốn thực hiện thao tác này?</p>
 
         <div class="confirm-actions">
 
-            <button class="btn-cancel" onclick="closeLockModal()">
+            <button type="button" class="btn-cancel" onclick="closeConfirmModal()">
                 Hủy
             </button>
 
-            <button class="btn-danger">
-                Khóa tài khoản
-            </button>
+            <a href="#" id="confirmBtn" class="btn-danger">
+                Đồng ý
+            </a>
 
         </div>
 
     </div>
 
 </div>
-
-<!-- UNLOCK MODAL -->
-
-<div class="modal" id="unlockModal">
-
-    <div class="confirm-modal">
-
-        <i class='bx bx-lock-open-alt'></i>
-
-        <h3>Mở khóa tài khoản?</h3>
-
-        <p>User sẽ được phép đăng nhập lại.</p>
-
-        <div class="confirm-actions">
-
-            <button class="btn-cancel" onclick="closeUnlockModal()">
-                Hủy
-            </button>
-
-            <button class="btn-success">
-                Mở khóa
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-<script>
-
-    const userModal = document.getElementById('userModal');
-    const lockModal = document.getElementById('lockModal');
-    const unlockModal = document.getElementById('unlockModal');
-
-    function openUserModal() {
-        userModal.classList.add('show');
-    }
-
-    function closeUserModal() {
-        userModal.classList.remove('show');
-    }
-
-    function openLockModal() {
-        lockModal.classList.add('show');
-    }
-
-    function closeLockModal() {
-        lockModal.classList.remove('show');
-    }
-
-    function openUnlockModal() {
-        unlockModal.classList.add('show');
-    }
-
-    function closeUnlockModal() {
-        unlockModal.classList.remove('show');
-    }
-
-</script>
