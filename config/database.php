@@ -13,7 +13,10 @@ try {
     $port       = 3306;
 
     $conn = new PDO(
-        "mysql:host=$servername;port=$port;dbname=$dbname;charset=utf8mb4",
+        "mysql:host=$servername;
+         port=$port;
+         dbname=$dbname;
+         charset=utf8mb4",
         $username,
         $password
     );
