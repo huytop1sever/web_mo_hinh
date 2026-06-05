@@ -214,3 +214,37 @@
         grid-template-columns: 1fr;
     }
 }
+
+.upload-box {
+    position: relative;
+    overflow: hidden;
+}
+
+#previewImage {
+    display: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.upload-box.has-image #previewImage {
+    display: block;
+}
+
+.upload-box.has-image .upload-content {
+    display: none;
+}
+
+.error-message,
+.image-error {
+    color: #ef4444;
+    font-size: 13px;
+    margin-top: 6px;
+    display: block;
+}
+
+.form-group.error input,
+.form-group.error select,
+.form-group.error textarea {
+    border-color: #ef4444;
+}
