@@ -26,7 +26,9 @@
 
             <tbody>
                 <?php if (!empty($products)): ?>
+
                     <?php foreach ($products as $product): ?>
+
                         <tr>
                             <td>#<?= $product['id'] ?></td>
 
@@ -41,7 +43,7 @@
                                 <?php endif; ?>
                             </td>
 
-                            <td class="product-name">
+                            <td>
                                 <?= htmlspecialchars($product['name']) ?>
                             </td>
 
@@ -83,14 +85,17 @@
                                 </div>
                             </td>
                         </tr>
+
                     <?php endforeach; ?>
 
                 <?php else: ?>
+
                     <tr>
                         <td colspan="7" style="text-align:center;">
                             Chưa có sản phẩm nào
                         </td>
                     </tr>
+
                 <?php endif; ?>
             </tbody>
         </table>
