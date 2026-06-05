@@ -1,160 +1,103 @@
+<?php $orders = $orders ?? []; ?>
+
+<?php if (isset($_GET['msg'])): ?>
+<div id="toast" class="toast-message">
+    <?php
+    switch ($_GET['msg']) {
+        case 'deleted':
+            echo "🗑️ Xóa đơn hàng thành công";
+            break;
+        case 'error':
+            echo "❌ Có lỗi xảy ra";
+            break;
+    }
+    ?>
+</div>
+<?php endif; ?>
+
 <div class="orders-page">
 
     <div class="box">
 
         <div class="box-title">
-
             <h2>Danh sách đơn hàng</h2>
-
-            <button class="btn-primary" onclick="openOrderModal()">
-                <i class='bx bx-plus'></i>
-                Tạo đơn hàng
-            </button>
-
         </div>
 
         <div class="table-wrapper">
 
             <table>
-
                 <thead>
-
                     <tr>
                         <th>Mã đơn</th>
                         <th>Khách hàng</th>
-                        <th>Sản phẩm</th>
                         <th>Tổng tiền</th>
                         <th>Thanh toán</th>
                         <th>Trạng thái</th>
+                        <th>Ngày đặt</th>
                         <th>Hành động</th>
                     </tr>
-
                 </thead>
 
                 <tbody>
+                    <?php foreach ($orders as $order): ?>
+                        <tr>
+                            <td>#OD<?= $order['id'] ?></td>
 
-                    <tr>
+                            <td><?= htmlspecialchars($order['name'] ?? $order['customer_name'] ?? '') ?></td>
 
-                        <td>#OD001</td>
+                            <td><?= number_format($order['total_price'] ?? $order['total'] ?? 0) ?>đ</td>
 
-                        <td>Nguyễn Văn A</td>
+                            <td>
+                                <?php if (($order['payment_status'] ?? 0) == 1): ?>
+                                    <span class="payment paid">Đã thanh toán</span>
+                                <?php else: ?>
+                                    <span class="payment unpaid">Chưa thanh toán</span>
+                                <?php endif; ?>
+                            </td>
 
-                        <td>Mô hình Luffy Gear 5</td>
+                            <td>
+                                <?php
+                                    $status = $order['status'] ?? 'pending';
 
-                        <td>2.500.000đ</td>
+                                    $statusText = [
+                                        'pending'   => 'Chờ xác nhận',
+                                        'confirmed' => 'Đã xác nhận',
+                                        'shipping'  => 'Đang giao',
+                                        'delivered' => 'Hoàn thành',
+                                        'cancelled' => 'Đã hủy'
+                                    ];
+                                    ?>
 
-                        <td>
-                            <span class="payment paid">
-                                Đã thanh toán
-                            </span>
-                        </td>
+                                    <span class="status <?= $status ?>">
+                                        <?= $statusText[$status] ?? 'Không xác định' ?>
+                                    </span>
+                            </td>
 
-                        <td>
-                            <span class="status confirmed">
-                                Đang giao
-                            </span>
-                        </td>
+                            <td><?= htmlspecialchars($order['created_at'] ?? '') ?></td>
 
-                        <td>
+                            <td>
+                                <div class="table-actions">
 
-                            <div class="table-actions">
+                                    <a 
+                                        class="action-btn view"
+                                        href="index.php?page=order-detail&id=<?= $order['id'] ?>"
+                                    >
+                                        <i class='bx bx-show'></i>
+                                    </a>
 
-                                <button class="action-btn view" onclick="openOrderModal()">
-                                    <i class='bx bx-show'></i>
-                                </button>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
 
-                                <button class="action-btn edit">
-                                    <i class='bx bx-edit'></i>
-                                </button>
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>#OD002</td>
-
-                        <td>Trần Văn B</td>
-
-                        <td>Mô hình Gojo Satoru</td>
-
-                        <td>1.850.000đ</td>
-
-                        <td>
-                            <span class="payment unpaid">
-                                Chưa thanh toán
-                            </span>
-                        </td>
-
-                        <td>
-                            <span class="status pending">
-                                Chờ xác nhận
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <div class="table-actions">
-
-                                <button class="action-btn view" onclick="openOrderModal()">
-                                    <i class='bx bx-show'></i>
-                                </button>
-
-                                <button class="action-btn edit">
-                                    <i class='bx bx-edit'></i>
-                                </button>
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>#OD003</td>
-
-                        <td>Lê Văn C</td>
-
-                        <td>Mô hình Naruto</td>
-
-                        <td>990.000đ</td>
-
-                        <td>
-                            <span class="payment paid">
-                                Đã thanh toán
-                            </span>
-                        </td>
-
-                        <td>
-                            <span class="status delivered">
-                                Hoàn thành
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <div class="table-actions">
-
-                                <button class="action-btn view" onclick="openOrderModal()">
-                                    <i class='bx bx-show'></i>
-                                </button>
-
-                                <button class="action-btn edit">
-                                    <i class='bx bx-edit'></i>
-                                </button>
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-
+                    <?php if (empty($orders)): ?>
+                        <tr>
+                            <td colspan="7" style="text-align:center;">
+                                Chưa có đơn hàng
+                            </td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
-
             </table>
 
         </div>
@@ -163,110 +106,28 @@
 
 </div>
 
-<!-- ORDER MODAL -->
+<div class="modal" id="confirmModal">
 
-<div class="modal" id="orderModal">
+    <div class="confirm-modal">
 
-    <div class="modal-box">
+        <i class='bx bx-trash'></i>
 
-        <div class="modal-header">
+        <h3>Xóa đơn hàng?</h3>
 
-            <h3>Chi tiết đơn hàng</h3>
+        <p>Đơn hàng sẽ bị xóa khỏi hệ thống.</p>
 
-            <button class="modal-close" onclick="closeOrderModal()">
-                <i class='bx bx-x'></i>
+        <div class="confirm-actions">
+            <button type="button" class="btn-cancel" onclick="closeConfirmModal()">
+                Hủy
             </button>
 
-        </div>
-
-        <div class="order-detail">
-
-            <div class="detail-group">
-                <span>Mã đơn:</span>
-                <strong>#OD001</strong>
-            </div>
-
-            <div class="detail-group">
-                <span>Khách hàng:</span>
-                <strong>Nguyễn Văn A</strong>
-            </div>
-
-            <div class="detail-group">
-                <span>Email:</span>
-                <strong>admin@gmail.com</strong>
-            </div>
-
-            <div class="detail-group">
-                <span>Số điện thoại:</span>
-                <strong>0987654321</strong>
-            </div>
-
-            <div class="detail-group full">
-                <span>Địa chỉ nhận hàng:</span>
-
-                <strong>
-                    123 Nguyễn Văn Cừ, Quận 5, TP.HCM
-                </strong>
-            </div>
-
-            <div class="detail-group">
-                <span>Sản phẩm:</span>
-                <strong>Mô hình Luffy Gear 5</strong>
-            </div>
-
-            <div class="detail-group">
-                <span>Số lượng:</span>
-                <strong>1</strong>
-            </div>
-
-            <div class="detail-group">
-                <span>Tổng tiền:</span>
-                <strong>2.500.000đ</strong>
-            </div>
-
-           <div class="detail-group">
-    <span>Thanh toán:</span>
-
-    <strong class="payment-method">
-        COD
-    </strong>
-</div>
-
-            <div class="detail-group">
-                <span>Trạng thái:</span>
-
-                <select>
-                    <option>Chờ xác nhận</option>
-                    <option>Đang giao</option>
-                    <option>Hoàn thành</option>
-                    <option>Đã hủy</option>
-                </select>
-            </div>
-
-            <div class="detail-group full">
-
-                <span>Ghi chú:</span>
-
-                <textarea placeholder="Không có ghi chú"></textarea>
-
-            </div>
-
+            <a href="#" id="confirmBtn" class="btn-danger">
+                Xóa đơn hàng
+            </a>
         </div>
 
     </div>
 
 </div>
 
-<script>
-
-    const orderModal = document.getElementById('orderModal');
-
-    function openOrderModal() {
-        orderModal.classList.add('show');
-    }
-
-    function closeOrderModal() {
-        orderModal.classList.remove('show');
-    }
-
-</script>
+<script src="../assets/admin/js/orders.js"></script>
