@@ -1,62 +1,56 @@
 <?php
+$totalRevenue = $totalRevenue ?? 0;
+$orderCount = $orderCount ?? 0;
+$userCount = $userCount ?? 0;
+$productCount = $productCount ?? 0;
+$latestOrders = $latestOrders ?? [];
+$topProducts = $topProducts ?? [];
 
-$title = 'Dashboard';
-$pageTitle = 'Dashboard';
-
-include_once __DIR__ . '/../layouts/header.php';
-include_once __DIR__ . '/../layouts/sidebar.php';
-include_once __DIR__ . '/../layouts/navbar.php';
-
+$statusText = [
+    'pending' => 'Ch&#7901; x&#225;c nh&#7853;n',
+    'confirmed' => '&#272;&#227; x&#225;c nh&#7853;n',
+    'shipping' => '&#272;ang giao',
+    'delivered' => 'Ho&#224;n th&#224;nh',
+    'cancelled' => '&#272;&#227; h&#7911;y'
+];
 ?>
 
 <div class="dashboard-grid">
 
     <div class="dashboard-card">
-
         <div class="card-top">
-            <h3>Tổng doanh thu</h3>
-
+            <h3>T&#7893;ng doanh thu</h3>
             <i class='bx bx-dollar-circle'></i>
         </div>
 
-        <p>850.000.000đ</p>
-
+        <p><?= number_format((float) $totalRevenue, 0, ',', '.') ?>&#273;</p>
     </div>
 
     <div class="dashboard-card">
-
         <div class="card-top">
-            <h3>Đơn hàng</h3>
-
+            <h3>&#272;&#417;n h&#224;ng</h3>
             <i class='bx bx-cart'></i>
         </div>
 
-        <p>1.250</p>
-
+        <p><?= number_format((int) $orderCount, 0, ',', '.') ?></p>
     </div>
 
     <div class="dashboard-card">
-
         <div class="card-top">
-            <h3>Người dùng</h3>
-
+            <h3>Ng&#432;&#7901;i d&#249;ng</h3>
             <i class='bx bx-user'></i>
         </div>
 
-        <p>5.680</p>
-
+        <p><?= number_format((int) $userCount, 0, ',', '.') ?></p>
     </div>
 
     <div class="dashboard-card">
-
         <div class="card-top">
-            <h3>Sản phẩm</h3>
-
+            <h3>S&#7843;n ph&#7849;m</h3>
             <i class='bx bx-package'></i>
         </div>
 
-        <p>325</p>
-
+        <p><?= number_format((int) $productCount, 0, ',', '.') ?></p>
     </div>
 
 </div>
@@ -64,144 +58,73 @@ include_once __DIR__ . '/../layouts/navbar.php';
 <div class="content-grid">
 
     <div class="box">
-
         <div class="box-title">
-            <h2>Đơn hàng mới</h2>
+            <h2>&#272;&#417;n h&#224;ng m&#7899;i</h2>
         </div>
 
         <div class="table-wrapper">
-
             <table>
-
                 <thead>
-
                     <tr>
-                        <th>Mã đơn</th>
-                        <th>Khách hàng</th>
-                        <th>Tổng tiền</th>
-                        <th>Trạng thái</th>
+                        <th>M&#227; &#273;&#417;n</th>
+                        <th>Kh&#225;ch h&#224;ng</th>
+                        <th>T&#7893;ng ti&#7873;n</th>
+                        <th>Tr&#7841;ng th&#225;i</th>
                     </tr>
-
                 </thead>
 
                 <tbody>
+                    <?php foreach ($latestOrders as $order): ?>
+                        <?php $status = $order['status'] ?? 'pending'; ?>
+                        <tr>
+                            <td>#OD<?= (int) $order['id'] ?></td>
+                            <td><?= htmlspecialchars($order['name'] ?? $order['customer_name'] ?? '') ?></td>
+                            <td><?= number_format((float) ($order['total_price'] ?? $order['total'] ?? 0), 0, ',', '.') ?>&#273;</td>
+                            <td>
+                                <span class="status <?= htmlspecialchars($status) ?>">
+                                    <?= $statusText[$status] ?? 'Kh&#244;ng x&#225;c &#273;&#7883;nh' ?>
+                                </span>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
 
-                    <tr>
-                        <td>#DH001</td>
-                        <td>Nguyễn Văn A</td>
-                        <td>2.500.000đ</td>
-
-                        <td>
-                            <span class="status pending">
-                                Đang xử lý
-                            </span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>#DH002</td>
-                        <td>Trần Văn B</td>
-                        <td>5.200.000đ</td>
-
-                        <td>
-                            <span class="status confirmed">
-                                Đã xác nhận
-                            </span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>#DH003</td>
-                        <td>Lê Văn C</td>
-                        <td>1.250.000đ</td>
-
-                        <td>
-                            <span class="status delivered">
-                                Đã giao
-                            </span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>#DH004</td>
-                        <td>Phạm Văn D</td>
-                        <td>850.000đ</td>
-
-                        <td>
-                            <span class="status cancelled">
-                                Đã hủy
-                            </span>
-                        </td>
-                    </tr>
-
+                    <?php if (empty($latestOrders)): ?>
+                        <tr>
+                            <td colspan="4" style="text-align:center;">
+                                Ch&#432;a c&#243; &#273;&#417;n h&#224;ng
+                            </td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
-
             </table>
-
         </div>
-
     </div>
 
     <div class="box">
-
         <div class="box-title">
-            <h2>Sản phẩm nổi bật</h2>
+            <h2>S&#7843;n ph&#7849;m n&#7893;i b&#7853;t</h2>
         </div>
 
         <div class="top-product-list">
+            <?php foreach ($topProducts as $product): ?>
+                <div class="top-product-item">
+                    <?php if (!empty($product['image'])): ?>
+                        <img src="../<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['title']) ?>">
+                    <?php else: ?>
+                        <img src="https://via.placeholder.com/65" alt="">
+                    <?php endif; ?>
 
-            <div class="top-product-item">
-
-                <img src="https://via.placeholder.com/65" alt="">
-
-                <div class="top-product-info">
-                    <h4>Ghế Gaming RGB</h4>
-                    <span>245 đơn bán</span>
+                    <div class="top-product-info">
+                        <h4><?= htmlspecialchars($product['title']) ?></h4>
+                        <span><?= number_format((int) ($product['sold'] ?? 0), 0, ',', '.') ?> &#273;&#417;n b&#225;n</span>
+                    </div>
                 </div>
+            <?php endforeach; ?>
 
-            </div>
-
-            <div class="top-product-item">
-
-                <img src="https://via.placeholder.com/65" alt="">
-
-                <div class="top-product-info">
-                    <h4>Bàn Gaming Pro</h4>
-                    <span>190 đơn bán</span>
-                </div>
-
-            </div>
-
-            <div class="top-product-item">
-
-                <img src="https://via.placeholder.com/65" alt="">
-
-                <div class="top-product-info">
-                    <h4>Tai nghe Bluetooth</h4>
-                    <span>170 đơn bán</span>
-                </div>
-
-            </div>
-
-            <div class="top-product-item">
-
-                <img src="https://via.placeholder.com/65" alt="">
-
-                <div class="top-product-info">
-                    <h4>Chuột Gaming</h4>
-                    <span>120 đơn bán</span>
-                </div>
-
-            </div>
-
+            <?php if (empty($topProducts)): ?>
+                <p>Ch&#432;a c&#243; s&#7843;n ph&#7849;m</p>
+            <?php endif; ?>
         </div>
-
     </div>
 
 </div>
-
-<?php
-
-include_once __DIR__ . '/../layouts/footer.php';
-
-?>
