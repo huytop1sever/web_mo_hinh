@@ -78,9 +78,19 @@ switch ($page) {
         (new PostController())->create();
         break;
 
+    case 'post-store':
+        require_once '../Controllers/admin/PostController.php';
+        (new PostController())->store();
+        break;
+
     case 'post-edit':
         require_once '../Controllers/admin/PostController.php';
         (new PostController())->edit();
+        break;
+
+    case 'post-update':
+        require_once '../Controllers/admin/PostController.php';
+        (new PostController())->update();
         break;
 
     case 'post-delete':

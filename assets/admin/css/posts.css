@@ -5,9 +5,9 @@
 .posts-page .box {
     background: #fff;
     border: 1px solid #e5e7eb;
-    border-radius: 14px;
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.05);
+    padding: 22px;
 }
 
 .posts-page .box-title {
@@ -15,140 +15,518 @@
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    margin-bottom: 24px;
+    margin-bottom: 22px;
     flex-wrap: wrap;
 }
 
 .posts-page .box-title h2 {
-    font-size: 24px;
+    margin: 0 0 6px;
     color: #111827;
-    margin-bottom: 6px;
+    font-size: 22px;
 }
 
-.posts-page .box-title p {
-    font-size: 14px;
+.posts-page .box-title p,
+.field-hint {
     color: #6b7280;
+    font-size: 13px;
+    line-height: 1.5;
 }
 
-.posts-page .btn-primary {
+.posts-page .btn-primary,
+.posts-page .btn-secondary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    min-height: 42px;
-    padding: 0 16px;
+    min-height: 40px;
+    padding: 0 14px;
     border: none;
-    border-radius: 10px;
-    background: #f59e0b;
-    color: #fff;
+    border-radius: 8px;
     font-size: 14px;
     font-weight: 700;
     text-decoration: none;
     white-space: nowrap;
     cursor: pointer;
-    transition: 0.25s;
+    transition: 0.2s ease;
+}
+
+.posts-page .btn-primary {
+    background: #f59e0b;
+    color: #fff;
 }
 
 .posts-page .btn-primary:hover {
     background: #d97706;
 }
 
-.posts-page .btn-primary i {
+.posts-page .btn-secondary {
+    background: #f3f4f6;
+    color: #111827;
+}
+
+.posts-page .btn-primary i,
+.posts-page .btn-secondary i {
     font-size: 20px;
 }
 
-.post-form {
+.post-stats {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 18px;
 }
 
-.post-form .form-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.post-form .form-group.full {
-    grid-column: 1 / -1;
-}
-
-.post-form .form-group label {
-    margin-bottom: 8px;
+.post-alert {
+    margin-bottom: 16px;
+    padding: 13px 14px;
+    border: 1px solid #bbf7d0;
+    border-radius: 8px;
+    background: #f0fdf4;
+    color: #166534;
     font-size: 14px;
     font-weight: 700;
+}
+
+.post-stat {
+    position: relative;
+    min-height: 112px;
+    padding: 18px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.05);
+}
+
+.post-stat span {
+    display: block;
+    margin-bottom: 12px;
+    color: #6b7280;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.post-stat strong {
+    color: #111827;
+    font-size: 28px;
+}
+
+.post-stat i {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+    color: #f59e0b;
+    font-size: 34px;
+    opacity: 0.9;
+}
+
+.post-filter {
+    display: grid;
+    grid-template-columns: minmax(260px, 1fr) 190px 180px auto auto;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.post-search {
+    position: relative;
+    display: block;
+}
+
+.post-search i {
+    position: absolute;
+    top: 50%;
+    left: 13px;
+    color: #9ca3af;
+    font-size: 18px;
+    transform: translateY(-50%);
+}
+
+.post-filter input,
+.post-filter select,
+.post-editor-form input,
+.post-editor-form select,
+.post-editor-form textarea {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #fff;
+    color: #111827;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+.post-filter input,
+.post-filter select {
+    height: 42px;
+    padding: 0 13px;
+}
+
+.post-search input {
+    padding-left: 40px;
+}
+
+.post-filter input:focus,
+.post-filter select:focus,
+.post-editor-form input:focus,
+.post-editor-form select:focus,
+.post-editor-form textarea:focus {
+    border-color: #f59e0b;
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.12);
+}
+
+.post-table {
+    min-width: 1040px;
+}
+
+.post-table tbody tr {
+    height: auto;
+}
+
+.post-cell {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 430px;
+}
+
+.post-thumb,
+.current-post-image {
+    width: 78px;
+    height: 78px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    object-fit: cover;
+    background: #f9fafb;
+}
+
+.post-thumb-empty {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    font-size: 24px;
+}
+
+.post-cell-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.post-title-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.post-title-line strong {
+    color: #111827;
+    font-size: 14px;
+    line-height: 1.35;
+}
+
+.post-cell-info small {
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+.post-cell-info p {
+    max-width: 520px;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.featured-badge,
+.category-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 26px;
+    padding: 0 9px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.featured-badge {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.category-pill {
+    background: #eef2ff;
+    color: #4338ca;
+}
+
+.post-status.published {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.post-status.draft {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.action-btn.view {
+    background: #f3f4f6;
     color: #374151;
 }
 
-.post-form .form-group label span {
-    color: #ef4444;
+.empty-posts {
+    padding: 46px 16px;
+    text-align: center;
 }
 
-.post-form .form-group input,
-.post-form .form-group select,
-.post-form .form-group textarea {
-    width: 100%;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
-    padding: 13px 14px;
-    font-size: 14px;
+.empty-posts i,
+.empty-posts strong,
+.empty-posts span {
+    display: block;
+}
+
+.empty-posts i {
+    margin-bottom: 10px;
+    color: #f59e0b;
+    font-size: 34px;
+}
+
+.empty-posts strong {
     color: #111827;
-    outline: none;
-    background: #fff;
-    transition: 0.25s;
+    font-size: 16px;
 }
 
-.post-form .form-group textarea {
-    min-height: 220px;
+.empty-posts span {
+    margin-top: 5px;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.post-editor-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.post-editor-main,
+.post-editor-side,
+.publish-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.post-editor-main,
+.publish-panel {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #fff;
+    padding: 18px;
+}
+
+.publish-panel h3 {
+    margin: 0;
+    color: #111827;
+    font-size: 16px;
+}
+
+.post-editor-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.post-editor-form label {
+    color: #374151;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.post-editor-form label span {
+    color: #dc2626;
+}
+
+.post-editor-form input,
+.post-editor-form select {
+    min-height: 42px;
+    padding: 0 13px;
+}
+
+.post-editor-form textarea {
+    padding: 13px;
     resize: vertical;
     line-height: 1.6;
 }
 
-.post-form .form-group input:focus,
-.post-form .form-group select:focus,
-.post-form .form-group textarea:focus {
-    border-color: #f59e0b;
-    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.14);
+.excerpt-input {
+    min-height: 110px;
 }
 
-.post-form .form-group.error input,
-.post-form .form-group.error select,
-.post-form .form-group.error textarea {
-    border-color: #ef4444;
+.content-input {
+    min-height: 320px;
 }
 
-.post-form .error-message {
-    min-height: 18px;
-    margin-top: 6px;
-    font-size: 13px;
-    color: #ef4444;
-}
-
-.post-form .form-actions {
-    grid-column: 1 / -1;
+.editor-toolbar {
     display: flex;
-    justify-content: flex-end;
-    margin-top: 4px;
+    gap: 8px;
+    padding: 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #f9fafb;
 }
 
-@media(max-width: 768px) {
+.editor-toolbar button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #fff;
+    color: #374151;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.toggle-row input {
+    display: none;
+}
+
+.toggle-row span {
+    position: relative;
+    width: 42px;
+    height: 24px;
+    border-radius: 999px;
+    background: #d1d5db;
+    transition: 0.2s ease;
+}
+
+.toggle-row span::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    transition: 0.2s ease;
+}
+
+.toggle-row input:checked + span {
+    background: #f59e0b;
+}
+
+.toggle-row input:checked + span::after {
+    transform: translateX(18px);
+}
+
+.image-drop {
+    display: flex;
+    min-height: 150px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 8px;
+    background: #f9fafb;
+    color: #6b7280;
+    cursor: pointer;
+    text-align: center;
+}
+
+.image-drop i {
+    color: #f59e0b;
+    font-size: 32px;
+}
+
+.image-drop strong {
+    color: #111827;
+    font-size: 14px;
+}
+
+.image-drop span {
+    color: #6b7280;
+    font-size: 12px;
+}
+
+.file-input {
+    display: none;
+}
+
+.current-post-image {
+    width: 100%;
+    height: 170px;
+}
+
+.post-editor-side .form-actions {
+    display: flex;
+}
+
+.post-editor-side .form-actions .btn-primary {
+    width: 100%;
+}
+
+.post-editor-form .form-group.error input,
+.post-editor-form .form-group.error select,
+.post-editor-form .form-group.error textarea {
+    border-color: #dc2626;
+}
+
+.post-editor-form .error-message {
+    min-height: 16px;
+    color: #dc2626;
+    font-size: 12px;
+}
+
+@media(max-width: 1100px) {
+    .post-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .post-filter {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .post-editor-form {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width: 700px) {
     .posts-page .box {
         padding: 16px;
     }
 
     .posts-page .box-title {
-        flex-direction: column;
         align-items: flex-start;
+        flex-direction: column;
     }
 
-    .post-form {
+    .post-stats,
+    .post-filter {
         grid-template-columns: 1fr;
     }
 
-    .post-form .form-actions {
-        justify-content: stretch;
+    .post-stat {
+        min-height: 98px;
     }
 
-    .post-form .form-actions .btn-primary {
-        width: 100%;
+    .post-cell {
+        min-width: 340px;
     }
 }
