@@ -1,122 +1,208 @@
 <?php
 
+require_once __DIR__ . '/../../Models/Post.php';
+
 class PostController
 {
-    private function getPosts()
+    private function getCategories(): array
+    {
+        return ['Gundam', 'Anime Figure', 'Huong dan', 'Tin tuc'];
+    }
+
+    private function getStatusText(): array
     {
         return [
-            [
-                'id' => 1,
-                'title' => 'Mô hình Gundam RX-78-2',
-                'category' => 'Gundam',
-                'author' => 'Admin',
-                'date' => '25/05/2026',
-                'status' => 'Hiển thị'
-            ],
-            [
-                'id' => 2,
-                'title' => 'Top mô hình One Piece đang mua',
-                'category' => 'Anime Figure',
-                'author' => 'Admin',
-                'date' => '24/05/2026',
-                'status' => 'Ẩn'
-            ],
-            [
-                'id' => 3,
-                'title' => 'Cách bảo quản mô hình sở thích',
-                'category' => 'Hướng dẫn',
-                'author' => 'Admin',
-                'date' => '23/05/2026',
-                'status' => 'Hiển thị'
-            ],
+            'published' => 'Hien thi',
+            'draft' => 'Ban nhap'
         ];
     }
 
     public function index()
     {
         $title = 'Bai viet';
-        $pageTitle = 'Quản lý bài viết';
+        $pageTitle = 'Quan ly bai viet';
         $css = 'posts';
 
-        $posts = $this->getPosts();
+        $postModel = new Post();
+        $categories = $this->getCategories();
+        $statusText = $this->getStatusText();
+        $keyword = trim($_GET['keyword'] ?? '');
+        $category = $_GET['category'] ?? '';
+        $status = $_GET['status'] ?? '';
 
-        if (!empty($_GET['delete_id'])) {
-            $deleteId = $_GET['delete_id'];
-
-            $posts = array_filter($posts, function ($post) use ($deleteId) {
-                return $post['id'] != $deleteId;
-            });
-        }
+        $posts = $postModel->getAll($keyword, $category, $status);
+        $stats = $postModel->stats();
+        $totalPosts = $stats['total'];
+        $publishedPosts = $stats['published'];
+        $draftPosts = $stats['draft'];
+        $featuredPosts = $stats['featured'];
 
         include_once __DIR__ . '/../../Views/admin/layouts/header.php';
         include_once __DIR__ . '/../../Views/admin/layouts/sidebar.php';
         include_once __DIR__ . '/../../Views/admin/layouts/navbar.php';
-
         include_once __DIR__ . '/../../Views/admin/posts/index.php';
-
         include_once __DIR__ . '/../../Views/admin/layouts/footer.php';
     }
 
     public function create()
     {
-        $title = 'Thêm bài viết';
-        $pageTitle = 'Thêm bài viết';
+        $title = 'Them bai viet';
+        $pageTitle = 'Them bai viet';
         $css = 'posts';
+        $categories = $this->getCategories();
+        $statusText = $this->getStatusText();
 
         include_once __DIR__ . '/../../Views/admin/layouts/header.php';
         include_once __DIR__ . '/../../Views/admin/layouts/sidebar.php';
         include_once __DIR__ . '/../../Views/admin/layouts/navbar.php';
-
         include_once __DIR__ . '/../../Views/admin/posts/create.php';
-
         include_once __DIR__ . '/../../Views/admin/layouts/footer.php';
+    }
+
+    public function store()
+    {
+        $postModel = new Post();
+        $data = $this->preparePostData($_POST, $postModel);
+        $data['image'] = $this->uploadImage();
+
+        $postModel->create($data);
+
+        header('Location: index.php?page=posts&msg=created');
+        exit;
     }
 
     public function edit()
     {
-        $title = 'Sửa bài viết';
-        $pageTitle = 'Sửa bài viết';
+        $title = 'Sua bai viet';
+        $pageTitle = 'Sua bai viet';
         $css = 'posts';
+        $categories = $this->getCategories();
+        $statusText = $this->getStatusText();
+        $id = $_GET['id'] ?? 0;
 
-        $id = $_GET['id'] ?? 1;
+        $postModel = new Post();
+        $postEdit = $postModel->find($id);
 
-        $posts = $this->getPosts();
-
-        $postEdit = null;
-
-        foreach ($posts as $post) {
-            if ($post['id'] == $id) {
-                $postEdit = $post;
-                break;
-            }
+        if (!$postEdit) {
+            header('Location: index.php?page=posts&msg=not_found');
+            exit;
         }
 
-        if ($postEdit === null) {
-            $postEdit = [
-                'id' => '',
-                'title' => '',
-                'category' => '',
-                'author' => '',
-                'date' => '',
-                'status' => 'Hiển thị',
-                'content' => ''
-            ];
-        }
+        $postEdit['date'] = $postEdit['published_at'] ?? date('Y-m-d');
 
         include_once __DIR__ . '/../../Views/admin/layouts/header.php';
         include_once __DIR__ . '/../../Views/admin/layouts/sidebar.php';
         include_once __DIR__ . '/../../Views/admin/layouts/navbar.php';
-
         include_once __DIR__ . '/../../Views/admin/posts/edit.php';
-
         include_once __DIR__ . '/../../Views/admin/layouts/footer.php';
+    }
+
+    public function update()
+    {
+        $id = $_POST['id'] ?? 0;
+        $postModel = new Post();
+        $oldPost = $postModel->find($id);
+
+        if (!$oldPost) {
+            header('Location: index.php?page=posts&msg=not_found');
+            exit;
+        }
+
+        $data = $this->preparePostData($_POST, $postModel, $id);
+        $data['image'] = $oldPost['image'] ?? '';
+
+        $newImage = $this->uploadImage();
+        if ($newImage !== '') {
+            $data['image'] = $newImage;
+        }
+
+        $postModel->update($id, $data);
+
+        header('Location: index.php?page=posts&msg=updated');
+        exit;
     }
 
     public function delete()
     {
-        $id = $_GET['id'] ?? '';
+        $id = $_GET['id'] ?? 0;
 
-        header('Location: index.php?page=posts&delete_id=' . $id);
+        if ($id) {
+            $postModel = new Post();
+            $postModel->delete($id);
+        }
+
+        header('Location: index.php?page=posts&msg=deleted');
         exit;
+    }
+
+    private function preparePostData(array $input, Post $postModel, $ignoreId = null): array
+    {
+        $title = trim($input['title'] ?? '');
+        $slug = trim($input['slug'] ?? '');
+
+        if ($slug === '') {
+            $slug = $this->slugify($title);
+        } else {
+            $slug = $this->slugify($slug);
+        }
+
+        $baseSlug = $slug !== '' ? $slug : 'bai-viet';
+        $slug = $baseSlug;
+        $counter = 2;
+
+        while ($postModel->slugExists($slug, $ignoreId)) {
+            $slug = $baseSlug . '-' . $counter;
+            $counter++;
+        }
+
+        return [
+            'title' => $title,
+            'slug' => $slug,
+            'excerpt' => trim($input['excerpt'] ?? ''),
+            'content' => trim($input['content'] ?? ''),
+            'category' => trim($input['category'] ?? ''),
+            'author' => trim($input['author'] ?? 'Admin'),
+            'date' => $input['date'] ?? date('Y-m-d'),
+            'status' => $input['status'] ?? 'draft',
+            'featured' => !empty($input['featured']) ? 1 : 0,
+        ];
+    }
+
+    private function slugify(string $text): string
+    {
+        $text = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $text);
+        $text = strtolower($text ?: '');
+        $text = preg_replace('/[^a-z0-9]+/', '-', $text);
+
+        return trim($text, '-');
+    }
+
+    private function uploadImage(): string
+    {
+        if (empty($_FILES['image']['name'])) {
+            return '';
+        }
+
+        $uploadDir = '../uploads/posts/';
+
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        $extension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+        $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+
+        if (!in_array($extension, $allowed, true)) {
+            return '';
+        }
+
+        $fileName = time() . '_' . uniqid() . '.' . $extension;
+        $targetPath = $uploadDir . $fileName;
+
+        if (!move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
+            return '';
+        }
+
+        return 'uploads/posts/' . $fileName;
     }
 }
