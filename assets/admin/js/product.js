@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const uploadBox = document.getElementById('uploadBox');
     const imageError = document.querySelector('.image-error');
     const variantList = document.getElementById('variantList');
+    const subImagesInput = document.getElementById('sub_images');
+    const subImagePreview = document.getElementById('subImagePreview');
 
     let variantIndex = document.querySelectorAll('.variant-item').length;
 
@@ -60,7 +62,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const initials = productName
             .split(/\s+/)
             .filter(Boolean)
-            .map(word => word.charAt(0))
+            .map(function (word) {
+                return word.charAt(0);
+            })
             .join('')
             .toUpperCase();
 
@@ -90,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function formatNumberInput(input) {
         if (!input) return;
+
         input.value = input.value.replace(/[^0-9]/g, '');
     }
 
@@ -270,6 +275,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (imageInput && previewImage && uploadBox) {
+        if (previewImage.getAttribute('src')) {
+            uploadBox.classList.add('has-image');
+        }
+
         imageInput.addEventListener('change', function () {
             const file = this.files[0];
 
@@ -278,8 +287,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             if (!file) {
-                previewImage.src = '';
-                uploadBox.classList.remove('has-image');
                 return;
             }
 
@@ -296,8 +303,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 this.value = '';
-                previewImage.src = '';
-                uploadBox.classList.remove('has-image');
                 return;
             }
 
@@ -307,13 +312,35 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 this.value = '';
-                previewImage.src = '';
-                uploadBox.classList.remove('has-image');
                 return;
             }
 
             previewImage.src = URL.createObjectURL(file);
             uploadBox.classList.add('has-image');
+        });
+    }
+
+    if (subImagesInput && subImagePreview) {
+        subImagesInput.addEventListener('change', function () {
+            subImagePreview.innerHTML = '';
+
+            Array.from(this.files).forEach(function (file) {
+                const validTypes = [
+                    'image/jpeg',
+                    'image/png',
+                    'image/webp',
+                    'image/jpg'
+                ];
+
+                if (!validTypes.includes(file.type)) {
+                    return;
+                }
+
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+
+                subImagePreview.appendChild(img);
+            });
         });
     }
 

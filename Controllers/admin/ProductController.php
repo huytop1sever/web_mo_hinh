@@ -4,27 +4,42 @@ require_once '../Models/Product.php';
 
 class ProductController
 {
-    public function index()
-    {
-        $title = 'Quản lý sản phẩm';
-        $pageTitle = 'Danh sách sản phẩm';
+public function index()
+{
+    $title = 'Quản lý sản phẩm';
+    $pageTitle = 'Danh sách sản phẩm';
 
-        $productModel = new Product();
+    $productModel = new Product();
 
-        $keyword = $_GET['keyword'] ?? '';
-        $categoryId = $_GET['category_id'] ?? '';
+    $keyword = $_GET['keyword'] ?? '';
+    $categoryId = $_GET['category_id'] ?? '';
 
-        $products = $productModel->getAll($keyword, $categoryId);
-        $categories = $productModel->getCategories();
+    $limit = 10;
+    $currentPage = isset($_GET['p']) ? (int)$_GET['p'] : 1;
 
-        include_once '../Views/admin/layouts/header.php';
-        include_once '../Views/admin/layouts/sidebar.php';
-        include_once '../Views/admin/layouts/navbar.php';
-
-        include_once '../Views/admin/products/index.php';
-
-        include_once '../Views/admin/layouts/footer.php';
+    if ($currentPage < 1) {
+        $currentPage = 1;
     }
+
+    $offset = ($currentPage - 1) * $limit;
+
+    $totalProducts = $productModel->countAll($keyword, $categoryId);
+    $totalPages = (int) ceil($totalProducts / $limit);
+
+    if ($totalPages < 1) {
+        $totalPages = 1;
+    }
+    $products = $productModel->getAll($keyword, $categoryId, $limit, $offset);
+    $categories = $productModel->getCategories();
+
+    include_once '../Views/admin/layouts/header.php';
+    include_once '../Views/admin/layouts/sidebar.php';
+    include_once '../Views/admin/layouts/navbar.php';
+
+    include_once '../Views/admin/products/index.php';
+
+    include_once '../Views/admin/layouts/footer.php';
+}
 
     public function add()
     {

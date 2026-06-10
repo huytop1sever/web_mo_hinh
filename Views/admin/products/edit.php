@@ -3,17 +3,24 @@
 $categories = $categories ?? [];
 $product = $product ?? [];
 $variants = $variants ?? [];
+$productImages = $productImages ?? [];
 
-$currentImage = $product['image'] ?? '';
+$currentImage = trim($product['image'] ?? '');
+
 $imagePath = '';
 
 if (!empty($currentImage)) {
-    if (str_contains($currentImage, 'uploads/products/')) {
+
+    if (file_exists('../' . $currentImage)) {
         $imagePath = '../' . $currentImage;
-    } elseif (str_contains($currentImage, 'products/')) {
-        $imagePath = '../uploads/' . $currentImage;
-    } else {
-        $imagePath = '../uploads/products/' . $currentImage;
+    }
+
+    elseif (file_exists('../uploads/products/' . basename($currentImage))) {
+        $imagePath = '../uploads/products/' . basename($currentImage);
+    }
+
+    else {
+        $imagePath = '../' . $currentImage;
     }
 }
 
@@ -36,10 +43,6 @@ if (empty($variants)) {
 <div class="product-form-page">
 
     <div class="product-form-header">
-        <div>
-            <h2>Sửa sản phẩm</h2>
-            <p>Cập nhật thông tin sản phẩm</p>
-        </div>
 
         <a href="index.php?page=products" class="btn-back">
             <i class='bx bx-arrow-back'></i>
@@ -152,7 +155,8 @@ if (empty($variants)) {
                                     <label>Giá <span>*</span></label>
                                     <input type="number"
                                            name="variants[<?= $index ?>][price]"
-                                        value="<?= !empty($variant['price']) ? (int)$variant['price'] : '' ?>"                                           placeholder="1200000">
+                                           value="<?= !empty($variant['price']) ? (int)$variant['price'] : '' ?>"
+                                           placeholder="1200000">
                                     <span class="error-message"></span>
                                 </div>
 
@@ -169,7 +173,7 @@ if (empty($variants)) {
                                     <label>Số lượng <span>*</span></label>
                                     <input type="number"
                                            name="variants[<?= $index ?>][stock]"
-                                           value="<?= !empty($variant['stock']) ? (int)$variant['stock'] : '' ?>"
+                                           value="<?= isset($variant['stock']) ? (int)$variant['stock'] : '' ?>"
                                            placeholder="20">
                                     <span class="error-message"></span>
                                 </div>
@@ -198,36 +202,67 @@ if (empty($variants)) {
 
         <div class="form-right">
 
+        <div class="form-group image-group">
+
+            <label>Ảnh hiện tại</label>
+
+            <?php if (!empty($imagePath)): ?>
+                <div style="margin-bottom:15px">
+                    <img
+                        src="<?= htmlspecialchars($imagePath) ?>"
+                        alt="Ảnh sản phẩm"
+                        style="
+                            width:100%;
+                            max-height:320px;
+                            object-fit:cover;
+                            border-radius:12px;
+                            border:1px solid #e5e7eb;
+                            display:block;
+                        ">
+                </div>
+            <?php endif; ?>
+
+            <label class="image-upload-box"
+                id="uploadBox"
+                for="image">
+
+                <input type="file"
+                    id="image"
+                    name="image"
+                    accept="image/png,image/jpeg,image/jpg,image/webp"
+                    hidden>
+
+                <img id="previewImage" alt="">
+
+                <div class="upload-placeholder">
+                    <i class='bx bx-image-add'></i>
+                    <h3>Chọn ảnh mới</h3>
+                    <p>PNG, JPG, JPEG, WEBP</p>
+                </div>
+
+            </label>
+
+            <span class="image-error error-message"></span>
+
+        </div>
+
             <div class="form-group image-group">
+                <label>Ảnh phụ</label>
 
-                <label class="image-upload-box <?= !empty($imagePath) ? 'has-image' : '' ?>"
-                       id="uploadBox"
-                       for="image">
-
+                <label class="sub-image-upload-box" for="sub_images">
                     <input type="file"
-                           id="image"
-                           name="image"
+                           id="sub_images"
+                           name="sub_images[]"
                            accept="image/png,image/jpeg,image/jpg,image/webp"
+                           multiple
                            hidden>
 
-                    <img id="previewImage"
-                         src="<?= htmlspecialchars($imagePath) ?>"
-                         alt="">
-
-                    <div class="upload-placeholder">
-                        <i class='bx bx-image-add'></i>
-
-                        <h3>
-                            <?= !empty($imagePath) ? 'Đổi ảnh sản phẩm' : 'Chọn ảnh sản phẩm' ?>
-                        </h3>
-
-                        <p>PNG, JPG, JPEG, WEBP</p>
-                    </div>
-
+                    <i class='bx bx-images'></i>
+                    <h3>Thêm ảnh phụ</h3>
+                    <p>Có thể chọn nhiều ảnh cùng lúc</p>
                 </label>
 
-                <span class="image-error error-message"></span>
-
+                <div id="subImagePreview" class="sub-image-preview"></div>
             </div>
 
             <div class="form-actions">

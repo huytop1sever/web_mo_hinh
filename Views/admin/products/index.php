@@ -4,6 +4,20 @@ $categories = $categories ?? [];
 
 $keyword = $_GET['keyword'] ?? '';
 $categoryId = $_GET['category_id'] ?? '';
+
+$currentPage = isset($_GET['p']) ? (int)$_GET['p'] : 1;
+$totalPages = isset($totalPages) ? (int)$totalPages : 1;
+$limit = 10;
+
+if ($currentPage < 1) {
+    $currentPage = 1;
+}
+
+if ($totalPages < 1) {
+    $totalPages = 1;
+}
+
+$stt = (($currentPage - 1) * $limit) + 1;
 ?>
 
 <div class="box">
@@ -31,7 +45,7 @@ $categoryId = $_GET['category_id'] ?? '';
 
             <?php foreach ($categories as $category): ?>
                 <option
-                    value="<?= $category['id'] ?>"
+                    value="<?= htmlspecialchars($category['id']) ?>"
                     <?= $categoryId == $category['id'] ? 'selected' : '' ?>>
                     <?= htmlspecialchars($category['name']) ?>
                 </option>
@@ -52,7 +66,7 @@ $categoryId = $_GET['category_id'] ?? '';
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>#</th>
                     <th>Ảnh</th>
                     <th>Tên sản phẩm</th>
                     <th>Danh mục</th>
@@ -68,11 +82,9 @@ $categoryId = $_GET['category_id'] ?? '';
 
             <tbody>
                 <?php if (!empty($products)): ?>
-
                     <?php foreach ($products as $product): ?>
-
                         <tr>
-                            <td>#<?= $product['id'] ?></td>
+                            <td><?= $stt++ ?></td>
 
                             <td>
                                 <?php if (!empty($product['image'])): ?>
@@ -85,13 +97,9 @@ $categoryId = $_GET['category_id'] ?? '';
                                 <?php endif; ?>
                             </td>
 
-                            <td>
-                                <?= htmlspecialchars($product['name']) ?>
-                            </td>
+                            <td><?= htmlspecialchars($product['name']) ?></td>
 
-                            <td>
-                                <?= htmlspecialchars($product['category'] ?? '') ?>
-                            </td>
+                            <td><?= htmlspecialchars($product['category'] ?? '') ?></td>
 
                             <td>
                                 <?php if (!empty($product['sale_price']) && $product['sale_price'] > 0): ?>
@@ -106,13 +114,11 @@ $categoryId = $_GET['category_id'] ?? '';
                                 <?php endif; ?>
                             </td>
 
-                            <td>
-                                <?= $product['total_stock'] ?? 0 ?>
-                            </td>
+                            <td><?= htmlspecialchars($product['total_stock'] ?? 0) ?></td>
 
                             <td>
                                 <span class="variant-count">
-                                    <?= $product['variant_count'] ?? 0 ?> biến thể
+                                    <?= htmlspecialchars($product['variant_count'] ?? 0) ?> biến thể
                                 </span>
                             </td>
 
@@ -148,13 +154,13 @@ $categoryId = $_GET['category_id'] ?? '';
                             <td>
                                 <div class="table-actions">
                                     <a
-                                        href="index.php?page=product-edit&id=<?= $product['id'] ?>"
+                                        href="index.php?page=product-edit&id=<?= htmlspecialchars($product['id']) ?>"
                                         class="action-btn edit">
                                         <i class='bx bx-edit'></i>
                                     </a>
 
                                     <a
-                                        href="index.php?page=product-delete&id=<?= $product['id'] ?>"
+                                        href="index.php?page=product-delete&id=<?= htmlspecialchars($product['id']) ?>"
                                         class="action-btn delete"
                                         onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">
                                         <i class='bx bx-trash'></i>
@@ -162,19 +168,42 @@ $categoryId = $_GET['category_id'] ?? '';
                                 </div>
                             </td>
                         </tr>
-
                     <?php endforeach; ?>
 
                 <?php else: ?>
-
                     <tr>
                         <td colspan="11" style="text-align:center;">
                             Không tìm thấy sản phẩm nào
                         </td>
                     </tr>
-
                 <?php endif; ?>
             </tbody>
         </table>
     </div>
+
+    <?php if ($totalPages > 1): ?>
+        <div class="pagination">
+
+            <?php if ($currentPage > 1): ?>
+                <a href="index.php?page=products&p=<?= $currentPage - 1 ?>&keyword=<?= urlencode($keyword) ?>&category_id=<?= urlencode($categoryId) ?>">
+                    Trước
+                </a>
+            <?php endif; ?>
+
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <a href="index.php?page=products&p=<?= $i ?>&keyword=<?= urlencode($keyword) ?>&category_id=<?= urlencode($categoryId) ?>"
+                   class="<?= $i === $currentPage ? 'active' : '' ?>">
+                    <?= $i ?>
+                </a>
+            <?php endfor; ?>
+
+            <?php if ($currentPage < $totalPages): ?>
+                <a href="index.php?page=products&p=<?= $currentPage + 1 ?>&keyword=<?= urlencode($keyword) ?>&category_id=<?= urlencode($categoryId) ?>">
+                    Sau
+                </a>
+            <?php endif; ?>
+
+        </div>
+    <?php endif; ?>
+
 </div>

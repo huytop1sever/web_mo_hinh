@@ -137,23 +137,44 @@ $categories = $categories ?? [];
         <div class="form-right">
 
             <div class="form-group image-group">
+                <label>Ảnh chính <span>*</span></label>
+
                 <label class="image-upload-box" id="uploadBox" for="image">
                     <input type="file"
-                           id="image"
-                           name="image"
-                           accept="image/png,image/jpeg,image/jpg,image/webp"
-                           hidden>
+                        id="image"
+                        name="image"
+                        accept="image/png,image/jpeg,image/jpg,image/webp"
+                        hidden>
 
                     <img id="previewImage" alt="">
 
                     <div class="upload-placeholder">
                         <i class='bx bx-image-add'></i>
-                        <h3>Chọn ảnh sản phẩm</h3>
+                        <h3>Chọn ảnh chính</h3>
                         <p>PNG, JPG, JPEG, WEBP</p>
                     </div>
                 </label>
 
                 <span class="image-error error-message"></span>
+            </div>
+
+            <div class="form-group image-group">
+                <label for="sub_images">Ảnh phụ</label>
+
+                <label class="sub-image-upload-box" for="sub_images">
+                    <input type="file"
+                        id="sub_images"
+                        name="sub_images[]"
+                        accept="image/png,image/jpeg,image/jpg,image/webp"
+                        multiple
+                        hidden>
+
+                    <i class='bx bx-images'></i>
+                    <h3>Chọn nhiều ảnh phụ</h3>
+                    <p>Có thể chọn nhiều ảnh cùng lúc</p>
+                </label>
+
+                <div id="subImagePreview" class="sub-image-preview"></div>
             </div>
 
             <div class="form-actions">
