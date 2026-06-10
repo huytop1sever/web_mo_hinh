@@ -25,6 +25,14 @@ class User
         return $stmt->fetch();
     }
 
+    public function findByEmail($email)
+    {
+        $sql = "SELECT * FROM users WHERE email = ? LIMIT 1";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$email]);
+        return $stmt->fetch();
+    }
+
     public function create($data)
     {
         $sql = "INSERT INTO users (name, email, phone, password, role, status)
@@ -39,6 +47,23 @@ class User
             password_hash($data['password'], PASSWORD_DEFAULT),
             $data['role'],
             $data['status']
+        ]);
+    }
+
+    public function register($data)
+    {
+        $sql = "INSERT INTO users (name, email, phone, password, role, status)
+                VALUES (?, ?, ?, ?, ?, ?)";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        return $stmt->execute([
+            $data['name'],
+            $data['email'],
+            $data['phone'],
+            password_hash($data['password'], PASSWORD_DEFAULT),
+            'client',
+            1
         ]);
     }
 
@@ -97,34 +122,4 @@ class User
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([$id]);
     }
-
-
-
-
-
-    public function findByEmail($email)
-{
-    $sql = "SELECT * FROM users WHERE email = ? LIMIT 1";
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute([$email]);
-
-    return $stmt->fetch();
-}
-
-public function register($data)
-{
-    $sql = "INSERT INTO users (name, email, phone, password, role, status)
-            VALUES (?, ?, ?, ?, ?, ?)";
-
-    $stmt = $this->pdo->prepare($sql);
-
-    return $stmt->execute([
-        $data['name'],
-        $data['email'],
-        $data['phone'] ?? '',
-        password_hash($data['password'], PASSWORD_DEFAULT),
-        'client',
-        1
-    ]);
-}
 }

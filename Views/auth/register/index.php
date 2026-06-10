@@ -69,6 +69,20 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Số điện thoại</label>
+
+                    <div class="auth-input">
+                        <i class="fa fa-phone"></i>
+
+                        <input
+                            type="text"
+                            name="phone"
+                            placeholder="nhập số điện thoại"
+                            required>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label>Mật khẩu</label>
 
                     <div class="auth-input">

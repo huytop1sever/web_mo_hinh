@@ -29,10 +29,11 @@ class AuthController
                         'id' => $user['id'],
                         'name' => $user['name'],
                         'email' => $user['email'],
+                        'phone' => $user['phone'] ?? '',
                         'role' => $user['role'] ?? 'client'
                     ];
 
-                  header('Location: index.php?page=profile');
+                    header('Location: index.php?page=profile');
                     exit;
                 }
             }
@@ -49,13 +50,16 @@ class AuthController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = trim($_POST['name'] ?? '');
             $email = trim($_POST['email'] ?? '');
+            $phone = trim($_POST['phone'] ?? '');
             $password = trim($_POST['password'] ?? '');
             $confirmPassword = trim($_POST['confirm_password'] ?? '');
 
-            if ($name === '' || $email === '' || $password === '' || $confirmPassword === '') {
+            if ($name === '' || $email === '' || $phone === '' || $password === '' || $confirmPassword === '') {
                 $error = 'Vui lòng nhập đầy đủ thông tin';
             } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $error = 'Email không hợp lệ';
+            } elseif (!preg_match('/^[0-9]{10,11}$/', $phone)) {
+                $error = 'Số điện thoại không hợp lệ';
             } elseif ($password !== $confirmPassword) {
                 $error = 'Mật khẩu xác nhận không khớp';
             } else {
@@ -67,7 +71,7 @@ class AuthController
                     $userModel->register([
                         'name' => $name,
                         'email' => $email,
-                        'phone' => '',
+                        'phone' => $phone,
                         'password' => $password
                     ]);
 
@@ -80,15 +84,14 @@ class AuthController
     }
 
     public function profile()
-{
-    if (empty($_SESSION['user'])) {
-        header('Location: index.php?page=login');
-        exit;
+    {
+        if (empty($_SESSION['user'])) {
+            header('Location: index.php?page=login');
+            exit;
+        }
+
+        require_once 'Views/auth/profile/index.php';
     }
-
-    require_once 'Views/auth/profile/index.php';
-}
-
 
     public function logout()
     {
