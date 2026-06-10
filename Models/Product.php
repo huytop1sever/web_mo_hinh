@@ -10,7 +10,7 @@ class Product
         $this->pdo = $conn;
     }
 
-    public function getAll($keyword = '', $categoryId = '')
+    public function getAll($keyword = '', $categoryId = '', $limit = 10, $offset = 0)
     {
         $sql = "
             SELECT 
@@ -58,7 +58,42 @@ class Product
                 p.created_at,
                 c.name
             ORDER BY p.id DESC
+            LIMIT :limit OFFSET :offset
         ";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        if ($keyword !== '') {
+            $stmt->bindValue(':keyword', '%' . $keyword . '%');
+        }
+
+        if ($categoryId !== '') {
+            $stmt->bindValue(':category_id', $categoryId, PDO::PARAM_INT);
+        }
+
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
+    public function countAll($keyword = '', $categoryId = '')
+    {
+        $sql = "
+            SELECT COUNT(*) AS total
+            FROM products p
+            WHERE 1
+        ";
+
+        if ($keyword !== '') {
+            $sql .= " AND p.title LIKE :keyword ";
+        }
+
+        if ($categoryId !== '') {
+            $sql .= " AND p.category_id = :category_id ";
+        }
 
         $stmt = $this->pdo->prepare($sql);
 
@@ -72,7 +107,7 @@ class Product
 
         $stmt->execute();
 
-        return $stmt->fetchAll();
+        return (int)$stmt->fetchColumn();
     }
 
     public function getCategories()
