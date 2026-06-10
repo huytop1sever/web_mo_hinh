@@ -138,13 +138,25 @@
 
                     </a>
 
-                    <a href="index.php?page=login"
-                        class="my-auto">
+                  <?php if (!empty($_SESSION['user'])): ?>
 
-                        <i class="fas fa-user fa-2x text-primary"></i>
+    <a href="index.php?page=profile"
+       class="my-auto text-decoration-none">
 
-                    </a>
+        <i class="fas fa-user fa-2x text-primary"></i>
 
+    </a>
+
+<?php else: ?>
+
+    <a href="index.php?page=login"
+       class="my-auto">
+
+        <i class="fas fa-user fa-2x text-primary"></i>
+
+    </a>
+
+<?php endif; ?>
                 </div>
 
             </div>

@@ -1,4 +1,7 @@
 <?php
+session_start();
+
+require_once 'config/database.php';
 
 require_once 'Controllers/client/HomeController.php';
 require_once 'Controllers/client/CartController.php';
@@ -7,49 +10,44 @@ require_once 'Controllers/client/ProductController.php';
 
 require_once 'Controllers/AuthController.php';
 
-
 $page = $_GET['page'] ?? 'home';
 
 switch ($page) {
-
     case 'home':
         (new HomeController())->index();
         break;
 
     case 'cart':
-        $controller = new CartController();
-        $controller->index();
+        (new CartController())->index();
         break;
 
     case 'product':
-        $controller = new ProductController();
-        $controller->index();
+        (new ProductController())->index();
         break;
 
     case 'product-detail':
-        $controller = new ProductController();
-        $controller->detail();
+        (new ProductController())->detail();
         break;
 
     case 'checkout':
-        $controller = new CheckoutController();
-        $controller->index();
+        (new CheckoutController())->index();
         break;
 
     case 'login':
-        $controller = new AuthController();
-        $controller->login();
+        (new AuthController())->login();
         break;
 
     case 'register':
-        $controller = new AuthController();
-        $controller->register();
+        (new AuthController())->register();
         break;
 
     case 'logout':
-        $controller = new AuthController();
-        $controller->logout();
+        (new AuthController())->logout();
         break;
+
+    case 'profile':
+    (new AuthController())->profile();
+    break;
 
     default:
         echo "404";
