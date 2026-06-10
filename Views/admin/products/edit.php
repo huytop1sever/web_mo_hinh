@@ -2,6 +2,7 @@
 
 $categories = $categories ?? [];
 $product = $product ?? [];
+$variants = $variants ?? [];
 
 $currentImage = $product['image'] ?? '';
 $imagePath = '';
@@ -14,6 +15,20 @@ if (!empty($currentImage)) {
     } else {
         $imagePath = '../uploads/products/' . $currentImage;
     }
+}
+
+if (empty($variants)) {
+    $variants = [
+        [
+            'id' => '',
+            'variant_name' => '',
+            'sku' => '',
+            'price' => '',
+            'sale_price' => '',
+            'stock' => '',
+            'status' => 1
+        ]
+    ];
 }
 
 ?>
@@ -39,9 +54,7 @@ if (!empty($currentImage)) {
           enctype="multipart/form-data"
           class="product-form-card">
 
-        <input type="hidden"
-               name="old_image"
-               value="<?= htmlspecialchars($currentImage) ?>">
+        <input type="hidden" name="id" value="<?= htmlspecialchars($product['id'] ?? '') ?>">
 
         <div class="form-left">
 
@@ -51,7 +64,7 @@ if (!empty($currentImage)) {
                        id="title"
                        name="title"
                        value="<?= htmlspecialchars($product['title'] ?? '') ?>"
-                       placeholder="Ví dụ: Mô hình Gojo Satoru">
+                       placeholder="Ví dụ: Goku Mui">
                 <span class="error-message"></span>
             </div>
 
@@ -88,6 +101,97 @@ if (!empty($currentImage)) {
                           rows="7"
                           placeholder="Nhập nội dung chi tiết sản phẩm"><?= htmlspecialchars($product['content'] ?? '') ?></textarea>
                 <span class="error-message"></span>
+            </div>
+
+            <div class="variant-box">
+                <div class="variant-title">
+                    <h3>Biến thể sản phẩm</h3>
+
+                    <button type="button" class="btn-add-variant" onclick="addVariant()">
+                        <i class='bx bx-plus'></i>
+                        Thêm biến thể
+                    </button>
+                </div>
+
+                <div id="variantList">
+
+                    <?php foreach ($variants as $index => $variant): ?>
+                        <div class="variant-item">
+
+                            <?php if ($index > 0): ?>
+                                <button type="button" class="btn-remove-variant">
+                                    <i class='bx bx-x'></i>
+                                </button>
+                            <?php endif; ?>
+
+                            <input type="hidden"
+                                   name="variants[<?= $index ?>][id]"
+                                   value="<?= htmlspecialchars($variant['id'] ?? '') ?>">
+
+                            <div class="variant-grid">
+
+                                <div class="form-group">
+                                    <label>Tên biến thể <span>*</span></label>
+                                    <input type="text"
+                                           name="variants[<?= $index ?>][variant_name]"
+                                           value="<?= htmlspecialchars($variant['variant_name'] ?? '') ?>"
+                                           placeholder="Ví dụ: Size 28cm">
+                                    <span class="error-message"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Mã SKU</label>
+                                    <input type="text"
+                                           name="variants[<?= $index ?>][sku]"
+                                           value="<?= htmlspecialchars($variant['sku'] ?? '') ?>"
+                                           placeholder="Tự động tạo">
+                                    <span class="error-message"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Giá <span>*</span></label>
+                                    <input type="number"
+                                           name="variants[<?= $index ?>][price]"
+                                        value="<?= !empty($variant['price']) ? (int)$variant['price'] : '' ?>"                                           placeholder="1200000">
+                                    <span class="error-message"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Giá sale</label>
+                                    <input type="number"
+                                           name="variants[<?= $index ?>][sale_price]"
+                                           value="<?= !empty($variant['sale_price']) ? (int)$variant['sale_price'] : '' ?>"
+                                           placeholder="Để trống nếu không sale">
+                                    <span class="error-message"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Số lượng <span>*</span></label>
+                                    <input type="number"
+                                           name="variants[<?= $index ?>][stock]"
+                                           value="<?= !empty($variant['stock']) ? (int)$variant['stock'] : '' ?>"
+                                           placeholder="20">
+                                    <span class="error-message"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Trạng thái</label>
+                                    <select name="variants[<?= $index ?>][status]">
+                                        <option value="1" <?= (($variant['status'] ?? 1) == 1) ? 'selected' : '' ?>>
+                                            Hiển thị
+                                        </option>
+                                        <option value="0" <?= (($variant['status'] ?? 1) == 0) ? 'selected' : '' ?>>
+                                            Ẩn
+                                        </option>
+                                    </select>
+                                    <span class="error-message"></span>
+                                </div>
+
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+
+                </div>
             </div>
 
         </div>

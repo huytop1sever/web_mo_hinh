@@ -1,6 +1,13 @@
-<?php $products = $products ?? []; ?>
+<?php
+$products = $products ?? [];
+$categories = $categories ?? [];
+
+$keyword = $_GET['keyword'] ?? '';
+$categoryId = $_GET['category_id'] ?? '';
+?>
 
 <div class="box">
+
     <div class="box-title">
         <h2>Danh sách sản phẩm</h2>
 
@@ -10,6 +17,37 @@
         </a>
     </div>
 
+    <form method="get" action="index.php" class="product-search-form">
+        <input type="hidden" name="page" value="products">
+
+        <input
+            type="text"
+            name="keyword"
+            placeholder="Tìm kiếm tên sản phẩm..."
+            value="<?= htmlspecialchars($keyword) ?>">
+
+        <select name="category_id">
+            <option value="">Tất cả danh mục</option>
+
+            <?php foreach ($categories as $category): ?>
+                <option
+                    value="<?= $category['id'] ?>"
+                    <?= $categoryId == $category['id'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($category['name']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+
+        <button type="submit" class="btn-primary">
+            <i class='bx bx-search'></i>
+            Tìm kiếm
+        </button>
+
+        <a href="index.php?page=products" class="btn-reset">
+            Làm mới
+        </a>
+    </form>
+
     <div class="table-wrapper">
         <table>
             <thead>
@@ -18,6 +56,10 @@
                     <th>Ảnh</th>
                     <th>Tên sản phẩm</th>
                     <th>Danh mục</th>
+                    <th>Giá</th>
+                    <th>Tồn kho</th>
+                    <th>Biến thể</th>
+                    <th>Trạng thái</th>
                     <th>Mô tả</th>
                     <th>Ngày tạo</th>
                     <th>Thao tác</th>
@@ -47,6 +89,41 @@
 
                             <td>
                                 <?= htmlspecialchars($product['category'] ?? '') ?>
+                            </td>
+
+                            <td>
+                                <?php if (!empty($product['sale_price']) && $product['sale_price'] > 0): ?>
+                                    <div class="product-price">
+                                        <del><?= number_format($product['price'], 0, ',', '.') ?>đ</del>
+                                        <strong><?= number_format($product['sale_price'], 0, ',', '.') ?>đ</strong>
+                                    </div>
+                                <?php elseif (!empty($product['price'])): ?>
+                                    <strong><?= number_format($product['price'], 0, ',', '.') ?>đ</strong>
+                                <?php else: ?>
+                                    <span>Chưa có giá</span>
+                                <?php endif; ?>
+                            </td>
+
+                            <td>
+                                <?= $product['total_stock'] ?? 0 ?>
+                            </td>
+
+                            <td>
+                                <span class="variant-count">
+                                    <?= $product['variant_count'] ?? 0 ?> biến thể
+                                </span>
+                            </td>
+
+                            <td>
+                                <?php if (($product['variant_count'] ?? 0) == 0): ?>
+                                    <span class="status no-variant">Chưa có biến thể</span>
+                                <?php elseif (($product['total_stock'] ?? 0) <= 0): ?>
+                                    <span class="status out-stock">Hết hàng</span>
+                                <?php elseif (($product['product_status'] ?? 1) == 1): ?>
+                                    <span class="status active">Đang bán</span>
+                                <?php else: ?>
+                                    <span class="status hidden">Đang ẩn</span>
+                                <?php endif; ?>
                             </td>
 
                             <td class="product-description">
@@ -87,8 +164,8 @@
 
                 <?php else: ?>
                     <tr>
-                        <td colspan="7" style="text-align:center;">
-                            Chưa có sản phẩm nào
+                        <td colspan="11" style="text-align:center;">
+                            Không tìm thấy sản phẩm nào
                         </td>
                     </tr>
                 <?php endif; ?>

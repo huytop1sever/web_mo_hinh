@@ -5,10 +5,6 @@ $categories = $categories ?? [];
 <div class="product-form-page">
 
     <div class="product-form-header">
-        <div>
-            <h2>Thêm sản phẩm</h2>
-            <p>Nhập thông tin sản phẩm mới</p>
-        </div>
 
         <a href="index.php?page=products" class="btn-back">
             <i class='bx bx-arrow-back'></i>
@@ -27,10 +23,7 @@ $categories = $categories ?? [];
 
             <div class="form-group">
                 <label for="title">Tên sản phẩm <span>*</span></label>
-                <input type="text"
-                       id="title"
-                       name="title"
-                       placeholder="Ví dụ: Mô hình Gojo Satoru">
+                <input type="text" id="title" name="title" placeholder="Ví dụ: Goku Mui">
                 <span class="error-message"></span>
             </div>
 
@@ -49,20 +42,72 @@ $categories = $categories ?? [];
 
             <div class="form-group">
                 <label for="description">Mô tả ngắn <span>*</span></label>
-                <textarea id="description"
-                          name="description"
-                          rows="4"
-                          placeholder="Nhập mô tả ngắn cho sản phẩm"></textarea>
+                <textarea id="description" name="description" rows="4" placeholder="Nhập mô tả ngắn cho sản phẩm"></textarea>
                 <span class="error-message"></span>
             </div>
 
             <div class="form-group">
                 <label for="content">Nội dung chi tiết <span>*</span></label>
-                <textarea id="content"
-                          name="content"
-                          rows="7"
-                          placeholder="Nhập nội dung chi tiết sản phẩm"></textarea>
+                <textarea id="content" name="content" rows="7" placeholder="Nhập nội dung chi tiết sản phẩm"></textarea>
                 <span class="error-message"></span>
+            </div>
+
+            <div class="variant-box">
+                <div class="variant-title">
+                    <h3>Biến thể sản phẩm</h3>
+
+                    <button type="button" class="btn-add-variant" onclick="addVariant()">
+                        <i class='bx bx-plus'></i>
+                        Thêm biến thể
+                    </button>
+                </div>
+
+                <div id="variantList">
+                    <div class="variant-item">
+                        <div class="variant-grid">
+
+                            <div class="form-group">
+                                <label>Tên biến thể <span>*</span></label>
+                                <input type="text" name="variants[0][variant_name]" placeholder="Ví dụ: Size 28cm">
+                                <span class="error-message"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Mã SKU</label>
+                                <input type="text" name="variants[0][sku]" placeholder="Tự động tạo">
+                                <span class="error-message"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Giá <span>*</span></label>
+                                <input type="number" name="variants[0][price]" placeholder="1200000">
+                                <span class="error-message"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Giá sale</label>
+                                <input type="number" name="variants[0][sale_price]" placeholder="Để trống nếu không sale">
+                                <span class="error-message"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Số lượng <span>*</span></label>
+                                <input type="number" name="variants[0][stock]" placeholder="20">
+                                <span class="error-message"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Trạng thái</label>
+                                <select name="variants[0][status]">
+                                    <option value="1">Hiển thị</option>
+                                    <option value="0">Ẩn</option>
+                                </select>
+                                <span class="error-message"></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -71,7 +116,6 @@ $categories = $categories ?? [];
 
             <div class="form-group image-group">
                 <label class="image-upload-box" id="uploadBox" for="image">
-
                     <input type="file"
                            id="image"
                            name="image"
@@ -85,7 +129,6 @@ $categories = $categories ?? [];
                         <h3>Chọn ảnh sản phẩm</h3>
                         <p>PNG, JPG, JPEG, WEBP</p>
                     </div>
-
                 </label>
 
                 <span class="image-error error-message"></span>
