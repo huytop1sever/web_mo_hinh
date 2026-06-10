@@ -10,7 +10,12 @@ class ProductController
         $pageTitle = 'Danh sách sản phẩm';
 
         $productModel = new Product();
-        $products = $productModel->getAll();
+
+        $keyword = $_GET['keyword'] ?? '';
+        $categoryId = $_GET['category_id'] ?? '';
+
+        $products = $productModel->getAll($keyword, $categoryId);
+        $categories = $productModel->getCategories();
 
         include_once '../Views/admin/layouts/header.php';
         include_once '../Views/admin/layouts/sidebar.php';
@@ -50,7 +55,11 @@ class ProductController
 
         $_POST['image'] = $image;
 
-        $productModel->create($_POST);
+        $productId = $productModel->create($_POST);
+
+        if (!empty($_POST['variants'])) {
+            $productModel->saveVariants($productId, $_POST['variants']);
+        }
 
         header('Location: index.php?page=products');
         exit;
@@ -62,8 +71,10 @@ class ProductController
         $pageTitle = 'Sửa sản phẩm';
 
         $productModel = new Product();
+
         $product = $productModel->find($id);
         $categories = $productModel->getCategories();
+        $variants = $productModel->getVariants($id);
 
         include_once '../Views/admin/layouts/header.php';
         include_once '../Views/admin/layouts/sidebar.php';
@@ -87,6 +98,9 @@ class ProductController
         }
 
         $productModel->update($_POST);
+
+        $variants = $_POST['variants'] ?? [];
+        $productModel->updateVariants($_POST['id'], $variants);
 
         header('Location: index.php?page=products');
         exit;
