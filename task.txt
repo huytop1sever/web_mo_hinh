@@ -1,0 +1,3 @@
+sửa lại hết mấy cái trang có require_once header với footer 
+đem cái đó để bên index trên với dưới switch case hết vì để bên đó nó gọn hơn
+làm hoàn chỉnh web lại 
