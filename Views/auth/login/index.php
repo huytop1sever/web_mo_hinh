@@ -33,7 +33,10 @@
                 </div>
             <?php endif; ?>
 
-            <form action="index.php?page=login" method="post" class="auth-form">
+            <form action="index.php?page=login"
+                  method="post"
+                  class="auth-form"
+                  novalidate>
 
                 <div class="form-group">
                     <label>Email</label>
@@ -45,8 +48,14 @@
                             type="email"
                             name="email"
                             placeholder="email@example.com"
-                            required>
+                            value="<?= htmlspecialchars($old['email'] ?? '') ?>">
                     </div>
+
+                    <?php if (!empty($errors['email'])): ?>
+                        <small class="error-message">
+                            <?= htmlspecialchars($errors['email']) ?>
+                        </small>
+                    <?php endif; ?>
                 </div>
 
                 <div class="form-group">
@@ -58,9 +67,14 @@
                         <input
                             type="password"
                             name="password"
-                            placeholder="Nhập mật khẩu"
-                            required>
+                            placeholder="Nhập mật khẩu">
                     </div>
+
+                    <?php if (!empty($errors['password'])): ?>
+                        <small class="error-message">
+                            <?= htmlspecialchars($errors['password']) ?>
+                        </small>
+                    <?php endif; ?>
                 </div>
 
                 <div class="auth-options">

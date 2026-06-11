@@ -38,7 +38,8 @@
 
             <form action="index.php?page=register"
                   method="post"
-                  class="auth-form">
+                  class="auth-form"
+                  novalidate>
 
                 <div class="form-group">
                     <label>Họ và tên</label>
@@ -50,8 +51,14 @@
                             type="text"
                             name="name"
                             placeholder="Nhập họ tên"
-                            required>
+                            value="<?= htmlspecialchars($old['name'] ?? '') ?>">
                     </div>
+
+                    <?php if (!empty($errors['name'])): ?>
+                        <small class="error-message">
+                            <?= htmlspecialchars($errors['name']) ?>
+                        </small>
+                    <?php endif; ?>
                 </div>
 
                 <div class="form-group">
@@ -64,8 +71,14 @@
                             type="email"
                             name="email"
                             placeholder="email@example.com"
-                            required>
+                            value="<?= htmlspecialchars($old['email'] ?? '') ?>">
                     </div>
+
+                    <?php if (!empty($errors['email'])): ?>
+                        <small class="error-message">
+                            <?= htmlspecialchars($errors['email']) ?>
+                        </small>
+                    <?php endif; ?>
                 </div>
 
                 <div class="form-group">
@@ -78,8 +91,14 @@
                             type="text"
                             name="phone"
                             placeholder="nhập số điện thoại"
-                            required>
+                            value="<?= htmlspecialchars($old['phone'] ?? '') ?>">
                     </div>
+
+                    <?php if (!empty($errors['phone'])): ?>
+                        <small class="error-message">
+                            <?= htmlspecialchars($errors['phone']) ?>
+                        </small>
+                    <?php endif; ?>
                 </div>
 
                 <div class="form-group">
@@ -91,9 +110,14 @@
                         <input
                             type="password"
                             name="password"
-                            placeholder="Tạo mật khẩu"
-                            required>
+                            placeholder="Tạo mật khẩu">
                     </div>
+
+                    <?php if (!empty($errors['password'])): ?>
+                        <small class="error-message">
+                            <?= htmlspecialchars($errors['password']) ?>
+                        </small>
+                    <?php endif; ?>
                 </div>
 
                 <div class="form-group">
@@ -105,17 +129,28 @@
                         <input
                             type="password"
                             name="confirm_password"
-                            placeholder="Nhập lại mật khẩu"
-                            required>
+                            placeholder="Nhập lại mật khẩu">
                     </div>
+
+                    <?php if (!empty($errors['confirm_password'])): ?>
+                        <small class="error-message">
+                            <?= htmlspecialchars($errors['confirm_password']) ?>
+                        </small>
+                    <?php endif; ?>
                 </div>
 
                 <label class="auth-check auth-policy">
-                    <input type="checkbox" required>
+                    <input type="checkbox" name="policy">
                     <span>
                         Tôi đồng ý với điều khoản và chính sách bảo mật.
                     </span>
                 </label>
+
+                <?php if (!empty($errors['policy'])): ?>
+                    <small class="error-message">
+                        <?= htmlspecialchars($errors['policy']) ?>
+                    </small>
+                <?php endif; ?>
 
                 <button type="submit" class="btn auth-submit">
                     Tạo tài khoản
