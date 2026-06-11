@@ -55,4 +55,24 @@ class Order
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([$id]);
     }
+
+    public function getByUserId($userId)
+{
+    $sql = "SELECT * FROM orders WHERE user_id = ? ORDER BY id DESC";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([$userId]);
+
+    return $stmt->fetchAll();
+}
+
+public function countByUserId($userId)
+{
+    $sql = "SELECT COUNT(*) AS total FROM orders WHERE user_id = ?";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([$userId]);
+
+    $row = $stmt->fetch();
+
+    return $row['total'] ?? 0;
+}
 }
