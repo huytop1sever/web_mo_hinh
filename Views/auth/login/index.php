@@ -83,7 +83,9 @@
                         <span>Ghi nhớ đăng nhập</span>
                     </label>
 
-                    <a href="#">Quên mật khẩu?</a>
+                    <a href="index.php?page=forgot-password">
+                        Quên mật khẩu?
+                    </a>
                 </div>
 
                 <button type="submit" class="btn auth-submit">

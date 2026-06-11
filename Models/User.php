@@ -102,6 +102,17 @@ class User
         return $stmt->execute($params);
     }
 
+    public function updatePasswordByEmail($email, $password)
+    {
+        $sql = "UPDATE users SET password = ? WHERE email = ?";
+        $stmt = $this->pdo->prepare($sql);
+
+        return $stmt->execute([
+            password_hash($password, PASSWORD_DEFAULT),
+            $email
+        ]);
+    }
+
     public function lock($id)
     {
         $sql = "UPDATE users SET status = 0 WHERE id = ?";

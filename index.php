@@ -37,6 +37,14 @@ switch ($page) {
         (new AuthController())->login();
         break;
 
+    case 'forgot-password':
+        (new AuthController())->forgotPassword();
+        break;
+
+    case 'reset-password':
+        (new AuthController())->resetPassword();
+        break;
+
     case 'register':
         (new AuthController())->register();
         break;
@@ -46,8 +54,8 @@ switch ($page) {
         break;
 
     case 'profile':
-    (new AuthController())->profile();
-    break;
+        (new AuthController())->profile();
+        break;
 
     default:
         echo "404";
