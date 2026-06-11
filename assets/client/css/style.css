@@ -1739,3 +1739,16 @@
     }
 }
 
+.error-message {
+    color: red;
+    font-size: 13px;
+    display: block;
+    margin-top: 5px;
+}
+
+.auth-alert.error {
+    color: red;
+}
+.auth-input input.error {
+    border: 1px solid red;
+}

@@ -7,14 +7,28 @@ class AuthController
     public function login()
     {
         $error = '';
+        $errors = [];
+        $old = [
+            'email' => ''
+        ];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = trim($_POST['email'] ?? '');
             $password = trim($_POST['password'] ?? '');
 
-            if ($email === '' || $password === '') {
-                $error = 'Vui lòng nhập đầy đủ email và mật khẩu';
-            } else {
+            $old['email'] = $email;
+
+            if ($email === '') {
+                $errors['email'] = 'Vui lòng nhập email';
+            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors['email'] = 'Email không hợp lệ';
+            }
+
+            if ($password === '') {
+                $errors['password'] = 'Vui lòng nhập mật khẩu';
+            }
+
+            if (empty($errors)) {
                 $userModel = new User();
                 $user = $userModel->findByEmail($email);
 
@@ -46,6 +60,13 @@ class AuthController
     {
         $error = '';
         $success = '';
+        $errors = [];
+
+        $old = [
+            'name' => '',
+            'email' => '',
+            'phone' => ''
+        ];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = trim($_POST['name'] ?? '');
@@ -54,19 +75,45 @@ class AuthController
             $password = trim($_POST['password'] ?? '');
             $confirmPassword = trim($_POST['confirm_password'] ?? '');
 
-            if ($name === '' || $email === '' || $phone === '' || $password === '' || $confirmPassword === '') {
-                $error = 'Vui lòng nhập đầy đủ thông tin';
+            $old['name'] = $name;
+            $old['email'] = $email;
+            $old['phone'] = $phone;
+
+            if ($name === '') {
+                $errors['name'] = 'Vui lòng nhập họ tên';
+            } elseif (mb_strlen($name) < 2) {
+                $errors['name'] = 'Họ tên phải có ít nhất 2 ký tự';
+            }
+
+            if ($email === '') {
+                $errors['email'] = 'Vui lòng nhập email';
             } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $error = 'Email không hợp lệ';
-            } elseif (!preg_match('/^[0-9]{10,11}$/', $phone)) {
-                $error = 'Số điện thoại không hợp lệ';
+                $errors['email'] = 'Email không hợp lệ';
+            }
+
+            if ($phone === '') {
+                $errors['phone'] = 'Vui lòng nhập số điện thoại';
+            } elseif (!preg_match('/^[0-9]{10}$/', $phone)) {
+                $errors['phone'] = 'Số điện thoại phải gồm đúng 10 chữ số';
+            }
+
+            if ($password === '') {
+                $errors['password'] = 'Vui lòng nhập mật khẩu';
+            } elseif (strlen($password) < 6) {
+                $errors['password'] = 'Mật khẩu phải có ít nhất 6 ký tự';
+            }
+
+            if ($confirmPassword === '') {
+                $errors['confirm_password'] = 'Vui lòng nhập lại mật khẩu';
             } elseif ($password !== $confirmPassword) {
-                $error = 'Mật khẩu xác nhận không khớp';
-            } else {
+                $errors['confirm_password'] = 'Mật khẩu xác nhận không khớp';
+            }
+
+            if (empty($errors)) {
                 $userModel = new User();
 
                 if ($userModel->findByEmail($email)) {
-                    $error = 'Email đã tồn tại';
+                    $errors['email'] = 'Email đã tồn tại';
                 } else {
                     $userModel->register([
                         'name' => $name,
@@ -76,7 +123,17 @@ class AuthController
                     ]);
 
                     $success = 'Đăng ký thành công, vui lòng đăng nhập';
+
+                    $old = [
+                        'name' => '',
+                        'email' => '',
+                        'phone' => ''
+                    ];
                 }
+            }
+
+            if (!empty($errors)) {
+                $error = 'Vui lòng kiểm tra lại thông tin';
             }
         }
 
