@@ -12,14 +12,9 @@ try {
     $dbname     = "oaljdfoghosting_WebMoHinh";
     $port       = 3306;
 
-    $conn = new PDO(
-        "mysql:host=$servername;
-         port=$port;
-         dbname=$dbname;
-         charset=utf8mb4",
-        $username,
-        $password
-    );
+    $dsn = "mysql:host=$servername;port=$port;dbname=$dbname;charset=utf8mb4";
+
+    $conn = new PDO($dsn, $username, $password);
 
     $conn->setAttribute(
         PDO::ATTR_ERRMODE,
