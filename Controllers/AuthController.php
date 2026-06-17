@@ -1,7 +1,5 @@
 <?php
 
-require_once 'Models/User.php';
-
 class AuthController
 {
     public function login()

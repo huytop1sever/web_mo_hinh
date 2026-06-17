@@ -1,7 +1,5 @@
 <?php
 
-require_once '../Models/Order.php';
-
 class OrderController
 {
     public function index()

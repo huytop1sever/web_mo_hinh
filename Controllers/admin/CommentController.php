@@ -35,12 +35,12 @@ class CommentController
             ],
         ];
 
-        include_once __DIR__ . '/../../Views/admin/layouts/header.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/sidebar.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/navbar.php';
+        include_once '../Views/admin/layouts/header.php';
+        include_once '../Views/admin/layouts/sidebar.php';
+        include_once '../Views/admin/layouts/navbar.php';
 
-        include_once __DIR__ . '/../../Views/admin/comments/index.php';
+        include_once '../Views/admin/comments/index.php';
 
-        include_once __DIR__ . '/../../Views/admin/layouts/footer.php';
+        include_once '../Views/admin/layouts/footer.php';
     }
 }

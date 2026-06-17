@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/../../Models/Post.php';
-
 class PostController
 {
     private function getCategories(): array
@@ -37,11 +35,11 @@ class PostController
         $draftPosts = $stats['draft'];
         $featuredPosts = $stats['featured'];
 
-        include_once __DIR__ . '/../../Views/admin/layouts/header.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/sidebar.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/navbar.php';
-        include_once __DIR__ . '/../../Views/admin/posts/index.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/footer.php';
+        include_once '../Views/admin/layouts/header.php';
+        include_once '../Views/admin/layouts/sidebar.php';
+        include_once '../Views/admin/layouts/navbar.php';
+        include_once '../Views/admin/posts/index.php';
+        include_once '../Views/admin/layouts/footer.php';
     }
 
     public function create()
@@ -52,11 +50,11 @@ class PostController
         $categories = $this->getCategories();
         $statusText = $this->getStatusText();
 
-        include_once __DIR__ . '/../../Views/admin/layouts/header.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/sidebar.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/navbar.php';
-        include_once __DIR__ . '/../../Views/admin/posts/create.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/footer.php';
+        include_once '../Views/admin/layouts/header.php';
+        include_once '../Views/admin/layouts/sidebar.php';
+        include_once '../Views/admin/layouts/navbar.php';
+        include_once '../Views/admin/posts/create.php';
+        include_once '../Views/admin/layouts/footer.php';
     }
 
     public function store()
@@ -90,11 +88,11 @@ class PostController
 
         $postEdit['date'] = $postEdit['published_at'] ?? date('Y-m-d');
 
-        include_once __DIR__ . '/../../Views/admin/layouts/header.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/sidebar.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/navbar.php';
-        include_once __DIR__ . '/../../Views/admin/posts/edit.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/footer.php';
+        include_once '../Views/admin/layouts/header.php';
+        include_once '../Views/admin/layouts/sidebar.php';
+        include_once '../Views/admin/layouts/navbar.php';
+        include_once '../Views/admin/posts/edit.php';
+        include_once '../Views/admin/layouts/footer.php';
     }
 
     public function update()

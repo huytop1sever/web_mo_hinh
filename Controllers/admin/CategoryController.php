@@ -38,13 +38,13 @@ class CategoryController
             ],
         ];
 
-        include_once __DIR__ . '/../../Views/admin/layouts/header.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/sidebar.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/navbar.php';
+        include_once '../Views/admin/layouts/header.php';
+        include_once '../Views/admin/layouts/sidebar.php';
+        include_once '../Views/admin/layouts/navbar.php';
 
-        include_once __DIR__ . '/../../Views/admin/categories/index.php';
+        include_once '../Views/admin/categories/index.php';
 
-        include_once __DIR__ . '/../../Views/admin/layouts/footer.php';
+        include_once '../Views/admin/layouts/footer.php';
     }
 
     public function add()
@@ -52,13 +52,13 @@ class CategoryController
         $title = 'Thêm danh mục mới';
         $pageTitle = 'Thêm danh mục';
 
-        include_once __DIR__ . '/../../Views/admin/layouts/header.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/sidebar.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/navbar.php';
+        include_once '../Views/admin/layouts/header.php';
+        include_once '../Views/admin/layouts/sidebar.php';
+        include_once '../Views/admin/layouts/navbar.php';
 
-        include_once __DIR__ . '/../../Views/admin/categories/add.php';
+        include_once '../Views/admin/categories/add.php';
 
-        include_once __DIR__ . '/../../Views/admin/layouts/footer.php';
+        include_once '../Views/admin/layouts/footer.php';
     }
 
     public function edit($id)
@@ -74,13 +74,13 @@ class CategoryController
             'status' => 'Hiển thị'
         ];
 
-        include_once __DIR__ . '/../../Views/admin/layouts/header.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/sidebar.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/navbar.php';
+        include_once '../Views/admin/layouts/header.php';
+        include_once '../Views/admin/layouts/sidebar.php';
+        include_once '../Views/admin/layouts/navbar.php';
 
-        include_once __DIR__ . '/../../Views/admin/categories/edit.php';
+        include_once '../Views/admin/categories/edit.php';
 
-        include_once __DIR__ . '/../../Views/admin/layouts/footer.php';
+        include_once '../Views/admin/layouts/footer.php';
     }
 
     public function store()

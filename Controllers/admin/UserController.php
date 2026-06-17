@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/../../Models/User.php';
-
 class UserController
 {
     public function index()
@@ -12,11 +10,11 @@ class UserController
         $userModel = new User();
         $users = $userModel->getAll();
 
-        include_once __DIR__ . '/../../Views/admin/layouts/header.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/sidebar.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/navbar.php';
-        include_once __DIR__ . '/../../Views/admin/users/index.php';
-        include_once __DIR__ . '/../../Views/admin/layouts/footer.php';
+        include_once '../Views/admin/layouts/header.php';
+        include_once '../Views/admin/layouts/sidebar.php';
+        include_once '../Views/admin/layouts/navbar.php';
+        include_once '../Views/admin/users/index.php';
+        include_once '../Views/admin/layouts/footer.php';
     }
 
     public function store()
