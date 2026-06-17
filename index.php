@@ -14,9 +14,9 @@ require_once 'Controllers/AuthController.php';
 //models
 require_once 'Models/Product.php';
 require_once 'Models/Category.php';
-require_once 'Models/Cart.php';
 require_once 'Models/User.php';
 require_once 'Models/Order.php';
+require_once 'Models/Post.php';
 
 
 $page = $_GET['page'] ?? 'home';

@@ -1,8 +1,5 @@
 <?php
 
-//dung PDO
-require_once '../config/database.php';
-
 class Category
 {
     private $pdo;
