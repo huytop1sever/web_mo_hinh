@@ -1,7 +1,5 @@
 <?php
 
-require_once '../Models/Product.php';
-
 class ProductController
 {
 public function index()
