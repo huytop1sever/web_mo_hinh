@@ -12,6 +12,7 @@ class ProductController
         $keyword = $_GET['keyword'] ?? '';
         $categoryId = $_GET['category_id'] ?? '';
         $priceRange = $_GET['price_range'] ?? '';
+        $sort = $_GET['sort'] ?? '';
 
         if ($pageNow < 1) {
             $pageNow = 1;
@@ -26,7 +27,7 @@ class ProductController
             $totalPages = 1;
         }
 
-        $products = $productModel->getAll($keyword, $categoryId, $limit, $offset, $priceRange);
+        $products = $productModel->getAll($keyword, $categoryId, $limit, $offset, $priceRange, $sort);
         $categories = $productModel->getCategoriesWithCount();
 
         require_once 'Views/client/product/index.php';

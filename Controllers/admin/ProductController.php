@@ -11,6 +11,8 @@ public function index()
 
     $keyword = $_GET['keyword'] ?? '';
     $categoryId = $_GET['category_id'] ?? '';
+    $priceRange = $_GET['price_range'] ?? '';
+    $sort = $_GET['sort'] ?? '';
 
     $limit = 10;
     $currentPage = isset($_GET['p']) ? (int)$_GET['p'] : 1;
@@ -21,13 +23,13 @@ public function index()
 
     $offset = ($currentPage - 1) * $limit;
 
-    $totalProducts = $productModel->countAll($keyword, $categoryId);
+    $totalProducts = $productModel->countAll($keyword, $categoryId, $priceRange);
     $totalPages = (int) ceil($totalProducts / $limit);
 
     if ($totalPages < 1) {
         $totalPages = 1;
     }
-    $products = $productModel->getAll($keyword, $categoryId, $limit, $offset);
+    $products = $productModel->getAll($keyword, $categoryId, $limit, $offset, $priceRange, $sort);
     $categories = $productModel->getCategories();
 
     include_once '../Views/admin/layouts/header.php';
@@ -132,15 +134,5 @@ public function index()
     {
         $uploadDir = '../uploads/products/';
 
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
-
-        $fileName = time() . '_' . basename($_FILES['image']['name']);
-        $targetPath = $uploadDir . $fileName;
-
-        move_uploaded_file($_FILES['image']['tmp_name'], $targetPath);
-
-        return 'uploads/products/' . $fileName;
-    }
-}
+    }};
+?>

@@ -130,9 +130,7 @@ class AuthController
                 }
             }
 
-            if (!empty($errors)) {
-                $error = 'Vui lòng kiểm tra lại thông tin';
-            }
+            
         }
 
         require_once 'Views/auth/register/index.php';
