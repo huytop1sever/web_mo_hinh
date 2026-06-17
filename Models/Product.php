@@ -10,7 +10,7 @@ class Product
         $this->pdo = $conn;
     }
 
-    public function getAll($keyword = '', $categoryId = '', $limit = 10, $offset = 0)
+    public function getAll($keyword = '', $categoryId = '', $limit = 10, $offset = 0, $priceRange = '')
     {
         $sql = "
             SELECT 
@@ -32,7 +32,17 @@ class Product
                 ) AS sale_price,
                 COALESCE(SUM(pv.stock), 0) AS total_stock,
                 COUNT(pv.id) AS variant_count,
-                MAX(pv.status) AS product_status
+                MAX(pv.status) AS product_status,
+                COALESCE(
+                    MIN(
+                        CASE 
+                            WHEN pv.sale_price IS NOT NULL AND pv.sale_price > 0 
+                            THEN pv.sale_price 
+                            ELSE pv.price 
+                        END
+                    ),
+                    0
+                ) AS filter_price
             FROM products p
             LEFT JOIN categories c ON p.category_id = c.id
             LEFT JOIN product_variants pv ON pv.product_id = p.id
@@ -57,6 +67,17 @@ class Product
                 p.category_id,
                 p.created_at,
                 c.name
+        ";
+
+        if ($priceRange === 'under_1000000') {
+            $sql .= " HAVING filter_price < 1000000 ";
+        } elseif ($priceRange === '1000000_2000000') {
+            $sql .= " HAVING filter_price BETWEEN 1000000 AND 2000000 ";
+        } elseif ($priceRange === 'over_2000000') {
+            $sql .= " HAVING filter_price > 2000000 ";
+        }
+
+        $sql .= "
             ORDER BY p.id DESC
             LIMIT :limit OFFSET :offset
         ";
@@ -71,20 +92,33 @@ class Product
             $stmt->bindValue(':category_id', $categoryId, PDO::PARAM_INT);
         }
 
-        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
 
         $stmt->execute();
 
         return $stmt->fetchAll();
     }
 
-    public function countAll($keyword = '', $categoryId = '')
+    public function countAll($keyword = '', $categoryId = '', $priceRange = '')
     {
         $sql = "
-            SELECT COUNT(*) AS total
-            FROM products p
-            WHERE 1
+            SELECT COUNT(*) FROM (
+                SELECT
+                    p.id,
+                    COALESCE(
+                        MIN(
+                            CASE 
+                                WHEN pv.sale_price IS NOT NULL AND pv.sale_price > 0 
+                                THEN pv.sale_price 
+                                ELSE pv.price 
+                            END
+                        ),
+                        0
+                    ) AS filter_price
+                FROM products p
+                LEFT JOIN product_variants pv ON pv.product_id = p.id
+                WHERE 1
         ";
 
         if ($keyword !== '') {
@@ -94,6 +128,22 @@ class Product
         if ($categoryId !== '') {
             $sql .= " AND p.category_id = :category_id ";
         }
+
+        $sql .= "
+                GROUP BY p.id
+        ";
+
+        if ($priceRange === 'under_1000000') {
+            $sql .= " HAVING filter_price < 1000000 ";
+        } elseif ($priceRange === '1000000_2000000') {
+            $sql .= " HAVING filter_price BETWEEN 1000000 AND 2000000 ";
+        } elseif ($priceRange === 'over_2000000') {
+            $sql .= " HAVING filter_price > 2000000 ";
+        }
+
+        $sql .= "
+            ) AS product_count
+        ";
 
         $stmt = $this->pdo->prepare($sql);
 
@@ -267,5 +317,21 @@ class Product
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 
         return $stmt->execute();
+    }
+
+    public function getCategoriesWithCount()
+    {
+        $sql = "
+            SELECT
+                c.*,
+                COUNT(p.id) as total_products
+            FROM categories c
+            LEFT JOIN products p
+                ON p.category_id = c.id
+            GROUP BY c.id
+            ORDER BY c.id DESC
+        ";
+
+        return $this->pdo->query($sql)->fetchAll();
     }
 }
