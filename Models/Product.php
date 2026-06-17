@@ -10,7 +10,7 @@ class Product
         $this->pdo = $conn;
     }
 
-    public function getAll($keyword = '', $categoryId = '', $limit = 10, $offset = 0, $priceRange = '')
+    public function getAll($keyword = '', $categoryId = '', $limit = 10, $offset = 0, $priceRange = '', $sort = '')
     {
         $sql = "
             SELECT 
@@ -77,8 +77,25 @@ class Product
             $sql .= " HAVING filter_price > 2000000 ";
         }
 
+        // Xử lý logic sắp xếp
+        $orderBy = "p.id DESC"; // Mặc định
+        switch ($sort) {
+            case 'price_asc':
+                $orderBy = "filter_price ASC";
+                break;
+            case 'price_desc':
+                $orderBy = "filter_price DESC";
+                break;
+            case 'name_asc':
+                $orderBy = "p.title ASC";
+                break;
+            case 'name_desc':
+                $orderBy = "p.title DESC";
+                break;
+        }
+
         $sql .= "
-            ORDER BY p.id DESC
+            ORDER BY $orderBy
             LIMIT :limit OFFSET :offset
         ";
 
