@@ -1,5 +1,3 @@
-<?php require_once 'Views/client/layouts/header.php'; ?>
-
 <?php
 $products = $products ?? [];
 $categories = $categories ?? [];
@@ -363,4 +361,3 @@ document.querySelectorAll('.add-cart-btn').forEach(btn => {
     });
 });
 </script>
-<?php require_once 'Views/client/layouts/footer.php'; ?>

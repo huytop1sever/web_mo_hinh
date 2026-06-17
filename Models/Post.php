@@ -8,38 +8,13 @@ class Post
     {
         global $conn;
         $this->pdo = $conn;
-        $this->ensureTable();
     }
 
-    private function ensureTable(): void
-    {
-        $sql = "
-            CREATE TABLE IF NOT EXISTS posts (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                title VARCHAR(255) NOT NULL,
-                slug VARCHAR(255) NOT NULL UNIQUE,
-                excerpt TEXT NULL,
-                content LONGTEXT NULL,
-                category VARCHAR(100) NOT NULL,
-                author VARCHAR(100) NOT NULL DEFAULT 'Admin',
-                image VARCHAR(255) NULL,
-                status VARCHAR(30) NOT NULL DEFAULT 'draft',
-                featured TINYINT(1) NOT NULL DEFAULT 0,
-                views INT NOT NULL DEFAULT 0,
-                published_at DATE NULL,
-                created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                updated_at DATETIME NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-        ";
-
-        $this->pdo->exec($sql);
-    }
-
-    public function getAll(string $keyword = '', string $category = '', string $status = ''): array
+    public function getAll(string $keyword = '', string $category = '', string $status = 'published'): array
     {
         $sql = "SELECT * FROM posts WHERE 1";
         $params = [];
-
+        
         if ($keyword !== '') {
             $sql .= " AND (title LIKE :keyword OR excerpt LIKE :keyword OR content LIKE :keyword)";
             $params[':keyword'] = '%' . $keyword . '%';
@@ -69,6 +44,13 @@ class Post
         $stmt->execute([$id]);
 
         return $stmt->fetch();
+    }
+
+    public function increaseView($id): void
+    {
+        $sql = "UPDATE posts SET views = views + 1 WHERE id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$id]);
     }
 
     public function create(array $data): bool
@@ -157,5 +139,26 @@ class Post
             ':featured' => !empty($data['featured']) ? 1 : 0,
             ':published_at' => $data['date'] ?? date('Y-m-d'),
         ];
+    }
+
+    public function getRelated(int $id, int $limit = 3): array
+    {
+        $post = $this->find($id);
+        if (!$post) return [];
+
+        $sql = "SELECT * FROM posts 
+                WHERE category = :category 
+                AND id <> :id 
+                AND status = 'published' 
+                ORDER BY created_at DESC 
+                LIMIT :limit";
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':category', $post['category']);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
     }
 }
