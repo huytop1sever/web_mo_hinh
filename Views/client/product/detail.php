@@ -1,5 +1,3 @@
-<?php require_once 'Views/client/layouts/Header.php'; ?>
-
 <?php
 // Nhận dữ liệu từ ProductController
 $product = $product ?? null;
@@ -158,5 +156,3 @@ $isOutOfStock = ($product['total_stock'] ?? 0) <= 0;
         </section>
     </div>
 </main>
-
-<?php require_once 'Views/client/layouts/Footer.php'; ?>

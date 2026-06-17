@@ -7,6 +7,7 @@ require_once 'Controllers/client/HomeController.php';
 require_once 'Controllers/client/CartController.php';
 require_once 'Controllers/client/CheckoutController.php';
 require_once 'Controllers/client/ProductController.php';
+require_once 'Controllers/client/PostController.php';
 
 require_once 'Controllers/AuthController.php';
 
@@ -20,6 +21,8 @@ require_once 'Models/Post.php';
 
 
 $page = $_GET['page'] ?? 'home';
+
+require_once 'Views/client/layouts/header.php';
 
 switch ($page) {
     case 'home':
@@ -36,6 +39,14 @@ switch ($page) {
 
     case 'product-detail':
         (new ProductController())->detail();
+        break;
+
+    case 'post':
+        (new PostController())->index();
+        break;
+
+    case 'post-detail':
+        (new PostController())->detail();
         break;
 
     case 'checkout':
@@ -70,3 +81,8 @@ switch ($page) {
         echo "404";
         break;
 }
+<<<<<<< HEAD
+=======
+
+require_once 'Views/client/layouts/footer.php';
+>>>>>>> 2270fcb (bài viết client vs chi tiết)

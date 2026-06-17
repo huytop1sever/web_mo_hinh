@@ -93,7 +93,7 @@
                         Danh mục
                     </a>
 
-                    <a href="#"
+                    <a href="index.php?page=post"
                         class="nav-item nav-link">
                         Tin tức
                     </a>
