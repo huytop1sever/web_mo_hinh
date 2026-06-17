@@ -110,16 +110,17 @@ $sort = $_GET['sort'] ?? '';
                                 $price = $product['price'];
                             }
 
-                            $image = !empty($product['image'])
-                                ? $product['image']
-                                : 'assets/client/img/no-image.png';
+                            // Sửa lỗi syntax và đường dẫn ảnh
+                            $image = (!empty($product['image'])) 
+                                ? "assets/client/img/" . $product['image'] 
+                                : "assets/client/img/no-image.png";
                             
                             $isOutOfStock = ($product['total_stock'] ?? 0) <= 0;
                             $statusText = $isOutOfStock ? 'Hết hàng' : 'Còn hàng';
                             $statusClass = $isOutOfStock ? 'text-danger' : 'text-success';
                             ?>
                             <div class="col-md-6 col-xl-4">
-                                <div class="product-card">
+                                <div class="product-card position-relative">
                                     <div class="product-img">
                                         <a href="index.php?page=product-detail&id=<?= htmlspecialchars($id) ?>">
                                             <img src="<?= htmlspecialchars($image) ?>"
@@ -139,7 +140,7 @@ $sort = $_GET['sort'] ?? '';
                                             </div>
                                         </div>
                                         <h4 class="product-title">
-                                            <a href="index.php?page=product-detail&id=<?= htmlspecialchars($id) ?>">
+                                            <a href="index.php?page=product-detail&id=<?= htmlspecialchars($id) ?>" class="stretched-link">
                                                 <?= htmlspecialchars($name) ?>
                                             </a>
                                         </h4>
@@ -295,6 +296,10 @@ $sort = $_GET['sort'] ?? '';
     border-color: #6c757d;
     cursor: not-allowed;
     opacity: 0.65;
+}
+.product-actions {
+    position: relative;
+    z-index: 2; /* Đảm bảo các nút bấm vẫn hoạt động khi dùng stretched-link */
 }
 .product-promo {
     margin-top: 30px;
