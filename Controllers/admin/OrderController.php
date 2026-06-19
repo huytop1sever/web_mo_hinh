@@ -52,7 +52,7 @@ class OrderController
         header('Location: index.php?page=orders&msg=error');
         exit;
     }
-    
+
     public function delete()
     {
         $id = $_GET['id'] ?? 0;

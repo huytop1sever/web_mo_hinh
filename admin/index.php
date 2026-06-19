@@ -79,6 +79,18 @@ switch ($page) {
         (new OrderController())->index();
         break;
 
+    case 'order-detail':
+        (new OrderController())->detail();
+        break;
+
+    case 'order-update-status':
+        (new OrderController())->updateStatus();
+        break;
+
+    case 'order-delete':
+        (new OrderController())->delete();
+        break;
+
     case 'users':
         (new UserController())->index();
         break;
