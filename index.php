@@ -29,14 +29,6 @@ switch ($page) {
         (new ProductController())->detail();
         break;
 
-    case 'cart-add':
-        (new CartController())->add();
-        break;
-
-    case 'cart-delete':
-        (new CartController())->delete();
-        break;
-
     case 'checkout':
         (new CheckoutController())->index();
         break;
