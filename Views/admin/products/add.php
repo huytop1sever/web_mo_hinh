@@ -40,28 +40,6 @@ $categories = $categories ?? [];
                 <span class="error-message"></span>
             </div>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="price">Giá <span>*</span></label>
-                    <input type="number"
-                           id="price"
-                           name="price"
-                           min="0"
-                           placeholder="Nhập giá">
-                    <span class="error-message"></span>
-                </div>
-
-                <div class="form-group">
-                    <label for="stock">Tồn kho <span>*</span></label>
-                    <input type="number"
-                           id="stock"
-                           name="stock"
-                           min="0"
-                           placeholder="Số lượng">
-                    <span class="error-message"></span>
-                </div>
-            </div>
-
             <div class="form-group">
                 <label for="description">Mô tả ngắn <span>*</span></label>
                 <textarea id="description" name="description" rows="4" placeholder="Nhập mô tả ngắn cho sản phẩm"></textarea>

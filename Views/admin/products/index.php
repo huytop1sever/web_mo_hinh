@@ -88,16 +88,24 @@ $stt = (($currentPage - 1) * $limit) + 1;
 
                             <td>
                                 <?php if (!empty($product['image'])): ?>
+                                    <?php
+                                    $imagePath = $product['image'];
+
+                                    if (!str_contains($imagePath, 'uploads/')) {
+                                        $imagePath = 'uploads/products/' . $imagePath;
+                                    }
+                                    ?>
+
                                     <img
-                                        src="../<?= htmlspecialchars($product['image']) ?>"
-                                        alt="<?= htmlspecialchars($product['name']) ?>"
+                                        src="../<?= htmlspecialchars($imagePath) ?>"
+                                        alt="<?= htmlspecialchars($product['name'] ?? '') ?>"
                                         class="product-thumb">
                                 <?php else: ?>
                                     Không có ảnh
                                 <?php endif; ?>
                             </td>
 
-                            <td><?= htmlspecialchars($product['name']) ?></td>
+                            <td><?= htmlspecialchars($product['name'] ?? '') ?></td>
 
                             <td><?= htmlspecialchars($product['category'] ?? '') ?></td>
 
