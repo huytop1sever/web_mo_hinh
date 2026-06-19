@@ -20,6 +20,7 @@ require_once 'Models/Order.php';
 require_once 'Models/Post.php';
 
 
+
 $page = $_GET['page'] ?? 'home';
 
 require_once 'Views/client/layouts/header.php';
@@ -29,9 +30,7 @@ switch ($page) {
         (new HomeController())->index();
         break;
 
-    case 'cart':
-        (new CartController())->index();
-        break;
+   
 
     case 'product':
         (new ProductController())->index();
