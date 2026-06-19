@@ -196,17 +196,38 @@ class Product
                 p.content,
                 p.image,
                 p.category_id,
-                c.name AS category
+                c.name AS category,
+                c.name AS category_name,
+                MIN(pv.price) AS price,
+                MIN(
+                    CASE 
+                        WHEN pv.sale_price IS NOT NULL AND pv.sale_price > 0 
+                        THEN pv.sale_price 
+                        ELSE NULL 
+                    END
+                ) AS sale_price,
+                COALESCE(SUM(pv.stock), 0) AS total_stock,
+                COUNT(pv.id) AS variant_count
             FROM products p
             LEFT JOIN categories c ON p.category_id = c.id
+            LEFT JOIN product_variants pv ON pv.product_id = p.id
             WHERE p.id = :id
+            GROUP BY 
+                p.id,
+                p.title,
+                p.description,
+                p.content,
+                p.image,
+                p.category_id,
+                c.name
+            LIMIT 1
         ";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
-        return $stmt->fetch();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function getVariants($productId)
@@ -215,6 +236,7 @@ class Product
             SELECT *
             FROM product_variants
             WHERE product_id = :product_id
+            AND status = 1
             ORDER BY id ASC
         ";
 
@@ -222,7 +244,7 @@ class Product
         $stmt->bindValue(':product_id', $productId, PDO::PARAM_INT);
         $stmt->execute();
 
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function create($data)
@@ -351,4 +373,21 @@ class Product
 
         return $this->pdo->query($sql)->fetchAll();
     }
+
+    public function getImages($productId)
+    {
+        $sql = "
+            SELECT *
+            FROM product_images
+            WHERE product_id = :product_id
+            ORDER BY id ASC
+        ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':product_id', $productId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
