@@ -81,8 +81,5 @@ switch ($page) {
         echo "404";
         break;
 }
-<<<<<<< HEAD
-=======
 
 require_once 'Views/client/layouts/footer.php';
->>>>>>> 2270fcb (bài viết client vs chi tiết)
