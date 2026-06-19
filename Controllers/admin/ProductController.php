@@ -134,5 +134,26 @@ public function index()
     {
         $uploadDir = '../uploads/products/';
 
-    }};
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        $fileName = time() . '_' . basename($_FILES['image']['name']);
+        $targetPath = $uploadDir . $fileName;
+
+        $allowTypes = ['jpg', 'jpeg', 'png', 'webp'];
+        $fileType = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
+        if (!in_array($fileType, $allowTypes)) {
+            return '';
+        }
+
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
+            return 'uploads/products/' . $fileName;
+        }
+
+        return '';
+    }
+    
+    };
 ?>
