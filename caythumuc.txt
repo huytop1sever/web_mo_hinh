@@ -1,529 +1,214 @@
 Folder PATH listing for volume New Volume
 Volume serial number is 0000000E DC21:7204
 D:.
-¦   cautruc.txt
-¦   caythumuc.txt
-¦   index.php
-¦   
+ï¿½   cautruc.txt
+ï¿½   caythumuc.txt
+ï¿½   index.php
+ï¿½   
 +---admin
-¦       index.php
-¦       
+ï¿½       index.php
+ï¿½       
 +---assets
-¦   +---admin
-¦   ¦   +---css
-¦   ¦   ¦       admin.css
-¦   ¦   ¦       category.css
-¦   ¦   ¦       comments.css
-¦   ¦   ¦       orders.css
-¦   ¦   ¦       posts.css
-¦   ¦   ¦       product-form.css
-¦   ¦   ¦       users.css
-¦   ¦   ¦       
-¦   ¦   +---js
-¦   ¦           category.js
-¦   ¦           orders.js
-¦   ¦           product.js
-¦   ¦           users.js
-¦   ¦           
-¦   +---client
-¦       +---css
-¦       ¦       bootstrap.min.css
-¦       ¦       style.css
-¦       ¦       
-¦       +---img
-¦       ¦   ¦   avatar.jpg
-¦       ¦   ¦   baner-1.png
-¦       ¦   ¦   banner-fruits.jpg
-¦       ¦   ¦   banner.jpg
-¦       ¦   ¦   best-product-1.jpg
-¦       ¦   ¦   best-product-2.jpg
-¦       ¦   ¦   best-product-3.webp
-¦       ¦   ¦   best-product-4.jpg
-¦       ¦   ¦   best-product-5.jpg
-¦       ¦   ¦   best-product-6.jpg
-¦       ¦   ¦   cart-page-header-img.jpg
-¦       ¦   ¦   featur-1.jpg
-¦       ¦   ¦   featur-2.jpg
-¦       ¦   ¦   featur-3.jpg
-¦       ¦   ¦   fruite-item-1.jpg
-¦       ¦   ¦   fruite-item-2.jpg
-¦       ¦   ¦   fruite-item-3.webp
-¦       ¦   ¦   fruite-item-4.webp
-¦       ¦   ¦   fruite-item-5.webp
-¦       ¦   ¦   fruite-item-6.webp
-¦       ¦   ¦   goku.jpg
-¦       ¦   ¦   goku1.jpg
-¦       ¦   ¦   Gundam.jpg
-¦       ¦   ¦   hero-img-1.png
-¦       ¦   ¦   hero-img-2.jpg
-¦       ¦   ¦   hero-img.jpg
-¦       ¦   ¦   luffy-gear-5.jpg
-¦       ¦   ¦   payment.png
-¦       ¦   ¦   S.H. Figuarts Goku Ultra Instinct - Search Images.html
-¦       ¦   ¦   single-item.jpg
-¦       ¦   ¦   testimonial-1.jpg
-¦       ¦   ¦   vegetable-item-1.jpg
-¦       ¦   ¦   vegetable-item-2.jpg
-¦       ¦   ¦   vegetable-item-3.png
-¦       ¦   ¦   vegetable-item-4.jpg
-¦       ¦   ¦   vegetable-item-5.jpg
-¦       ¦   ¦   vegetable-item-6.jpg
-¦       ¦   ¦   
-¦       ¦   +---css
-¦       ¦   ¦       bootstrap.min.css
-¦       ¦   ¦       style.css
-¦       ¦   ¦       
-¦       ¦   +---S.H. Figuarts Goku Ultra Instinct - Search Images_files
-¦       ¦           -A5v-hTPFRzEXEMXLO7124F8nt0.svg
-¦       ¦           0LuzIQloNcuB_qQPm90mZuVm2uE.br.js.download
-¦       ¦           0NkXKkaVkOi7zqIYRQQ-JN2ZMRk.br.js.download
-¦       ¦           0WKY0ny-iWR3yYCvsD6MQVMjVbw.svg
-¦       ¦           1Gpwn6KYBMfLcQ96fMfvyA3jmIo.br.js.download
-¦       ¦           1L93TsCjxRt6RY7EoEoEa7937NA.br.js.download
-¦       ¦           1YhPsbfyL21332neAsex_IeehLU.br.js.download
-¦       ¦           3pOqOoohWwtHPg-vnhNBGY5yHHI.br.css
-¦       ¦           3U4MuSTuHs_9JKfRazSxuXeJlv4.br.js.download
-¦       ¦           4A9D07RlW6M7gPmPQQydX3khDJc.svg
-¦       ¦           4L4QdyjTv0HYE2Ig2ol9eYoqxg8.svg
-¦       ¦           4XhNiFLBac8W4P-lZmslgZDf000.br.js.download
-¦       ¦           5FbVcVko_TuW5Y8VB4_bHoFuDm8.br.js.download
-¦       ¦           5Gaj26NnMYyy_ojACxjl5rSGsQk.br.js.download
-¦       ¦           5L3iD467J3iJWEPwIjxlK0MMDpY.br.js.download
-¦       ¦           5vFSQCRSrpDcq3eta_XSlrn9ECQ.br.js.download
-¦       ¦           5yVAKe18OXFf_XvuMPJO61GQVsc.svg
-¦       ¦           7-J2RHYGGYSSYur9SUNcAJ6V57w.br.js.download
-¦       ¦           71mLq5OSx9PI8jgeJllXdk39KxM.br.js.download
-¦       ¦           75SIhjT7cikNAal0FuI8WHdzWa8.br.js.download
-¦       ¦           7htWzqWZv8GSHJaIW1haas9SNTE.svg
-¦       ¦           7oG-Ji9mObOzUoeus7A7UlcJDIs.br.css
-¦       ¦           7PJapN8TBlSbFd5vZ9NOvZ_h98A.br.css
-¦       ¦           7tTfYznr5m_lbsCaTZ5lJ5NfMNw.svg
-¦       ¦           88F_WFp57AEhbuX2xUzJp0yKLEM.br.js.download
-¦       ¦           8M5_rpcxUUkVgUBFJV_AP7Ut3ds.br.js.download
-¦       ¦           8_l7FdkTEeUdq3709l0ZIjUaFso.br.js.download
-¦       ¦           910ptS3pcIDQ7a5acMaHuQliuN0.br.js.download
-¦       ¦           9g2uGVRiVEp1Z6NEnafRTzu39z4.br.js.download
-¦       ¦           9mM--t8iClqcK4e1MHzNovhHkVA.svg
-¦       ¦           9Z2GyyGvsKSVNrmOMrTfcv8z_yQ.br.js.download
-¦       ¦           AlZ2sswxAQ4Q7UFsdy4GhX407fw.br.js.download
-¦       ¦           Ass0FROa2e9YKJimHNSYJXacvKI.br.js.download
-¦       ¦           BCVDUNfeZ7tQ2QpI_u5lZbww3VY.br.js.download
-¦       ¦           BlueIdentityDropdownRedirect_c.js.download
-¦       ¦           bSmUb4SdiINJy0O6_CJPQxImT6o.svg
-¦       ¦           bWBJ7MKIOg3qs13dXIBmHzsBR3M.br.js.download
-¦       ¦           c662_JIRtrk_PS2cDdfzRDiKHsg.br.css
-¦       ¦           cD-VOAGiLxuv3XXo37JO9cObcPg.br.js.download
-¦       ¦           cfKt7bw67nxWZkkgOIRReDE3rQI.br.js.download
-¦       ¦           Ci6Xzu7lUfNYtt_LRbzVQ2-kSew.br.js.download
-¦       ¦           ckyHL9EJsFerbRV4bwdC-K491q0.br.js.download
-¦       ¦           ClBkzRTD0QLpIATX2q7eWktfr_k.br.js.download
-¦       ¦           DmYomXZ0p9--syG1mm6CnQwvRHg.br.js.download
-¦       ¦           dTR8g_w1JyjkycsHAwG_b2BGs0o.br.js.download
-¦       ¦           DVAuwtqd1nRcTCF3ZCHWFi09ARI.br.js.download
-¦       ¦           e5L7vKbubPSU1bqZ4-OGMj8wr3o.br.js.download
-¦       ¦           e7qg7cbQkMD6ZlpuYCqAK_iAwxw.br.css
-¦       ¦           EAI2MpbgpapWy3f5CJ0mQ55YzkI.br.js.download
-¦       ¦           eKvcHdnNwo1WcxoSioV4ztnfZk8.br.js.download
-¦       ¦           EmbwE8rah_7zdUQkosWSw-5nAPY.br.js.download
-¦       ¦           eONVEA3w40AuXT8urmfzc7DGNg8.br.css
-¦       ¦           exHxE2SwmQuFB7CLKl9ZNNql7Tc.br.js.download
-¦       ¦           eyf7iYpkU1E7D0Itcc4XVcbdbLc.css
-¦       ¦           f14sYkAoIbYUnR0EQpMSkaGmmiI.br.css
-¦       ¦           F6F2TFC8wCHiTA8V0d64bx8w7rw.br.js.download
-¦       ¦           f9_6SowaHqJofUje54tw3jHEXb0.br.js.download
-¦       ¦           fdVZU4ttbw8NDRm6H3I5BW3_vCo.svg
-¦       ¦           Flag_Feedback.png
-¦       ¦           fRSNKQanUHk53F1a1Bi8UA71Qt4.br.js.download
-¦       ¦           Fsa_OI0AplCnVoXGca8ALOo0S0s.svg
-¦       ¦           gIoKmeHMJx2_2nng59mskaI57bg.br.css
-¦       ¦           GSNeCa5XvtoP6jz0k5V172vRaQ8.br.js.download
-¦       ¦           Gyuq2bqitqDJM0BeAkbKXGlQXNw.br.js.download
-¦       ¦           HamburgerServicesHeaderFlyout_c.js.download
-¦       ¦           hEqFKjQayMY_lHvLB2LmW1vKiD4.br.js.download
-¦       ¦           Hlxod2HjXBRmUQXC-oLI2O_MpO4.br.js.download
-¦       ¦           hSC2A2u1nPLBLKtx9YeXrNrijSw.br.js.download
-¦       ¦           i-SS1Dy3qt0ZGjyJ9-LpTEUaE9s.br.js.download
-¦       ¦           i5N4s2ROMVJIxdoq6CxpAEaDtfM.br.js.download
-¦       ¦           IMG_20200602_131946.jpg
-¦       ¦           inKqjZb7BBrOYwHLzCiWzAwJAZs.css
-¦       ¦           item_0000014587_FYxVRme9_01.jpg
-¦       ¦           iWvFSvKqX_lsNKysouDrh1hlrF8.br.js.download
-¦       ¦           JGmTj76FhGsk-L6oOi3ert6BeoQ.br.js.download
-¦       ¦           jXNwtGSsRRQ_YtowiJWIGYMzAV4.br.js.download
-¦       ¦           kCUpM11UAm_OYWzgyOYxVXT4Ij4.br.js.download
-¦       ¦           KKmv7jms62e_ic8wypgx5UKGIA8.svg
-¦       ¦           KLrSbzDKMog0mCiPcB9iwoEvlE4.br.js.download
-¦       ¦           kxTm6_yMJSr-Au_oSrzcrpJm2mY.svg
-¦       ¦           K_V1CARn2Q2lTs5njJKUvUkHyi4.br.js.download
-¦       ¦           lcZUQ5dyBbr5Tcsch2u_vENiSgM.br.css
-¦       ¦           LDPtmbi_w4y1oa90D_hi6HqB1QI.br.js.download
-¦       ¦           lK9b2BvbKZwxuJPsi52l8jcfzjU.br.css
-¦       ¦           Lks94sRsdVtbuF4IeWF2rzAMGAA.br.js.download
-¦       ¦           lwgCOY8rCo0Ub0btSshwRlT9HWI.br.js.download
-¦       ¦           lW_ItddKcD7wM6c7P5sfj9-Qqpw.br.js.download
-¦       ¦           lyKaxu_gNU_cPWIclldAukh4pCo.br.js.download
-¦       ¦           Mb809aw4VSMcuGQ4dq7jeph9Rjg.br.js.download
-¦       ¦           MFCea3lBZtF5AAN0Slj6qpivo78.br.js.download
-¦       ¦           MicXn58E9O2d9myy2AkyWVxfKMM.br.js.download
-¦       ¦           MjkKTrIX9w2UKVd1W1WV1Gj2zWM.br.js.download
-¦       ¦           n21aGRCN5EKHB3qObygw029dyNU.br.js.download
-¦       ¦           NNcPWELs37mjrTd4McRPz8yoC_E.br.js.download
-¦       ¦           noviXekWbIEiww0Q05yqGO7ZChU.br.js.download
-¦       ¦           nt6a1ZR520utsLoZmSYgwxdOPgI.js.download
-¦       ¦           nvhPqs2mXlmOvLc6hIeGEy1K1Ck.br.js.download
-¦       ¦           ODF(1).Gd2tmQwY5t6Ie38J_LaAbg
-¦       ¦           ODF(2).Gd2tmQwY5t6Ie38J_LaAbg
-¦       ¦           ODF(3)._tv6hJu-9jkFaUNgkbT5UA
-¦       ¦           ODF(4).QZ4yaRmTp-FQEvaeYtr_xA
-¦       ¦           ODF(5).gc09FdKMN4Hnrcfjw0m6kA
-¦       ¦           ODF(6).tpz6o_gmdIjOcgu-neVKkg
-¦       ¦           ODF.0JnSQY91lrxgoOFO9zqAvA
-¦       ¦           ODF.1dRx2sbIY2WvMteEC4Kgig
-¦       ¦           ODF.6EP5DPGpbT0Ls-5Mj7akdg
-¦       ¦           ODF.9ZFbtby4AHz9NNNrez1Y4g
-¦       ¦           ODF.caGqWNYEbyUBw8mLXcz8cw
-¦       ¦           ODF.CVboLIYyTg-R20TiUXP7Dg
-¦       ¦           ODF.CXNQkt8X-9rt8rcavtekgA
-¦       ¦           ODF.eACp8yrSq2IPQ7ZdFpGQlA
-¦       ¦           ODF.eUcR3hjNxILXRRtzA014ww
-¦       ¦           ODF.fqKsGIz6AMJRxbO-NuEsCA
-¦       ¦           ODF.G8GbmHa7S8zYQHBDQlC9dg
-¦       ¦           ODF.gc09FdKMN4Hnrcfjw0m6kA
-¦       ¦           ODF.Gd2tmQwY5t6Ie38J_LaAbg
-¦       ¦           ODF.hQPWtlHhHzxR_6cmGyUohQ
-¦       ¦           ODF.JQhednbqlD0PcY6g_Gohmg
-¦       ¦           ODF.jVGsuXI2kPPkUfrUhCm7IQ
-¦       ¦           ODF.khx2sdY9LLInTQXsOQBFDg
-¦       ¦           ODF.LvO4oPNtFydHNEur7iMecw
-¦       ¦           ODF.mgDx29WIUC8Z9TwV7rNguw
-¦       ¦           ODF.MrzzDTMlZsq_k5DWWmv7Hw
-¦       ¦           ODF.Oex71mW8Dhp0-CJmNk2D3g
-¦       ¦           ODF.OKmvKyC08oOmfhNhVXtx1w
-¦       ¦           ODF.qf0vE8x1Qda00QmNMm6FuA
-¦       ¦           ODF.QhaTy7HPvKoaJWwye8j2CQ
-¦       ¦           ODF.QZ4yaRmTp-FQEvaeYtr_xA
-¦       ¦           ODF.RpHW6zLXjO-zr8OEyEVq_w
-¦       ¦           ODF.Tp2s2qPIt39rB7xDyBGY3g
-¦       ¦           ODF.tpz6o_gmdIjOcgu-neVKkg
-¦       ¦           ODF.tzQU2QL0AupUlKigS0JnxQ
-¦       ¦           ODF.vJ_NaufNxvldpBNoF-22ow
-¦       ¦           ODF.WD3EZEUQ9Z2rvmSrZDKV6A
-¦       ¦           ODF.xizGzXdmK2agADgyu7PcoA
-¦       ¦           ODF.XvIJ9hWbHHYYQ4viK_nC_w
-¦       ¦           ODF._tv6hJu-9jkFaUNgkbT5UA
-¦       ¦           OHA5u4HW70mLbGkOE41WRDXcYTY.svg
-¦       ¦           OIP(1).XQPpgGOP1lpJO0h74WtVowAAAA
-¦       ¦           OIP.-h1LPWMFFSHhROL8kz8XAwHaD4
-¦       ¦           OIP.-hjO3r5tc3axdRf0axdJFwHaJ4
-¦       ¦           OIP.06xLyuwTDOa9JlmcQ85a9gHaKe
-¦       ¦           OIP.0swJE9khBbiVAgYI1Plc_QHaHa
-¦       ¦           OIP.1df-Sqt5noDwgtN_QRnq8gHaE7
-¦       ¦           OIP.1EIgganw_-YKLtnC03nvQwHaKd
-¦       ¦           OIP.20z3Dxe-F-mUKln0rgQqMwHaFj
-¦       ¦           OIP.2BJwjqB6ElTuC8Xe5yVOygHaHa
-¦       ¦           OIP.376vVWUx6PjY3d9AO-qBjAHaKd
-¦       ¦           OIP.5a7hF3XgRfiY7qgotNJoTwHaE7
-¦       ¦           OIP.60x7R5vRIu6pSQEyBvcBSQHaFj
-¦       ¦           OIP.6i70AUWmXsPR0osbXwRlmwHaKd
-¦       ¦           OIP.7e-Mqc41jYuvSIMY4nPnCwHaJo
-¦       ¦           OIP.7mXJ_3ac_FjO32KjlWH3SQHaHa
-¦       ¦           OIP.a1jZp5VD9PFuiE-APWT_5wHaJ4
-¦       ¦           OIP.a9BtMB7SZ0heGM9Igrj9dgHaFj
-¦       ¦           OIP.aHdFCkz2QDpg0DeXsYY5tgHaNK
-¦       ¦           OIP.aziUoc5fGLTwqMruXw8FrQHaFj
-¦       ¦           OIP.a_mSwOYkamFgA_kxEGPY2wAAAA
-¦       ¦           OIP.bqTMe23VgcSFJk2xtUWwPQHaJQ
-¦       ¦           OIP.Brv4Il3LUcRpenReNUQkLAHaHa
-¦       ¦           OIP.bVZw-L50AxeFbZkpUELQPQAAAA
-¦       ¦           OIP.CUDEwqmNUh48rEqX5VzcnQHaNJ
-¦       ¦           OIP.CVWcbDuwaFvmN1wUCPgFXQHaJR
-¦       ¦           OIP.DI89CF-QlzypDNOuQJm94wHaHa
-¦       ¦           OIP.dJ2IZCpYJPcGzUAd0W6G7wHaNK
-¦       ¦           OIP.DnY-fmTEappyAIasuqwAgwHaJ4
-¦       ¦           OIP.DVczAJLaI4i8ZSwcI8tc7AHaJ4
-¦       ¦           OIP.e0h60Ja2SSudquizpmsTmAHaJ4
-¦       ¦           OIP.E6yY6Pz-m-xmq1WrRkIHAQHaFj
-¦       ¦           OIP.EHfkaYEKpLxWVYxTL6blIgHaFj
-¦       ¦           OIP.eItscxfl4ZkJEr8SWn937AHaFh
-¦       ¦           OIP.eOT6BFkrcZaCsdDI40dRCAHaKd
-¦       ¦           OIP.eYrv4B1PlvKr_wS7LcPu8wHaLF
-¦       ¦           OIP.ezptxEwGbdPd6VweoAWDsQHaNL
-¦       ¦           OIP.f071ZYTo39j4d3gWexiMEwHaI0
-¦       ¦           OIP.fHsj22CWerVCDbKrSsY9aQHaHa
-¦       ¦           OIP.fK7M9aFxl2M0lJ66p5QsqQHaLH
-¦       ¦           OIP.fqns4KoLMZyXxyzZHybpWwHaJ4
-¦       ¦           OIP.FT7LLzQUnv2Xi7U383oI1wAAAA
-¦       ¦           OIP.FXRcV5CP1jMMETY979i-uAHaJQ
-¦       ¦           OIP.G8T75qnia-7X92eOh1_OMAHaKe
-¦       ¦           OIP.GBN4Pxp21zOzA8Fnus_NYgHaLG
-¦       ¦           OIP.hIKWK3FhP02MzFdCw1LURwHaHa
-¦       ¦           OIP.hSANgrGnvdWxLh5Vjc0rjAHaLH
-¦       ¦           OIP.hy0jZii2b9RGydtiVOr2gQAAAA
-¦       ¦           OIP.HZqGQH4xrtLruLgzHQUIDgHaKd
-¦       ¦           OIP.i556F0fkTcrdw89gnOTAPAHaHa
-¦       ¦           OIP.I7BU6yUoJAqq7PiCnEL47wHaFk
-¦       ¦           OIP.i97pXDM5khiNRk7z2H5mIwHaKd
-¦       ¦           OIP.j-jB9f1Cv569eOt3l1u57wHaJQ
-¦       ¦           OIP.jq9wu1nLRYKz5sccHeaOLQHaHa
-¦       ¦           OIP.jVHHMfZhEMBAOPHZpnJKSwHaJQ
-¦       ¦           OIP.K1ELaMsgQ5AXe1tgjjLFZQHaFj
-¦       ¦           OIP.kbYAW-jGWmofOHMGb3sZdAHaJ4
-¦       ¦           OIP.lM50qT5MnEZKDh0LF9-ogwAAAA
-¦       ¦           OIP.lrt7FnOcG1kVMs94E2GitAAAAA
-¦       ¦           OIP.LrvYrG2uDrgJFYqcMAFjnQHaJQ
-¦       ¦           OIP.lSxnlLVj5IcFCAOsrjARewHaI4
-¦       ¦           OIP.MelMvA2r_e82HG7eGf3ovAHaNK
-¦       ¦           OIP.MgwM2nyb1UCTAngDaAmeZQHaJQ
-¦       ¦           OIP.mxirvw0Yin2Z1AYrxRWOZgHaE7
-¦       ¦           OIP.mzHekbJ_8n1x6nk0wdKtDQHaGL
-¦       ¦           OIP.nMIsnVSJr9shII7K6_4oxwHaJP
-¦       ¦           OIP.nPBp3wix3ScSDZZlM9PUOgHaLG
-¦       ¦           OIP.O7l01z22p_E6bExtUFpm4wHaLG
-¦       ¦           OIP.OLx5-Osp55Lbnj2qBlzh3gHaKd
-¦       ¦           OIP.P29zD2_FOR41tD_HOtN4qQHaE7
-¦       ¦           OIP.pmcvo3PjgJQwgaFRx4iGGwHaLH
-¦       ¦           OIP.pPuUYoWVKJV9v3uA4PZ7bQHaHd
-¦       ¦           OIP.Q1sTedy3Usrwd1HsZW0W5gHaJQ
-¦       ¦           OIP.qaAHSvaD4JQtjUDkW2AFVwHaHa
-¦       ¦           OIP.QpNErb6av_52VCepzKlrEgHaHa
-¦       ¦           OIP.QzjjQLkdKHTyQeR5WQTArAHaKd
-¦       ¦           OIP.RDDl33zxctn2qgU6L167IgHaHa
-¦       ¦           OIP.RonHmIUT-dF87nrapyR7YgHaKa
-¦       ¦           OIP.rrhTa_6UQuiaFKkuC4MNyAHaJb
-¦       ¦           OIP.S9Ws6ARM-7FUy3pISVqIewAAAA
-¦       ¦           OIP.TcXgmXKglYK3Z2EKy_z50gHaHa
-¦       ¦           OIP.ThEc8q7IChiSJcsfzUHuoAHaJ4
-¦       ¦           OIP.THoMqXaAcoK7JVJkkOyR5gHaJQ
-¦       ¦           OIP.tiXAN_JKAh7_Y_DlnxypCAHaHf
-¦       ¦           OIP.TzHKZzPtnzmnacfcAu_KtwHaHo
-¦       ¦           OIP.UEpXb5rvmD3LYL-c5KqtmwHaKd
-¦       ¦           OIP.UJfeOf0H3hpT7nQdL8UXoAHaHa
-¦       ¦           OIP.V154rZEVeSP33UmFpZUILAHaEK
-¦       ¦           OIP.vFpBpa_OcYcGVXtskTG1BgHaKd
-¦       ¦           OIP.vgveIP7myJ8ouhD1Y8_1cAHaJ4
-¦       ¦           OIP.vnUO-EWzGi-ZyJOfDY4L9QHaJ4
-¦       ¦           OIP.W3QL9VaBwk3s0SZJzq4lLwHaFj
-¦       ¦           OIP.W3ueiAwKL2CugLNNdJ1GDwHaKd
-¦       ¦           OIP.W4Oi0Vyiill7yYIeYROmugHaJ4
-¦       ¦           OIP.WRxFpbKb9kGwQg8Fxxy0bwHaHa
-¦       ¦           OIP.WuGkxmHlP29K5WviqL2jOQHaKd
-¦       ¦           OIP.Wveb7zPL_iRD-hbK65K_1QHaJQ
-¦       ¦           OIP.WYPFcHJnIj8LVBaS--ee7QHaHa
-¦       ¦           OIP.X6W2aYsn4rzm_TrtFRg20gHaJ4
-¦       ¦           OIP.xanSwz9Pu80QGb-9Q6GLsQHaJn
-¦       ¦           OIP.xNBhRoG6inI3ZjOBq1ZNRwHaHa
-¦       ¦           OIP.XQPpgGOP1lpJO0h74WtVowAAAA
-¦       ¦           OIP.ya-zV6wQCprejOxoA6s76QAAAA
-¦       ¦           OIP.Yw4gjz-LMuUMZSMKJhxvhgAAAA
-¦       ¦           OIP.z05HT5D15_5OwidjkSDZswHaJ4
-¦       ¦           OIP.zDgIIfogFv-CXk7H9gAaLAHaKe
-¦       ¦           OIP.zhlCWeH2uJPkLxSNWxBPrAHaJ3
-¦       ¦           OIP.ZNSKN2HbSM9qIyhrJPouvgHaJQ
-¦       ¦           OIP._26OXoyCVd-xvnJAGm6I2wHaFj
-¦       ¦           OIP._UACPKwOKpDqzuS9vqzD2AHaHa
-¦       ¦           p8ebYmTQgXWQrEi0enn0amG_Ep4.br.js.download
-¦       ¦           Pay4yaPOiUAvZS2FdTZQjeCxe84.br.css
-¦       ¦           psgXZvzYJMEW2ydikIk493Va1d4.br.js.download
-¦       ¦           Q5BJPjebyYN5QiqznkcMQmLrF9U.svg
-¦       ¦           q6sDSflab_ozJ5WZq8sHUBeMmrs.br.js.download
-¦       ¦           qi9Bm_IYxbXnj0KXk4SBGNjT3cc.br.js.download
-¦       ¦           qwce00QJxdHzNxXh5H1mBc8QgBU.br.js.download
-¦       ¦           r31GrT0Eaf_5sPyu1TswcyPA8VI.svg
-¦       ¦           raY7i09EhP1dcnxIV0f_2Qc45Q4.br.js.download
-¦       ¦           RBARmUXLe8rKWg9gEFXYysn3nEg.br.css
-¦       ¦           rHEuoibmyxFGY3AaVM2-pUPbxT4.br.js.download
-¦       ¦           rRq_wl5pFjuswQTmZNb3ETdg7dQ.br.js.download
-¦       ¦           rWUlkcyGoUfwvBrugkc5bgJZpgg.br.js.download
-¦       ¦           RxnQtSv3YDXTp2Pi1BT-ojVQhss.css
-¦       ¦           saved_resource(1).html
-¦       ¦           saved_resource(2).html
-¦       ¦           saved_resource.html
-¦       ¦           SfJ6raSq1fhuhhfFXPVdwEdJvkY.css
-¦       ¦           sGLGWS22Xd3xpXONLKYyCIR-XiA.br.js.download
-¦       ¦           th
-¦       ¦           th(1)
-¦       ¦           th(10)
-¦       ¦           th(11)
-¦       ¦           th(12)
-¦       ¦           th(13)
-¦       ¦           th(14)
-¦       ¦           th(15)
-¦       ¦           th(16)
-¦       ¦           th(17)
-¦       ¦           th(18)
-¦       ¦           th(19)
-¦       ¦           th(2)
-¦       ¦           th(20)
-¦       ¦           th(21)
-¦       ¦           th(22)
-¦       ¦           th(23)
-¦       ¦           th(24)
-¦       ¦           th(25)
-¦       ¦           th(26)
-¦       ¦           th(3)
-¦       ¦           th(4)
-¦       ¦           th(5)
-¦       ¦           th(6)
-¦       ¦           th(7)
-¦       ¦           th(8)
-¦       ¦           th(9)
-¦       ¦           tVgY_M5dls3BAK95HDTquEv8IPs.br.js.download
-¦       ¦           t_tZD_58QirIILI3AXazLkWIy3k.br.js.download
-¦       ¦           UFyPMNBPfzIn4AnsDJ4D8VEjpGU.svg
-¦       ¦           ulJ3ckR0YcGpvIX6xhO4prJhEQQ.br.js.download
-¦       ¦           UusW4P7f5q9mXctgEuZhyIziufA.svg
-¦       ¦           UzLAW1Q1WOatPD4L3XbeKD9b0Lg.svg
-¦       ¦           v2.html
-¦       ¦           v2x0iJ1EzB0jc9IkvJKJQy1x0Co.br.js.download
-¦       ¦           widget.js.download
-¦       ¦           wNhUjm3kl_kvyfrio44J6j1zdYo.br.js.download
-¦       ¦           wZxQYdP5UmelV7Q7YBZxc_a0ypQ.br.js.download
-¦       ¦           XhuulIbo88eLoQSXNdexXtHhacY.svg
-¦       ¦           XszfaRNIszDJ1EChA9cAyiLcvBg.br.js.download
-¦       ¦           yQzL_mYdyQfAEdw601f8HBLgQqA.br.css
-¦       ¦           z0ZB2TPIKTjr74Z7JY8u8IJnH6M.br.js.download
-¦       ¦           zGVbRs8ROJp4JuMU5KatlsGYWWY.br.js.download
-¦       ¦           zP39lDxtrVHqXpgE8Vo-PryLpkI.svg
-¦       ¦           zU-wzeTci_PmsyatZvTRjj8U0as.br.js.download
-¦       ¦           zYRmeqAEd4Z0yDRz8nuL0syHMEI.svg
-¦       ¦           z_rOe0VUiazlym4ZI_NlUTCO0ok.br.js.download
-¦       ¦           _C-vnoEigkuMwoQZNefrC-Z99WU.br.js.download
-¦       ¦           _shfiguarts_son_goku_ultra_ins_1765267646_67493724_progressive
-¦       ¦           
-¦       +---js
-¦       ¦       main.js
-¦       ¦       
-¦       +---lib
-¦           +---easing
-¦           ¦       easing.js
-¦           ¦       easing.min.js
-¦           ¦       
-¦           +---lightbox
-¦           ¦   +---css
-¦           ¦   ¦       lightbox.min.css
-¦           ¦   ¦       
-¦           ¦   +---images
-¦           ¦   ¦       close.png
-¦           ¦   ¦       loading.gif
-¦           ¦   ¦       next.png
-¦           ¦   ¦       prev.png
-¦           ¦   ¦       
-¦           ¦   +---js
-¦           ¦           lightbox.min.js
-¦           ¦           
-¦           +---owlcarousel
-¦           ¦   ¦   LICENSE
-¦           ¦   ¦   owl.carousel.js
-¦           ¦   ¦   owl.carousel.min.js
-¦           ¦   ¦   
-¦           ¦   +---assets
-¦           ¦           ajax-loader.gif
-¦           ¦           owl.carousel.css
-¦           ¦           owl.carousel.min.css
-¦           ¦           owl.theme.default.css
-¦           ¦           owl.theme.default.min.css
-¦           ¦           owl.theme.green.css
-¦           ¦           owl.theme.green.min.css
-¦           ¦           owl.video.play.png
-¦           ¦           
-¦           +---waypoints
-¦                   links.php
-¦                   waypoints.min.js
-¦                   
+ï¿½   +---admin
+ï¿½   ï¿½   +---css
+ï¿½   ï¿½   ï¿½       admin.css
+ï¿½   ï¿½   ï¿½       category.css
+ï¿½   ï¿½   ï¿½       comments.css
+ï¿½   ï¿½   ï¿½       orders.css
+ï¿½   ï¿½   ï¿½       posts.css
+ï¿½   ï¿½   ï¿½       product-form.css
+ï¿½   ï¿½   ï¿½       users.css
+ï¿½   ï¿½   ï¿½       
+ï¿½   ï¿½   +---js
+ï¿½   ï¿½           category.js
+ï¿½   ï¿½           orders.js
+ï¿½   ï¿½           product.js
+ï¿½   ï¿½           users.js
+ï¿½   ï¿½           
+ï¿½   +---client
+ï¿½       +---css
+ï¿½       ï¿½       bootstrap.min.css
+ï¿½       ï¿½       style.css
+ï¿½       ï¿½       
+ï¿½       +---img
+ï¿½       ï¿½   ï¿½   avatar.jpg
+ï¿½       ï¿½   ï¿½   baner-1.png
+ï¿½       ï¿½   ï¿½   banner-fruits.jpg
+ï¿½       ï¿½   ï¿½   banner.jpg
+ï¿½       ï¿½   ï¿½   best-product-1.jpg
+ï¿½       ï¿½   ï¿½   best-product-2.jpg
+ï¿½       ï¿½   ï¿½   best-product-3.webp
+ï¿½       ï¿½   ï¿½   best-product-4.jpg
+ï¿½       ï¿½   ï¿½   best-product-5.jpg
+ï¿½       ï¿½   ï¿½   best-product-6.jpg
+ï¿½       ï¿½   ï¿½   cart-page-header-img.jpg
+ï¿½       ï¿½   ï¿½   featur-1.jpg
+ï¿½       ï¿½   ï¿½   featur-2.jpg
+ï¿½       ï¿½   ï¿½   featur-3.jpg
+ï¿½       ï¿½   ï¿½   fruite-item-1.jpg
+ï¿½       ï¿½   ï¿½   fruite-item-2.jpg
+ï¿½       ï¿½   ï¿½   fruite-item-3.webp
+ï¿½       ï¿½   ï¿½   fruite-item-4.webp
+ï¿½       ï¿½   ï¿½   fruite-item-5.webp
+ï¿½       ï¿½   ï¿½   fruite-item-6.webp
+ï¿½       ï¿½   ï¿½   goku.jpg
+ï¿½       ï¿½   ï¿½   goku1.jpg
+ï¿½       ï¿½   ï¿½   Gundam.jpg
+ï¿½       ï¿½   ï¿½   hero-img-1.png
+ï¿½       ï¿½   ï¿½   hero-img-2.jpg
+ï¿½       ï¿½   ï¿½   hero-img.jpg
+ï¿½       ï¿½   ï¿½   luffy-gear-5.jpg
+ï¿½       ï¿½   ï¿½   payment.png
+ï¿½       ï¿½   ï¿½   S.H. Figuarts Goku Ultra Instinct - Search Images.html
+ï¿½       ï¿½   ï¿½   single-item.jpg
+ï¿½       ï¿½   ï¿½   testimonial-1.jpg
+ï¿½       ï¿½   ï¿½   vegetable-item-1.jpg
+ï¿½       ï¿½   ï¿½   vegetable-item-2.jpg
+ï¿½       ï¿½   ï¿½   vegetable-item-3.png
+ï¿½       ï¿½   ï¿½   vegetable-item-4.jpg
+ï¿½       ï¿½   ï¿½   vegetable-item-5.jpg
+ï¿½       ï¿½   ï¿½   vegetable-item-6.jpg
+ï¿½       ï¿½   ï¿½   
+ï¿½       ï¿½   +---css
+ï¿½       ï¿½   ï¿½       bootstrap.min.css
+ï¿½       ï¿½   ï¿½       style.css
+ï¿½       ï¿½   ï¿½       
+sive
+ï¿½       ï¿½           
+ï¿½       +---js
+ï¿½       ï¿½       main.js
+ï¿½       ï¿½       
+ï¿½       +---lib
+ï¿½           +---easing
+ï¿½           ï¿½       easing.js
+ï¿½           ï¿½       easing.min.js
+ï¿½           ï¿½       
+ï¿½           +---lightbox
+ï¿½           ï¿½   +---css
+ï¿½           ï¿½   ï¿½       lightbox.min.css
+ï¿½           ï¿½   ï¿½       
+ï¿½           ï¿½   +---images
+ï¿½           ï¿½   ï¿½       close.png
+ï¿½           ï¿½   ï¿½       loading.gif
+ï¿½           ï¿½   ï¿½       next.png
+ï¿½           ï¿½   ï¿½       prev.png
+ï¿½           ï¿½   ï¿½       
+ï¿½           ï¿½   +---js
+ï¿½           ï¿½           lightbox.min.js
+ï¿½           ï¿½           
+ï¿½           +---owlcarousel
+ï¿½           ï¿½   ï¿½   LICENSE
+ï¿½           ï¿½   ï¿½   owl.carousel.js
+ï¿½           ï¿½   ï¿½   owl.carousel.min.js
+ï¿½           ï¿½   ï¿½   
+ï¿½           ï¿½   +---assets
+ï¿½           ï¿½           ajax-loader.gif
+ï¿½           ï¿½           owl.carousel.css
+ï¿½           ï¿½           owl.carousel.min.css
+ï¿½           ï¿½           owl.theme.default.css
+ï¿½           ï¿½           owl.theme.default.min.css
+ï¿½           ï¿½           owl.theme.green.css
+ï¿½           ï¿½           owl.theme.green.min.css
+ï¿½           ï¿½           owl.video.play.png
+ï¿½           ï¿½           
+ï¿½           +---waypoints
+ï¿½                   links.php
+ï¿½                   waypoints.min.js
+ï¿½                   
 +---config
-¦       database.php
-¦       
+ï¿½       database.php
+ï¿½       
 +---Controllers
-¦   ¦   AuthController.php
-¦   ¦   
-¦   +---admin
-¦   ¦       CategoryController.php
-¦   ¦       CommentController.php
-¦   ¦       DashboardController.php
-¦   ¦       OrderController.php
-¦   ¦       PostController.php
-¦   ¦       ProductController.php
-¦   ¦       UserController.php
-¦   ¦       
-¦   +---client
-¦           CartController.php
-¦           CheckoutController.php
-¦           HomeController.php
-¦           ProductController.php
-¦           
+ï¿½   ï¿½   AuthController.php
+ï¿½   ï¿½   
+ï¿½   +---admin
+ï¿½   ï¿½       CategoryController.php
+ï¿½   ï¿½       CommentController.php
+ï¿½   ï¿½       DashboardController.php
+ï¿½   ï¿½       OrderController.php
+ï¿½   ï¿½       PostController.php
+ï¿½   ï¿½       ProductController.php
+ï¿½   ï¿½       UserController.php
+ï¿½   ï¿½       
+ï¿½   +---client
+ï¿½           CartController.php
+ï¿½           CheckoutController.php
+ï¿½           HomeController.php
+ï¿½           ProductController.php
+ï¿½           
 +---Models
-¦       Category.php
-¦       Order.php
-¦       Product.php
-¦       User.php
-¦       
+ï¿½       Category.php
+ï¿½       Order.php
+ï¿½       Product.php
+ï¿½       User.php
+ï¿½       
 +---routes
-¦       admin.php
-¦       client.php
-¦       
+ï¿½       admin.php
+ï¿½       client.php
+ï¿½       
 +---uploads
-¦   +---products
-¦           1780466263_best-product-2.jpg
-¦           1780898157_fruite-item-3.webp
-¦           1780900208_fruite-item-5.webp
-¦           
+ï¿½   +---products
+ï¿½           1780466263_best-product-2.jpg
+ï¿½           1780898157_fruite-item-3.webp
+ï¿½           1780900208_fruite-item-5.webp
+ï¿½           
 +---Views
     +---admin
-    ¦   +---categories
-    ¦   ¦       add.php
-    ¦   ¦       edit.php
-    ¦   ¦       index.php
-    ¦   ¦       
-    ¦   +---comments
-    ¦   ¦       index.php
-    ¦   ¦       
-    ¦   +---dashboard
-    ¦   ¦       index.php
-    ¦   ¦       
-    ¦   +---layouts
-    ¦   ¦       footer.php
-    ¦   ¦       header.php
-    ¦   ¦       navbar.php
-    ¦   ¦       sidebar.php
-    ¦   ¦       
-    ¦   +---orders
-    ¦   ¦       detail.php
-    ¦   ¦       index.php
-    ¦   ¦       
-    ¦   +---posts
-    ¦   ¦       create.php
-    ¦   ¦       edit.php
-    ¦   ¦       index.php
-    ¦   ¦       
-    ¦   +---products
-    ¦   ¦       add.php
-    ¦   ¦       edit.php
-    ¦   ¦       index.php
-    ¦   ¦       
-    ¦   +---users
-    ¦           index.php
-    ¦           
+    ï¿½   +---categories
+    ï¿½   ï¿½       add.php
+    ï¿½   ï¿½       edit.php
+    ï¿½   ï¿½       index.php
+    ï¿½   ï¿½       
+    ï¿½   +---comments
+    ï¿½   ï¿½       index.php
+    ï¿½   ï¿½       
+    ï¿½   +---dashboard
+    ï¿½   ï¿½       index.php
+    ï¿½   ï¿½       
+    ï¿½   +---layouts
+    ï¿½   ï¿½       footer.php
+    ï¿½   ï¿½       header.php
+    ï¿½   ï¿½       navbar.php
+    ï¿½   ï¿½       sidebar.php
+    ï¿½   ï¿½       
+    ï¿½   +---orders
+    ï¿½   ï¿½       detail.php
+    ï¿½   ï¿½       index.php
+    ï¿½   ï¿½       
+    ï¿½   +---posts
+    ï¿½   ï¿½       create.php
+    ï¿½   ï¿½       edit.php
+    ï¿½   ï¿½       index.php
+    ï¿½   ï¿½       
+    ï¿½   +---products
+    ï¿½   ï¿½       add.php
+    ï¿½   ï¿½       edit.php
+    ï¿½   ï¿½       index.php
+    ï¿½   ï¿½       
+    ï¿½   +---users
+    ï¿½           index.php
+    ï¿½           
     +---auth
-    ¦   +---login
-    ¦   ¦       index.php
-    ¦   ¦       
-    ¦   +---register
-    ¦           index.php
-    ¦           
+    ï¿½   +---login
+    ï¿½   ï¿½       index.php
+    ï¿½   ï¿½       
+    ï¿½   +---register
+    ï¿½           index.php
+    ï¿½           
     +---client
         +---cart
-        ¦       index.php
-        ¦       
+        ï¿½       index.php
+        ï¿½       
         +---checkout
-        ¦       index.php
-        ¦       
+        ï¿½       index.php
+        ï¿½       
         +---home
-        ¦       index.php
-        ¦       
+        ï¿½       index.php
+        ï¿½       
         +---layouts
-        ¦       Footer.php
-        ¦       header.php
-        ¦       
+        ï¿½       Footer.php
+        ï¿½       header.php
+        ï¿½       
         +---product
                 detail.php
                 index.php
