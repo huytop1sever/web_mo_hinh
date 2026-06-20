@@ -789,3 +789,105 @@
         width: 100%;
     }
 }
+.order-step-box {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 18px 0;
+}
+
+.order-step {
+    background: #f3f4f6;
+    border-radius: 14px;
+    padding: 14px;
+    text-align: center;
+    color: #6b7280;
+    font-weight: 700;
+}
+
+.order-step span {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #d1d5db;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.order-step.active {
+    background: #fff7ed;
+    color: #ea580c;
+}
+
+.order-step.active span {
+    background: #ea580c;
+}
+
+.order-step.cancelled {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.order-step.cancelled span {
+    background: #dc2626;
+}
+.status-button-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.status-action-btn {
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    min-height: 76px;
+    border-radius: 14px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 15px;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: 0.2s;
+}
+
+.status-action-btn i {
+    font-size: 24px;
+}
+
+.status-action-btn:hover {
+    transform: translateY(-2px);
+    border-color: #ea580c;
+    color: #ea580c;
+}
+
+.status-action-btn.active,
+.status-action-btn:disabled {
+    background: #ea580c;
+    color: #fff;
+    border-color: #ea580c;
+    cursor: not-allowed;
+    opacity: 1;
+}
+
+.status-action-btn.cancelled {
+    color: #dc2626;
+}
+
+.status-action-btn.cancelled:hover {
+    border-color: #dc2626;
+    color: #dc2626;
+}
+
+.status-action-btn.cancelled.active,
+.status-action-btn.cancelled:disabled {
+    background: #dc2626;
+    border-color: #dc2626;
+    color: #fff;
+}
