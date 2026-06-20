@@ -21,6 +21,14 @@
 
 <div class="container-fluid fixed-top">
 
+<?php
+if (!isset($cartCount)) {
+    require_once __DIR__ . '/../../../Models/Cart.php';
+    $cart = new Cart();
+    $cartCount = $cart->count();
+}
+?>
+
     <!-- Topbar -->
     <div class="container topbar bg-primary d-none d-lg-block">
 
@@ -130,10 +138,10 @@
 
                         <i class="fa fa-shopping-bag fa-2x text-primary"></i>
 
-                        <span
+                        <span id="cart-count"
                             class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
                             style="top:-5px;left:15px;height:20px;min-width:20px;">
-                            0
+                            <?= (int)($cartCount ?? 0) ?>
                         </span>
 
                     </a>

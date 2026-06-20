@@ -45,7 +45,8 @@ class AuthController
                         'role' => $user['role'] ?? 'client'
                     ];
 
-                    header('Location: index.php?page=profile');
+                    ob_end_clean();
+                    header('Location: index.php?page=home');
                     exit;
                 }
             }
@@ -167,6 +168,7 @@ class AuthController
                 } else {
                     $_SESSION['reset_email'] = $email;
 
+                    ob_end_clean();
                     header('Location: index.php?page=reset-password');
                     exit;
                 }
@@ -183,6 +185,7 @@ class AuthController
     public function resetPassword()
     {
         if (empty($_SESSION['reset_email'])) {
+            ob_end_clean();
             header('Location: index.php?page=forgot-password');
             exit;
         }
@@ -213,7 +216,9 @@ class AuthController
 
                 unset($_SESSION['reset_email']);
 
-                $success = 'Đổi mật khẩu thành công, vui lòng đăng nhập';
+                ob_end_clean();
+                header('Location: index.php?page=login&success=password_reset');
+                exit;
             } else {
                 $error = 'Vui lòng kiểm tra lại thông tin';
             }
@@ -224,11 +229,6 @@ class AuthController
 
   public function profile()
 {
-    if (empty($_SESSION['user'])) {
-        header('Location: index.php?page=login');
-        exit;
-    }
-
     require_once 'Models/Order.php';
 
     $userModel = new User();
@@ -238,6 +238,7 @@ class AuthController
 
     if (!$user) {
         unset($_SESSION['user']);
+        ob_end_clean();
         header('Location: index.php?page=login');
         exit;
     }
@@ -258,9 +259,15 @@ class AuthController
 
     public function logout()
     {
+        if (!empty($_SESSION['user'])) {
+            $cart = new Cart();
+            $cart->clear();
+        }
+        
         unset($_SESSION['user']);
         unset($_SESSION['reset_email']);
 
+        ob_end_clean();
         header('Location: index.php?page=login');
         exit;
     }

@@ -4,8 +4,11 @@ class HomeController
 {
     public function index()
     {
-        require_once "Views/Client/Layouts/Header.php";
-        require_once "Views/Client/Home/index.php";
-        require_once "Views/Client/Layouts/Footer.php";
+        require_once 'Models/Product.php';
+
+        $productModel = new Product();
+        $products = $productModel->getAll('', '', 8, 0);
+
+        require_once 'Views/client/home/index.php';
     }
 }

@@ -1,5 +1,3 @@
-<?php require_once 'Views/client/layouts/header.php'; ?>
-
 <main class="auth-page">
     <section class="auth-panel">
 

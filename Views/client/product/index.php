@@ -300,8 +300,21 @@ document.addEventListener('DOMContentLoaded', function () {
             fetch('index.php?page=cart&action=add&id=' + id)
                 .then(res => res.json())
                 .then(data => {
+                    if (data && data.login_required) {
+                        window.location.href = 'index.php?page=login';
+                        return;
+                    }
+
                     if (data.success) {
                         showToast('✓ Đã thêm sản phẩm vào giỏ hàng', 'success');
+                        const cartCountEl = document.querySelector('#cart-count');
+                        if (cartCountEl) {
+                            if (typeof data.count !== 'undefined') {
+                                cartCountEl.innerText = data.count;
+                            } else {
+                                cartCountEl.innerText = parseInt(cartCountEl.innerText || '0') + 1;
+                            }
+                        }
                     } else {
                         showToast('✕ Thêm vào giỏ hàng thất bại', 'error');
                     }
