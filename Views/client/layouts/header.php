@@ -6,22 +6,19 @@
     <title>Phantom</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <!-- Bootstrap -->
     <link href="assets/client/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Font Awesome -->
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    <!-- Style -->
     <link href="assets/client/css/style.css" rel="stylesheet">
 </head>
 
 <body>
 
-<div class="container-fluid fixed-top">
-
 <?php
+$currentPage = $_GET['page'] ?? 'home';
+
 if (!isset($cartCount)) {
     require_once __DIR__ . '/../../../Models/Cart.php';
     $cart = new Cart();
@@ -29,13 +26,13 @@ if (!isset($cartCount)) {
 }
 ?>
 
+<div class="container-fluid fixed-top">
+
     <!-- Topbar -->
     <div class="container topbar bg-primary d-none d-lg-block">
-
         <div class="d-flex justify-content-between">
 
             <div class="top-info ps-2">
-
                 <small class="me-3 text-white">
                     <i class="fas fa-phone-alt me-2 text-warning"></i>
                     Hotline: 0909 999 999
@@ -45,19 +42,15 @@ if (!isset($cartCount)) {
                     <i class="fas fa-envelope me-2 text-warning"></i>
                     support@phantomfigure.com
                 </small>
-
             </div>
 
             <div class="top-link pe-2">
-
                 <small class="text-white">
                     Miễn phí vận chuyển cho đơn hàng từ 500.000đ
                 </small>
-
             </div>
 
         </div>
-
     </div>
 
     <!-- Navbar -->
@@ -82,36 +75,24 @@ if (!isset($cartCount)) {
             </button>
 
             <div class="collapse navbar-collapse bg-white"
-                id="navbarCollapse">
+                 id="navbarCollapse">
 
                 <div class="navbar-nav mx-auto">
 
                     <a href="index.php"
-                        class="nav-item nav-link active">
+                       class="nav-item nav-link <?= $currentPage == 'home' ? 'active' : '' ?>">
                         Trang chủ
                     </a>
 
                     <a href="index.php?page=product"
-                        class="nav-item nav-link">
+                       class="nav-item nav-link <?= ($currentPage == 'product' || $currentPage == 'product-detail') ? 'active' : '' ?>">
                         Sản phẩm
                     </a>
 
-                    <a href="#"
-                        class="nav-item nav-link">
-                        Danh mục
-                    </a>
-
                     <a href="index.php?page=post"
-                        class="nav-item nav-link">
-                        Tin tức
+                       class="nav-item nav-link <?= ($currentPage == 'post' || $currentPage == 'post-detail') ? 'active' : '' ?>">
+                        Bài viết
                     </a>
-
-                    <a href="#"
-                        class="nav-item nav-link">
-                        Liên hệ
-                    </a>
-
-            
 
                 </div>
 
@@ -127,44 +108,47 @@ if (!isset($cartCount)) {
                     </button>
 
                     <a href="#"
-                        class="position-relative me-4 my-auto">
+                       class="position-relative me-4 my-auto">
 
                         <i class="fa fa-heart fa-2x text-primary"></i>
 
                     </a>
 
                     <a href="index.php?page=cart"
-                        class="position-relative me-4 my-auto">
+                       class="position-relative me-4 my-auto">
 
                         <i class="fa fa-shopping-bag fa-2x text-primary"></i>
 
                         <span id="cart-count"
-                            class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
-                            style="top:-5px;left:15px;height:20px;min-width:20px;">
-                            <?= (int)($cartCount ?? 0) ?>
+                              class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
+                              style="top:-5px;left:15px;height:20px;min-width:20px;">
+
+                            <?= (int)$cartCount ?>
+
                         </span>
 
                     </a>
 
-                  <?php if (!empty($_SESSION['user'])): ?>
+                    <?php if (!empty($_SESSION['user'])): ?>
 
-    <a href="index.php?page=profile"
-       class="my-auto text-decoration-none">
+                        <a href="index.php?page=profile"
+                           class="my-auto text-decoration-none">
 
-        <i class="fas fa-user fa-2x text-primary"></i>
+                            <i class="fas fa-user fa-2x text-primary"></i>
 
-    </a>
+                        </a>
 
-<?php else: ?>
+                    <?php else: ?>
 
-    <a href="index.php?page=login"
-       class="my-auto">
+                        <a href="index.php?page=login"
+                           class="my-auto">
 
-        <i class="fas fa-user fa-2x text-primary"></i>
+                            <i class="fas fa-user fa-2x text-primary"></i>
 
-    </a>
+                        </a>
 
-<?php endif; ?>
+                    <?php endif; ?>
+
                 </div>
 
             </div>
@@ -177,8 +161,8 @@ if (!isset($cartCount)) {
 
 <!-- Search Modal -->
 <div class="modal fade"
-    id="searchModal"
-    tabindex="-1">
+     id="searchModal"
+     tabindex="-1">
 
     <div class="modal-dialog modal-fullscreen">
 
@@ -191,8 +175,8 @@ if (!isset($cartCount)) {
                 </h5>
 
                 <button type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal">
+                        class="btn-close"
+                        data-bs-dismiss="modal">
                 </button>
 
             </div>
