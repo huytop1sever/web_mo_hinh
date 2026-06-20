@@ -11,21 +11,38 @@ if (!$product) {
 
 $fallbackImage = 'uploads/products/1781846482_gojo.webp';
 
-$currentPrice = (($product['sale_price'] ?? 0) > 0) ? ($product['sale_price'] ?? 0) : ($product['price'] ?? 0);
-$oldPrice = (($product['sale_price'] ?? 0) > 0) ? ($product['price'] ?? 0) : 0;
-
 $mainImage = $fallbackImage;
-
 if (!empty($product['image'])) {
     $mainImage = $product['image'];
-
     if (!str_contains($mainImage, 'uploads/')) {
         $mainImage = 'uploads/products/' . $mainImage;
     }
 }
 
-$totalStock = 0;
+$firstVariant = $variants[0] ?? null;
 
+$currentPrice = 0;
+$oldPrice = 0;
+
+if ($firstVariant) {
+    $currentPrice = !empty($firstVariant['sale_price']) && $firstVariant['sale_price'] > 0
+        ? $firstVariant['sale_price']
+        : $firstVariant['price'];
+
+    $oldPrice = !empty($firstVariant['sale_price']) && $firstVariant['sale_price'] > 0
+        ? $firstVariant['price']
+        : 0;
+} else {
+    $currentPrice = !empty($product['sale_price']) && $product['sale_price'] > 0
+        ? $product['sale_price']
+        : ($product['price'] ?? 0);
+
+    $oldPrice = !empty($product['sale_price']) && $product['sale_price'] > 0
+        ? ($product['price'] ?? 0)
+        : 0;
+}
+
+$totalStock = 0;
 foreach ($variants as $variant) {
     $totalStock += (int)($variant['stock'] ?? 0);
 }
@@ -44,7 +61,7 @@ $isOutOfStock = $totalStock <= 0;
             <span>/</span>
             <a href="index.php?page=product">Sản phẩm</a>
             <span>/</span>
-            <strong><?= htmlspecialchars($product['name'] ?? '') ?></strong>
+            <strong><?= htmlspecialchars($product['name'] ?? $product['title'] ?? '') ?></strong>
         </nav>
 
         <section class="product-detail">
@@ -53,54 +70,27 @@ $isOutOfStock = $totalStock <= 0;
                     <img
                         id="mainProductImage"
                         src="<?= htmlspecialchars($mainImage) ?>"
-                        alt="<?= htmlspecialchars($product['name'] ?? '') ?>"
+                        alt="<?= htmlspecialchars($product['name'] ?? $product['title'] ?? '') ?>"
                         onerror="this.src='<?= $fallbackImage ?>'">
 
-                    <span><?= htmlspecialchars($product['category_name'] ?? 'Mô hình') ?></span>
+                    <span><?= htmlspecialchars($product['category_name'] ?? $product['category'] ?? 'Mô hình') ?></span>
                 </div>
 
                 <div class="product-thumbs">
                     <button type="button" class="active" onclick="changeMainImage(this)">
-                        <img
-                            src="<?= htmlspecialchars($mainImage) ?>"
-                            alt="Ảnh chính"
-                            onerror="this.src='<?= $fallbackImage ?>'">
+                        <img src="<?= htmlspecialchars($mainImage) ?>" alt="Ảnh chính">
                     </button>
 
                     <?php foreach ($productImages as $img): ?>
                         <?php if (!empty($img['image'])): ?>
                             <?php
                             $subImage = $img['image'];
-
                             if (!str_contains($subImage, 'uploads/')) {
                                 $subImage = 'uploads/products/' . $subImage;
                             }
                             ?>
-
                             <button type="button" onclick="changeMainImage(this)">
-                                <img
-                                    src="<?= htmlspecialchars($subImage) ?>"
-                                    alt="Ảnh phụ"
-                                    onerror="this.closest('button').remove()">
-                            </button>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-
-                    <?php foreach ($variants as $variant): ?>
-                        <?php if (!empty($variant['image'])): ?>
-                            <?php
-                            $variantImage = $variant['image'];
-
-                            if (!str_contains($variantImage, 'uploads/')) {
-                                $variantImage = 'uploads/products/' . $variantImage;
-                            }
-                            ?>
-
-                            <button type="button" onclick="changeMainImage(this)">
-                                <img
-                                    src="<?= htmlspecialchars($variantImage) ?>"
-                                    alt="Ảnh biến thể"
-                                    onerror="this.closest('button').remove()">
+                                <img src="<?= htmlspecialchars($subImage) ?>" alt="Ảnh phụ">
                             </button>
                         <?php endif; ?>
                     <?php endforeach; ?>
@@ -108,11 +98,11 @@ $isOutOfStock = $totalStock <= 0;
             </div>
 
             <div class="product-detail-info">
-                <span class="detail-status">
+                <span class="detail-status" id="stockStatus">
                     <?= $isOutOfStock ? 'Hết hàng' : 'Còn hàng - giao nhanh toàn quốc' ?>
                 </span>
 
-                <h1><?= htmlspecialchars($product['name'] ?? '') ?></h1>
+                <h1><?= htmlspecialchars($product['name'] ?? $product['title'] ?? '') ?></h1>
 
                 <div class="detail-rating">
                     <i class="fas fa-star"></i>
@@ -124,28 +114,57 @@ $isOutOfStock = $totalStock <= 0;
                 </div>
 
                 <div class="detail-price">
-                    <strong><?= number_format($currentPrice, 0, ',', '.') ?>đ</strong>
+                    <strong id="variantPrice"><?= number_format($currentPrice, 0, ',', '.') ?>đ</strong>
 
-                    <?php if ($oldPrice > 0): ?>
-                        <del><?= number_format($oldPrice, 0, ',', '.') ?>đ</del>
-                    <?php endif; ?>
+                    <del id="variantOldPrice" style="<?= $oldPrice > 0 ? '' : 'display:none;' ?>">
+                        <?= number_format($oldPrice, 0, ',', '.') ?>đ
+                    </del>
                 </div>
 
                 <p class="detail-desc">
                     <?= nl2br(htmlspecialchars($product['description'] ?? 'Đang cập nhật mô tả cho sản phẩm này.')) ?>
                 </p>
 
+                <?php if (!empty($variants)): ?>
+                    <div class="mt-4 product-variant-box">
+                        <h6>Phiên bản:</h6>
+
+                        <div class="d-flex gap-2 flex-wrap">
+                            <?php foreach ($variants as $index => $v): ?>
+                                <?php
+                                $vPrice = !empty($v['sale_price']) && $v['sale_price'] > 0 ? $v['sale_price'] : $v['price'];
+                                $vOldPrice = !empty($v['sale_price']) && $v['sale_price'] > 0 ? $v['price'] : 0;
+                                $vStock = (int)($v['stock'] ?? 0);
+                                ?>
+
+                                <button
+                                    type="button"
+                                    class="variant-btn badge border text-dark p-2 <?= $index === 0 ? 'active' : '' ?>"
+                                    data-id="<?= htmlspecialchars($v['id']) ?>"
+                                    data-name="<?= htmlspecialchars($v['variant_name'] ?? '') ?>"
+                                    data-price="<?= htmlspecialchars($vPrice) ?>"
+                                    data-old-price="<?= htmlspecialchars($vOldPrice) ?>"
+                                    data-stock="<?= htmlspecialchars($vStock) ?>">
+                                    <?= htmlspecialchars($v['variant_name'] ?? 'Biến thể') ?>
+                                </button>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
                 <div class="detail-actions">
                     <div class="detail-quantity">
-                        <button type="button">-</button>
-                        <input type="number" value="1" min="1">
-                        <button type="button">+</button>
+                        <button type="button" onclick="changeQty(-1)">-</button>
+                        <input id="quantityInput" type="number" value="1" min="1">
+                        <button type="button" onclick="changeQty(1)">+</button>
                     </div>
 
                     <button
                         type="button"
+                        id="addCartBtn"
                         class="btn detail-cart-btn add-cart-btn <?= $isOutOfStock ? 'disabled' : '' ?>"
                         data-id="<?= htmlspecialchars($product['id']) ?>"
+                        data-variant-id="<?= htmlspecialchars($firstVariant['id'] ?? '') ?>"
                         <?= $isOutOfStock ? 'disabled' : '' ?>>
                         <i class="fa fa-shopping-bag me-2"></i>
                         <?= $isOutOfStock ? 'Hết hàng' : 'Thêm vào giỏ' ?>
@@ -155,12 +174,16 @@ $isOutOfStock = $totalStock <= 0;
                 <div class="detail-meta">
                     <div>
                         <span>Mã sản phẩm</span>
-                        <strong><?= htmlspecialchars($product['sku'] ?? 'PH-' . $product['id']) ?></strong>
+                        <strong id="variantSku">
+                            <?= htmlspecialchars($firstVariant['sku'] ?? $product['sku'] ?? 'PH-' . $product['id']) ?>
+                        </strong>
                     </div>
 
                     <div>
                         <span>Tồn kho</span>
-                        <strong><?= htmlspecialchars($totalStock) ?></strong>
+                        <strong id="variantStock">
+                            <?= htmlspecialchars($firstVariant['stock'] ?? $totalStock) ?>
+                        </strong>
                     </div>
 
                     <div>
@@ -173,20 +196,6 @@ $isOutOfStock = $totalStock <= 0;
                         <strong><?= htmlspecialchars($product['material'] ?? 'PVC/ABS') ?></strong>
                     </div>
                 </div>
-
-                <?php if (!empty($variants)): ?>
-                    <div class="mt-4">
-                        <h6>Phiên bản:</h6>
-
-                        <div class="d-flex gap-2">
-                            <?php foreach ($variants as $v): ?>
-                                <span class="badge border text-dark p-2">
-                                    <?= htmlspecialchars($v['variant_name'] ?? '') ?>
-                                </span>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                <?php endif; ?>
             </div>
         </section>
 
@@ -220,12 +229,10 @@ $isOutOfStock = $totalStock <= 0;
 
                     <?php
                     $rPrice = (float)(($item['sale_price'] ?? 0) > 0 ? $item['sale_price'] : ($item['price'] ?? 0));
-
                     $rImage = $fallbackImage;
 
                     if (!empty($item['image'])) {
                         $rImage = $item['image'];
-
                         if (!str_contains($rImage, 'uploads/')) {
                             $rImage = 'uploads/products/' . $rImage;
                         }
@@ -236,7 +243,7 @@ $isOutOfStock = $totalStock <= 0;
                         <div class="related-card">
                             <img
                                 src="<?= htmlspecialchars($rImage) ?>"
-                                alt="<?= htmlspecialchars($item['name'] ?? '') ?>"
+                                alt="<?= htmlspecialchars($item['name'] ?? $item['title'] ?? '') ?>"
                                 onerror="this.src='<?= $fallbackImage ?>'">
 
                             <div>
@@ -244,7 +251,7 @@ $isOutOfStock = $totalStock <= 0;
 
                                 <h4>
                                     <a href="index.php?page=product-detail&id=<?= htmlspecialchars($item['id']) ?>">
-                                        <?= htmlspecialchars($item['name'] ?? '') ?>
+                                        <?= htmlspecialchars($item['name'] ?? $item['title'] ?? '') ?>
                                     </a>
                                 </h4>
 
@@ -259,6 +266,10 @@ $isOutOfStock = $totalStock <= 0;
 </main>
 
 <script>
+function formatMoney(number) {
+    return Number(number).toLocaleString('vi-VN') + 'đ';
+}
+
 function changeMainImage(button) {
     const img = button.querySelector('img');
     const mainImage = document.getElementById('mainProductImage');
@@ -273,18 +284,81 @@ function changeMainImage(button) {
 
     button.classList.add('active');
 }
-</script>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
+function changeQty(number) {
+    const input = document.getElementById('quantityInput');
+    let value = parseInt(input.value || 1);
+
+    value += number;
+
+    if (value < 1) {
+        value = 1;
+    }
+
+    input.value = value;
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const addCartBtn = document.getElementById('addCartBtn');
+
+    document.querySelectorAll('.variant-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            document.querySelectorAll('.variant-btn').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            this.classList.add('active');
+
+            const variantId = this.dataset.id;
+            const price = this.dataset.price;
+            const oldPrice = this.dataset.oldPrice;
+            const stock = parseInt(this.dataset.stock || 0);
+
+            document.getElementById('variantPrice').innerText = formatMoney(price);
+            document.getElementById('variantStock').innerText = stock;
+
+            const oldPriceEl = document.getElementById('variantOldPrice');
+
+            if (oldPrice > 0) {
+                oldPriceEl.innerText = formatMoney(oldPrice);
+                oldPriceEl.style.display = 'inline';
+            } else {
+                oldPriceEl.style.display = 'none';
+            }
+
+            if (addCartBtn) {
+                addCartBtn.dataset.variantId = variantId;
+
+                if (stock <= 0) {
+                    addCartBtn.disabled = true;
+                    addCartBtn.classList.add('disabled');
+                    addCartBtn.innerHTML = '<i class="fa fa-shopping-bag me-2"></i>Hết hàng';
+                    document.getElementById('stockStatus').innerText = 'Hết hàng';
+                } else {
+                    addCartBtn.disabled = false;
+                    addCartBtn.classList.remove('disabled');
+                    addCartBtn.innerHTML = '<i class="fa fa-shopping-bag me-2"></i>Thêm vào giỏ';
+                    document.getElementById('stockStatus').innerText = 'Còn hàng - giao nhanh toàn quốc';
+                }
+            }
+        });
+    });
+
     document.querySelectorAll('.add-cart-btn').forEach(btn => {
         btn.addEventListener('click', function (event) {
             event.preventDefault();
-            event.stopPropagation();
 
             let id = this.dataset.id;
+            let variantId = this.dataset.variantId || '';
+            let qty = document.getElementById('quantityInput')?.value || 1;
 
-            fetch('index.php?page=cart&action=add&id=' + id)
+            let url = 'index.php?page=cart&action=add&id=' + id + '&qty=' + qty;
+
+            if (variantId !== '') {
+                url += '&variant_id=' + variantId;
+            }
+
+            fetch(url)
                 .then(res => res.json())
                 .then(data => {
                     if (data && data.login_required) {
@@ -301,11 +375,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         const cartCountEl = document.querySelector('#cart-count');
                         if (cartCountEl) {
-                            if (typeof data.count !== 'undefined') {
-                                cartCountEl.innerText = data.count;
-                            } else {
-                                cartCountEl.innerText = parseInt(cartCountEl.innerText || '0') + 1;
-                            }
+                            cartCountEl.innerText = data.count ?? (parseInt(cartCountEl.innerText || '0') + 1);
                         }
                     }
                 });
