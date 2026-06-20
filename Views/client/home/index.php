@@ -135,26 +135,6 @@ function postImagePath($image)
                 <div class="col-lg-8 text-end">
                     <ul class="nav nav-pills d-inline-flex text-center mb-5">
 
-                        <li class="nav-item">
-                            <a class="d-flex m-2 py-2 bg-light rounded-pill active"
-                               data-bs-toggle="pill"
-                               href="#tab-all">
-                                <span class="text-dark" style="width:130px;">Tất cả</span>
-                            </a>
-                        </li>
-
-                        <?php foreach ($categories as $category): ?>
-                            <li class="nav-item">
-                                <a class="d-flex m-2 py-2 bg-light rounded-pill"
-                                   data-bs-toggle="pill"
-                                   href="#tab-category-<?= htmlspecialchars($category['id']) ?>">
-                                    <span class="text-dark" style="width:130px;">
-                                        <?= htmlspecialchars($category['name']) ?>
-                                    </span>
-                                </a>
-                            </li>
-                        <?php endforeach; ?>
-
                     </ul>
                 </div>
             </div>
