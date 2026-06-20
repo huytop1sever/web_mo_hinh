@@ -61,6 +61,13 @@ class PostController
     {
         $postModel = new Post();
         $data = $this->preparePostData($_POST, $postModel);
+        $validation = $this->validatePostData($data);
+
+        if ($validation !== true) {
+            header('Location: index.php?page=posts&msg=invalid');
+            exit;
+        }
+
         $data['image'] = $this->uploadImage();
 
         $postModel->create($data);
@@ -106,7 +113,19 @@ class PostController
             exit;
         }
 
+        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+            header('Location: index.php?page=posts');
+            exit;
+        }
+
         $data = $this->preparePostData($_POST, $postModel, $id);
+        $validation = $this->validatePostData($data);
+
+        if ($validation !== true) {
+            header('Location: index.php?page=posts&msg=invalid');
+            exit;
+        }
+
         $data['image'] = $oldPost['image'] ?? '';
 
         $newImage = $this->uploadImage();
@@ -124,9 +143,26 @@ class PostController
     {
         $id = $_GET['id'] ?? 0;
 
-        if ($id) {
-            $postModel = new Post();
-            $postModel->delete($id);
+        if (!$id) {
+            header('Location: index.php?page=posts&msg=not_found');
+            exit;
+        }
+
+        $postModel = new Post();
+        $oldPost = $postModel->find($id);
+
+        if (!$oldPost) {
+            header('Location: index.php?page=posts&msg=not_found');
+            exit;
+        }
+
+        $postModel->delete($id);
+
+        if (!empty($oldPost['image'])) {
+            $filePath = '../' . ltrim($oldPost['image'], '/');
+            if (is_file($filePath)) {
+                @unlink($filePath);
+            }
         }
 
         header('Location: index.php?page=posts&msg=deleted');
@@ -173,6 +209,23 @@ class PostController
         $text = preg_replace('/[^a-z0-9]+/', '-', $text);
 
         return trim($text, '-');
+    }
+
+    private function validatePostData(array $data)
+    {
+        $requiredKeys = ['title', 'excerpt', 'content', 'category', 'author', 'status'];
+        foreach ($requiredKeys as $key) {
+            if (!isset($data[$key]) || trim((string) $data[$key]) === '') {
+                return false;
+            }
+        }
+
+        $allowedStatus = ['published', 'draft'];
+        if (!in_array($data['status'], $allowedStatus, true)) {
+            return false;
+        }
+
+        return true;
     }
 
     private function uploadImage(): string

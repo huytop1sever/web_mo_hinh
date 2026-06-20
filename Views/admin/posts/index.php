@@ -20,7 +20,8 @@ $featuredPosts = $featuredPosts ?? 0;
                 'created' => 'Da them bai viet thanh cong.',
                 'updated' => 'Da cap nhat bai viet thanh cong.',
                 'deleted' => 'Da xoa bai viet thanh cong.',
-                'not_found' => 'Khong tim thay bai viet.'
+                'not_found' => 'Khong tim thay bai viet.',
+                'invalid' => 'Du lieu khong hop le. Vui long kiem tra lai thong tin.',
             ];
 
             echo htmlspecialchars($messages[$_GET['msg']] ?? '');
@@ -160,7 +161,7 @@ $featuredPosts = $featuredPosts ?? 0;
                             <td><?= htmlspecialchars($post['author']) ?></td>
 
                             <?php
-                                $postDate = $post['published_at'] ?? $post['date'] ?? $post['created_at'] ?? '';
+                            $postDate = $post['published_at'] ?? $post['date'] ?? $post['created_at'] ?? '';
                             ?>
                             <td>
                                 <?= $postDate ? date('d/m/Y', strtotime($postDate)) : '-' ?>
@@ -176,7 +177,7 @@ $featuredPosts = $featuredPosts ?? 0;
 
                             <td>
                                 <div class="table-actions">
-                                    <a href="#" class="action-btn view" title="Xem nhanh">
+                                    <a href="index.php?page=post-edit&id=<?= (int) $post['id'] ?>" class="action-btn view" title="Xem nhanh">
                                         <i class='bx bx-show'></i>
                                     </a>
 

@@ -10,7 +10,7 @@ class Post
         $this->pdo = $conn;
     }
 
-    public function getAll(string $keyword = '', string $category = '', string $status = 'published'): array
+    public function getAll(string $keyword = '', string $category = '', string $status = ''): array
     {
         $sql = "SELECT * FROM posts WHERE 1";
         $params = [];
