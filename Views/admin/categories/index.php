@@ -15,7 +15,6 @@
                     <th>ID</th>
                     <th>Ten danh muc</th>
                     <th>Mo ta</th>
-                    <th>So san pham</th>
                     <th>Trang thai</th>
                     <th>Thao tac</th>
                 </tr>
@@ -27,7 +26,6 @@
                         <td>#<?= $category['id'] ?></td>
                         <td><strong><?= $category['name'] ?></strong></td>
                         <td><?= $category['description'] ?></td>
-                        <td><?= $category['product_count'] ?></td>
                         <td>
                             <span class="status <?= $category['status'] === 'Hien thi' || $category['status'] === 'Hiển thị' ? 'confirmed' : 'cancelled' ?>">
                                 <?= $category['status'] ?>

@@ -7,36 +7,20 @@ class CategoryController
         $title = 'Quản lý danh mục';
         $pageTitle = 'Danh mục';
 
-        $categories = [
-            [
-                'id' => 1,
-                'name' => 'Gundam',
-                'description' => 'Mô hình lắp ráp và phụ kiện Gundam',
-                'product_count' => 42,
-                'status' => 'Hiển thị',
-            ],
-            [
-                'id' => 2,
-                'name' => 'Anime Figure',
-                'description' => 'Figure nhân vật anime và manga',
-                'product_count' => 68,
-                'status' => 'Hiển thị',
-            ],
-            [
-                'id' => 3,
-                'name' => 'Marvel',
-                'description' => 'Mô hình siêu anh hùng Marvel',
-                'product_count' => 21,
-                'status' => 'Hiển thị',
-            ],
-            [
-                'id' => 4,
-                'name' => 'Pokemon',
-                'description' => 'Mô hình và đồ sưu tầm Pokemon',
-                'product_count' => 15,
-                'status' => 'Tạm ẩn',
-            ],
-        ];
+        // Lấy dữ liệu danh mục từ database
+        $categoryModel = new Category();
+        $categories = $categoryModel->getAll();
+
+        // Chuẩn hóa key để khớp với view
+        foreach ($categories as &$c) {
+            $c['product_count'] = $c['product_count'] ?? 0;
+            // Một số DB có thể lưu status dạng khác nhau
+            if (empty($c['status'])) {
+                $c['status'] = 'Hiển thị';
+            }
+        }
+        unset($c);
+
 
         include_once '../Views/admin/layouts/header.php';
         include_once '../Views/admin/layouts/sidebar.php';
@@ -61,18 +45,19 @@ class CategoryController
         include_once '../Views/admin/layouts/footer.php';
     }
 
+
     public function edit($id)
     {
         $title = 'Chỉnh sửa danh mục';
         $pageTitle = 'Sửa danh mục';
 
-        // Giả lập lấy dữ liệu danh mục theo ID
-        $category = [
-            'id' => $id,
-            'name' => 'Gundam',
-            'description' => 'Mô hình lắp ráp và phụ kiện Gundam',
-            'status' => 'Hiển thị'
-        ];
+        $categoryModel = new Category();
+        $category = $categoryModel->find($id);
+
+        if (!$category) {
+            header('Location: index.php?page=categories');
+            exit;
+        }
 
         include_once '../Views/admin/layouts/header.php';
         include_once '../Views/admin/layouts/sidebar.php';
@@ -85,24 +70,61 @@ class CategoryController
 
     public function store()
     {
-        // Logic xử lý lưu dữ liệu từ form Thêm vào DB
-        // Sau khi lưu xong, chuyển hướng về trang danh sách
-        header('Location: index.php?act=categories');
-    }
+        $categoryModel = new Category();
+        $name = trim($_POST['name'] ?? '');
+        $description = trim($_POST['description'] ?? '');
+        $status = trim($_POST['status'] ?? '');
 
-    public function update()
-    {
-        // Logic xử lý cập nhật dữ liệu từ form Sửa vào DB
-        // Sau khi cập nhật xong, chuyển hướng về trang danh sách
-        header('Location: index.php?act=categories');
-    }
+        if ($name === '' || $description === '' || $status === '') {
+            header('Location: index.php?page=category-add');
+            exit;
+        }
 
-
-    public function delete($id)
-    {
-        // xử lý xóa
+        $categoryModel->create([
+            'name' => $name,
+            'description' => $description,
+            'status' => $status,
+        ]);
 
         header('Location: index.php?page=categories');
         exit;
     }
+
+    public function update()
+    {
+        $categoryModel = new Category();
+        $id = (int)($_POST['id'] ?? 0);
+
+        $name = trim($_POST['name'] ?? '');
+        $description = trim($_POST['description'] ?? '');
+        $status = trim($_POST['status'] ?? '');
+
+        if ($id <= 0 || $name === '' || $description === '' || $status === '') {
+            header('Location: index.php?page=categories');
+            exit;
+        }
+
+        $categoryModel->update($id, [
+            'name' => $name,
+            'description' => $description,
+            'status' => $status,
+        ]);
+
+        header('Location: index.php?page=categories');
+        exit;
+    }
+
+    public function delete($id)
+    {
+        $categoryModel = new Category();
+        $id = (int)$id;
+
+        if ($id > 0) {
+            $categoryModel->delete($id);
+        }
+
+        header('Location: index.php?page=categories');
+        exit;
+    }
+
 }
