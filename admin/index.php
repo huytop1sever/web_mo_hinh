@@ -75,6 +75,26 @@ switch ($page) {
         (new PostController())->index();
         break;
 
+    case 'post-create':
+        (new PostController())->create();
+    break;
+
+    case 'post-store':
+    (new PostController())->store();
+    break;
+
+    case 'post-edit':
+        (new PostController())->edit($_GET['id'] ?? 0);
+        break;
+
+    case 'post-update':
+    (new PostController())->update();
+    break;
+
+    case 'post-delete':
+    (new PostController())->delete($_GET['id'] ?? 0);
+    break;
+
     case 'orders':
         (new OrderController())->index();
         break;

@@ -1,39 +1,48 @@
 <?php
 
+require_once '../Models/Post.php';
+require_once '../Models/Category.php';
+
 class PostController
 {
     private function getCategories(): array
     {
-        return ['Gundam', 'Anime Figure', 'Huong dan', 'Tin tuc'];
+        $categoryModel = new Category();
+        $categories = $categoryModel->getAll();
+
+        return array_column($categories, 'name');
     }
 
     private function getStatusText(): array
     {
         return [
-            'published' => 'Hien thi',
-            'draft' => 'Ban nhap'
+            'published' => 'Hiển thị',
+            'draft' => 'Bản nháp'
         ];
     }
 
     public function index()
     {
-        $title = 'Bai viet';
-        $pageTitle = 'Quan ly bai viet';
+        $title = 'Bài viết';
+        $pageTitle = 'Quản lý bài viết';
         $css = 'posts';
 
         $postModel = new Post();
+
         $categories = $this->getCategories();
         $statusText = $this->getStatusText();
+
         $keyword = trim($_GET['keyword'] ?? '');
         $category = $_GET['category'] ?? '';
         $status = $_GET['status'] ?? '';
 
         $posts = $postModel->getAll($keyword, $category, $status);
+
         $stats = $postModel->stats();
-        $totalPosts = $stats['total'];
-        $publishedPosts = $stats['published'];
-        $draftPosts = $stats['draft'];
-        $featuredPosts = $stats['featured'];
+        $totalPosts = $stats['total'] ?? 0;
+        $publishedPosts = $stats['published'] ?? 0;
+        $draftPosts = $stats['draft'] ?? 0;
+        $featuredPosts = $stats['featured'] ?? 0;
 
         include_once '../Views/admin/layouts/header.php';
         include_once '../Views/admin/layouts/sidebar.php';
@@ -44,9 +53,10 @@ class PostController
 
     public function create()
     {
-        $title = 'Them bai viet';
-        $pageTitle = 'Them bai viet';
+        $title = 'Thêm bài viết';
+        $pageTitle = 'Thêm bài viết';
         $css = 'posts';
+
         $categories = $this->getCategories();
         $statusText = $this->getStatusText();
 
@@ -60,6 +70,7 @@ class PostController
     public function store()
     {
         $postModel = new Post();
+
         $data = $this->preparePostData($_POST, $postModel);
         $data['image'] = $this->uploadImage();
 
@@ -71,12 +82,14 @@ class PostController
 
     public function edit()
     {
-        $title = 'Sua bai viet';
-        $pageTitle = 'Sua bai viet';
+        $title = 'Sửa bài viết';
+        $pageTitle = 'Sửa bài viết';
         $css = 'posts';
+
         $categories = $this->getCategories();
         $statusText = $this->getStatusText();
-        $id = $_GET['id'] ?? 0;
+
+        $id = (int)($_GET['id'] ?? 0);
 
         $postModel = new Post();
         $postEdit = $postModel->find($id);
@@ -86,7 +99,7 @@ class PostController
             exit;
         }
 
-        $postEdit['date'] = $postEdit['published_at'] ?? date('Y-m-d');
+        $postEdit['date'] = $postEdit['published_at'] ?? $postEdit['date'] ?? $postEdit['created_at'] ?? date('Y-m-d');
 
         include_once '../Views/admin/layouts/header.php';
         include_once '../Views/admin/layouts/sidebar.php';
@@ -97,7 +110,8 @@ class PostController
 
     public function update()
     {
-        $id = $_POST['id'] ?? 0;
+        $id = (int)($_POST['id'] ?? 0);
+
         $postModel = new Post();
         $oldPost = $postModel->find($id);
 
@@ -110,6 +124,7 @@ class PostController
         $data['image'] = $oldPost['image'] ?? '';
 
         $newImage = $this->uploadImage();
+
         if ($newImage !== '') {
             $data['image'] = $newImage;
         }
@@ -122,9 +137,9 @@ class PostController
 
     public function delete()
     {
-        $id = $_GET['id'] ?? 0;
+        $id = (int)($_GET['id'] ?? 0);
 
-        if ($id) {
+        if ($id > 0) {
             $postModel = new Post();
             $postModel->delete($id);
         }
