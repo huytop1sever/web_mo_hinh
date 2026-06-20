@@ -10,6 +10,78 @@ class Order
         $this->pdo = $conn;
     }
 
+    // Tổng doanh thu (tính từ order_detail)
+    public function getTotalRevenue(): float
+    {
+        $sql = "
+            SELECT
+                COALESCE(SUM(od.qty * od.price), 0) AS total
+            FROM order_detail od
+
+            INNER JOIN orders o ON o.id = od.order_id
+        ";
+
+
+        $stmt = $this->pdo->query($sql);
+        $row = $stmt ? $stmt->fetch() : null;
+
+        return (float) (($row['total'] ?? 0));
+    }
+
+    public function countOrders(): int
+    {
+        $stmt = $this->pdo->query("SELECT COUNT(*) AS total FROM orders");
+        $row = $stmt ? $stmt->fetch() : null;
+        return (int) ($row['total'] ?? 0);
+    }
+
+    public function getNewOrders(int $limit = 10): array
+    {
+        // Lấy các order mới nhất kèm tên khách hàng.
+        // Tùy schema của DB, cột tên có thể là: name hoặc customer_name.
+        $sql = "
+            SELECT
+                o.id,
+                o.user_id,
+                o.status,
+                o.payment_status,
+                o.created_at,
+                u.name AS customer_name,
+                COALESCE(SUM(od.qty * od.price), 0) AS total_price
+
+            FROM orders o
+            LEFT JOIN users u ON u.id = o.user_id
+            LEFT JOIN order_detail od ON od.order_id = o.id
+            GROUP BY o.id, o.user_id, o.status, o.payment_status, o.created_at, u.name
+            ORDER BY o.created_at DESC, o.id DESC
+            LIMIT " . (int) $limit . "
+        ";
+
+        $stmt = $this->pdo->query($sql);
+        return $stmt ? $stmt->fetchAll(PDO::FETCH_ASSOC) : [];
+    }
+
+    public function getPaidOrdersCount(): int
+    {
+        // payment_status tùy schema có thể là 1/0 hoặc paid/unpaid
+        $sql = "
+            SELECT COUNT(*) AS total
+            FROM orders
+            WHERE payment_status IN (1, 'paid')
+        ";
+
+        $stmt = $this->pdo->query($sql);
+        $row = $stmt ? $stmt->fetch() : null;
+        return (int) ($row['total'] ?? 0);
+    }
+
+    public function getRevenueForDisplay(): float
+    {
+        return $this->getTotalRevenue();
+    }
+
+
+
     public function getAll()
     {
         $sql = "SELECT * FROM orders ORDER BY id DESC";
