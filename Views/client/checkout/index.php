@@ -1,4 +1,14 @@
 <?php require_once 'Views/client/layouts/Header.php'; ?>
+<?php
+require_once 'Models/Cart.php';
+require_once 'Models/Product.php';
+
+$cartModel = new Cart();
+$cartItems = $cartModel->getItems();
+$productModel = new Product();
+
+$user = $_SESSION['user'] ?? null;
+?>
 
 <div class="container-fluid page-header py-5">
     <h1 class="text-center text-white display-6">Thanh toán</h1>
@@ -7,7 +17,7 @@
 <div class="container-fluid py-5">
     <div class="container py-5">
 
-        <form action="#" method="post">
+        <form action="index.php?page=checkout" method="post">
 
             <div class="row g-5">
 
@@ -17,29 +27,27 @@
 
                     <div class="form-item mb-3">
                         <label class="form-label">Họ và tên</label>
-                        <input type="text" class="form-control" placeholder="Nhập họ tên">
+                        <input type="text" name="name" class="form-control" placeholder="Nhập họ tên" value="<?= htmlspecialchars($user['name'] ?? '') ?>">
                     </div>
 
                     <div class="form-item mb-3">
                         <label class="form-label">Số điện thoại</label>
-                        <input type="text" class="form-control" placeholder="Nhập số điện thoại">
+                        <input type="text" name="phone" class="form-control" placeholder="Nhập số điện thoại" value="<?= htmlspecialchars($user['phone'] ?? '') ?>">
                     </div>
 
                     <div class="form-item mb-3">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control" placeholder="Nhập email">
+                        <input type="email" class="form-control" placeholder="Nhập email" value="<?= htmlspecialchars($user['email'] ?? '') ?>" readonly>
                     </div>
 
                     <div class="form-item mb-3">
                         <label class="form-label">Địa chỉ nhận hàng</label>
-                        <input type="text" class="form-control" placeholder="Số nhà, đường, phường/xã, quận/huyện">
+                        <input type="text" name="address" class="form-control" placeholder="Số nhà, đường, phường/xã, quận/huyện" value="<?= htmlspecialchars($user['address'] ?? '') ?>">
                     </div>
 
                     <div class="form-item mb-3">
                         <label class="form-label">Ghi chú</label>
-                        <textarea class="form-control"
-                                  rows="5"
-                                  placeholder="Ghi chú đơn hàng"></textarea>
+                        <textarea name="note" class="form-control" rows="5" placeholder="Ghi chú đơn hàng"><?= htmlspecialchars($_POST['note'] ?? '') ?></textarea>
                     </div>
 
                 </div>
@@ -59,54 +67,47 @@
                             </thead>
 
                             <tbody>
-
+                                <?php
+                                $subtotal = 0;
+                                if (!empty($cartItems)):
+                                    foreach ($cartItems as $productId => $quantity):
+                                        $product = $productModel->find($productId);
+                                        if (!$product) continue;
+                                        $price = (isset($product['sale_price']) && $product['sale_price'] > 0) ? $product['sale_price'] : $product['price'];
+                                        $lineTotal = $price * (int)$quantity;
+                                        $subtotal += $lineTotal;
+                                ?>
                                 <tr>
                                     <td>
-                                        <img src="assets/client/img/fruite-item-1.jpg"
+                                        <img src="<?= htmlspecialchars($product['image'] ?? 'assets/client/img/no-image.png') ?>"
                                              class="img-fluid rounded-circle"
                                              style="width:70px;height:70px;object-fit:cover;">
                                     </td>
 
                                     <td>
-                                        <p class="mb-0 mt-4">Luffy Gear 5</p>
+                                        <p class="mb-0 mt-4"><?= htmlspecialchars($product['title'] ?? $product['name'] ?? '') ?></p>
                                     </td>
 
                                     <td>
-                                        <p class="mb-0 mt-4">2.500.000đ</p>
+                                        <p class="mb-0 mt-4"><?= number_format($price, 0, ',', '.') ?>đ</p>
                                     </td>
 
                                     <td>
-                                        <p class="mb-0 mt-4">1</p>
+                                        <p class="mb-0 mt-4"><?= (int)$quantity ?></p>
                                     </td>
 
                                     <td>
-                                        <p class="mb-0 mt-4">2.500.000đ</p>
+                                        <p class="mb-0 mt-4"><?= number_format($lineTotal, 0, ',', '.') ?>đ</p>
                                     </td>
                                 </tr>
-
+                                <?php
+                                    endforeach;
+                                else:
+                                ?>
                                 <tr>
-                                    <td>
-                                        <img src="assets/client/img/fruite-item-2.jpg"
-                                             class="img-fluid rounded-circle"
-                                             style="width:70px;height:70px;object-fit:cover;">
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0 mt-4">Naruto Uzumaki</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0 mt-4">1.850.000đ</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0 mt-4">1</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="mb-0 mt-4">1.850.000đ</p>
-                                    </td>
+                                    <td colspan="5" class="text-center">Giỏ hàng trống</td>
                                 </tr>
+                                <?php endif; ?>
 
                                 <tr>
                                     <td colspan="4">
@@ -114,7 +115,7 @@
                                     </td>
 
                                     <td>
-                                        <p class="mt-4">4.350.000đ</p>
+                                        <p class="mt-4"><?= number_format($subtotal, 0, ',', '.') ?>đ</p>
                                     </td>
                                 </tr>
 
@@ -134,7 +135,7 @@
                                     </td>
 
                                     <td>
-                                        <h5>4.350.000đ</h5>
+                                        <h5><?= number_format($subtotal, 0, ',', '.') ?>đ</h5>
                                     </td>
                                 </tr>
 

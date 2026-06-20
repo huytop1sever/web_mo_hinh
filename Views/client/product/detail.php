@@ -274,3 +274,42 @@ function changeMainImage(button) {
     button.classList.add('active');
 }
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.add-cart-btn').forEach(btn => {
+        btn.addEventListener('click', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            let id = this.dataset.id;
+
+            fetch('index.php?page=cart&action=add&id=' + id)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.login_required) {
+                        window.location.href = 'index.php?page=login';
+                        return;
+                    }
+
+                    if (data.success) {
+                        const t = document.createElement('div');
+                        t.className = 'cart-toast';
+                        t.innerText = '✓ Đã thêm sản phẩm vào giỏ hàng';
+                        document.body.appendChild(t);
+                        setTimeout(() => t.remove(), 2000);
+
+                        const cartCountEl = document.querySelector('#cart-count');
+                        if (cartCountEl) {
+                            if (typeof data.count !== 'undefined') {
+                                cartCountEl.innerText = data.count;
+                            } else {
+                                cartCountEl.innerText = parseInt(cartCountEl.innerText || '0') + 1;
+                            }
+                        }
+                    }
+                });
+        });
+    });
+});
+</script>

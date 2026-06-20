@@ -1,7 +1,9 @@
 <?php
 session_start();
+ob_start();
 
 require_once 'config/database.php';
+require_once 'Models/Cart.php';
 
 require_once 'Controllers/client/HomeController.php';
 require_once 'Controllers/client/CartController.php';
@@ -21,6 +23,35 @@ require_once 'Models/Post.php';
 
 
 $page = $_GET['page'] ?? 'home';
+
+$action = $_GET['action'] ?? null;
+
+// Handle AJAX cart actions (no header/footer) before rendering full page
+if ($page === 'cart' && in_array($action, ['add', 'remove', 'update'])) {
+    $cart = new CartController();
+
+    switch ($action) {
+        case 'add':
+            $cart->add();
+            break;
+        case 'remove':
+            $cart->remove();
+            break;
+        case 'update':
+            $cart->update();
+            break;
+    }
+
+    exit;
+}
+
+// Check login requirement BEFORE including header
+$requireLogin = in_array($page, ['cart', 'checkout', 'profile']);
+if ($requireLogin && empty($_SESSION['user'])) {
+    ob_end_clean();
+    header('Location: index.php?page=login');
+    exit;
+}
 
 require_once 'Views/client/layouts/header.php';
 

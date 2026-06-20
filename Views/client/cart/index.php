@@ -23,93 +23,82 @@
                 </thead>
 
                 <tbody>
+                    <?php
+                    require_once 'Models/Cart.php';
+                    $cartModel = new Cart();
+                    $cartItems = $cartModel->getItems();
+                    $productModel = new Product();
 
-                    <tr class="cart-item">
-                        <td>
-                            <img src="assets/client/img/luffy-gear-5.jpg"
-                                 class="img-fluid rounded"
-                                 style="width:90px;height:90px;object-fit:cover;">
-                        </td>
+                    if (!empty($cartItems)):
+                        foreach ($cartItems as $productId => $quantity):
+                            $product = $productModel->find($productId);
+                            if (!$product) continue;
+                            // Normalize quantity (support either int or ['qty'=>int] storage)
+                            if (is_array($quantity)) {
+                                $qty = isset($quantity['qty']) ? (int)$quantity['qty'] : 0;
+                            } else {
+                                $qty = (int)$quantity;
+                            }
 
-                        <td>
-                            <p class="mb-0">Luffy Gear 5 Figure</p>
-                        </td>
+                            $price = (isset($product['sale_price']) && $product['sale_price'] > 0) ? $product['sale_price'] : $product['price'];
+                            $price = (int)$price;
+                            ?>
 
-                        <td>
-                            <p class="mb-0 item-price" data-price="2500000">2.500.000đ</p>
-                        </td>
+                            <tr class="cart-item" data-id="<?= htmlspecialchars($product['id']) ?>">
+                                <td>
+                                    <img src="<?= htmlspecialchars($product['image'] ?? 'assets/client/img/no-image.png') ?>"
+                                         class="img-fluid rounded"
+                                         style="width:90px;height:90px;object-fit:cover;">
+                                </td>
 
-                        <td>
-                            <div class="input-group quantity" style="width:120px;">
-                                <button type="button" class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                    <i class="fa fa-minus"></i>
-                                </button>
+                                <td>
+                                    <p class="mb-0"><?= htmlspecialchars($product['title'] ?? $product['name'] ?? '') ?></p>
+                                </td>
 
-                                <input type="text"
-                                       class="form-control form-control-sm text-center border-0 quantity-input"
-                                       value="1"
-                                       readonly>
+                                <td>
+                                    <p class="mb-0 item-price" data-price="<?= (int)$price ?>"><?= number_format($price, 0, ',', '.') ?>đ</p>
+                                </td>
 
-                                <button type="button" class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </td>
+                                <td>
+                                    <div class="input-group quantity" style="width:120px;">
+                                        <button type="button" class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
 
-                        <td>
-                            <p class="mb-0 item-total">2.500.000đ</p>
-                        </td>
+                                        <input type="text"
+                                               class="form-control form-control-sm text-center border-0 quantity-input"
+                                               value="<?= (int)$qty ?>"
+                                               readonly
+                                               data-id="<?= htmlspecialchars($product['id']) ?>">
 
-                        <td>
-                            <button type="button" class="btn btn-md rounded-circle bg-light border remove-item">
-                                <i class="fa fa-times text-danger"></i>
-                            </button>
-                        </td>
-                    </tr>
+                                        <button type="button" class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </td>
 
-                    <tr class="cart-item">
-                        <td>
-                            <img src="assets/client/img/naruto-figure.jpg"
-                                 class="img-fluid rounded"
-                                 style="width:90px;height:90px;object-fit:cover;">
-                        </td>
+                                <td>
+                                    <p class="mb-0 item-total"><?= number_format($price * $qty, 0, ',', '.') ?>đ</p>
+                                </td>
 
-                        <td>
-                            <p class="mb-0">Naruto Uzumaki Figure</p>
-                        </td>
+                                <td>
+                                    <button type="button" class="btn btn-md rounded-circle bg-light border remove-item" data-id="<?= htmlspecialchars($product['id']) ?>">
+                                        <i class="fa fa-times text-danger"></i>
+                                    </button>
+                                </td>
+                            </tr>
 
-                        <td>
-                            <p class="mb-0 item-price" data-price="1850000">1.850.000đ</p>
-                        </td>
+                        <?php endforeach; else: ?>
 
-                        <td>
-                            <div class="input-group quantity" style="width:120px;">
-                                <button type="button" class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                    <i class="fa fa-minus"></i>
-                                </button>
+                        <tr>
+                            <td colspan="6" class="text-center py-5">
+                                <i class="fa fa-shopping-cart fa-3x text-muted mb-3"></i>
+                                <p class="mb-0">Giỏ hàng của bạn đang trống.</p>
+                                <a href="index.php?page=product" class="btn btn-primary mt-2">Xem sản phẩm</a>
+                            </td>
+                        </tr>
 
-                                <input type="text"
-                                       class="form-control form-control-sm text-center border-0 quantity-input"
-                                       value="1"
-                                       readonly>
-
-                                <button type="button" class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </td>
-
-                        <td>
-                            <p class="mb-0 item-total">1.850.000đ</p>
-                        </td>
-
-                        <td>
-                            <button type="button" class="btn btn-md rounded-circle bg-light border remove-item">
-                                <i class="fa fa-times text-danger"></i>
-                            </button>
-                        </td>
-                    </tr>
-
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
@@ -243,26 +232,65 @@ document.addEventListener('DOMContentLoaded', function() {
 
         minus.addEventListener('click', function() {
             let qty = parseInt(input.value);
-
             if (qty > 1) {
-                input.value = qty - 1;
-                updateCartTotal();
+                let newQty = qty - 1;
+
+                fetch('index.php?page=cart&action=update', {
+                    method: 'POST',
+                    body: new URLSearchParams({ id: input.dataset.id, qty: newQty })
+                }).then(res => res.json())
+                  .then(data => {
+                      if (data.success) {
+                          input.value = newQty;
+                          updateCartTotal();
+                      } else {
+                          showCartToast('✕ Cập nhật thất bại', 'error');
+                      }
+                  }).catch(() => showCartToast('✕ Cập nhật thất bại', 'error'));
             }
         });
 
         plus.addEventListener('click', function() {
             let qty = parseInt(input.value);
+            let newQty = qty + 1;
 
-            input.value = qty + 1;
-            updateCartTotal();
+            fetch('index.php?page=cart&action=update', {
+                method: 'POST',
+                body: new URLSearchParams({ id: input.dataset.id, qty: newQty })
+            }).then(res => res.json())
+              .then(data => {
+                  if (data.success) {
+                      input.value = newQty;
+                      updateCartTotal();
+                  } else {
+                      showCartToast('✕ Cập nhật thất bại', 'error');
+                  }
+              }).catch(() => showCartToast('✕ Cập nhật thất bại', 'error'));
         });
     });
 
     document.querySelectorAll('.remove-item').forEach(function(btn) {
         btn.addEventListener('click', function() {
-            this.closest('.cart-item').remove();
-            updateCartTotal();
-            showCartToast('✓ Đã xóa sản phẩm khỏi giỏ hàng', 'success');
+            const id = this.dataset.id;
+            const row = this.closest('.cart-item');
+
+            fetch('index.php?page=cart&action=remove&id=' + encodeURIComponent(id))
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        row.remove();
+                        updateCartTotal();
+                        showCartToast('✓ Đã xóa sản phẩm khỏi giỏ hàng', 'success');
+
+                        if (document.querySelectorAll('.cart-item').length === 0) {
+                            // reload to show empty cart message
+                            location.reload();
+                        }
+                    } else {
+                        showCartToast('✕ Xóa thất bại', 'error');
+                    }
+                })
+                .catch(() => showCartToast('✕ Xóa thất bại', 'error'));
         });
     });
 

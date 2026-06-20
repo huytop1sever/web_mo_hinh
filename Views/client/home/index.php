@@ -1,5 +1,4 @@
 <?php
-require_once 'Views/client/layouts/Header.php';
 ?>
 
         <!-- Hero Start -->
@@ -154,37 +153,50 @@ require_once 'Views/client/layouts/Header.php';
                             <div class="row g-4">
 
                                 <?php
-                                $products = [
-                                    ['img' => 'luffy-gear-5.jpg', 'cat' => 'One Piece', 'name' => 'Luffy Gear 5', 'price' => '2.500.000đ'],
-                                    ['img' => 'fruite-item-2.jpg', 'cat' => 'Naruto', 'name' => 'Naruto Uzumaki', 'price' => '1.850.000đ'],
-                                    ['img' => 'fruite-item-3.webp', 'cat' => 'Dragon Ball', 'name' => 'Son Goku', 'price' => '2.200.000đ'],
-                                    ['img' => 'fruite-item-4.webp', 'cat' => 'Demon Slayer', 'name' => 'Tanjiro Kamado', 'price' => '1.650.000đ'],
-                                    ['img' => 'fruite-item-5.webp', 'cat' => 'Jujutsu Kaisen', 'name' => 'Gojo Satoru', 'price' => '2.900.000đ'],
-                                    ['img' => 'fruite-item-6.webp', 'cat' => 'Attack On Titan', 'name' => 'Levi Ackerman', 'price' => '2.750.000đ'],
-                                    ['img' => 'best-product-1.jpg', 'cat' => 'Nendoroid', 'name' => 'Nendoroid Anime', 'price' => '950.000đ'],
-                                    ['img' => 'best-product-2.jpg', 'cat' => 'PVC Figure', 'name' => 'PVC Collection', 'price' => '1.200.000đ'],
-                                ];
+                                $products = $products ?? [];
+                                $fallbackImage = 'uploads/products/1781846482_gojo.webp';
 
-                                foreach ($products as $product) {
+                                if (!empty($products)):
+                                    foreach ($products as $product):
+                                        $id = $product['id'] ?? 0;
+                                        $name = $product['name'] ?? $product['title'] ?? '';
+                                        $image = $fallbackImage;
+                                        if (!empty($product['image'])) {
+                                            $image = $product['image'];
+                                            if (!str_contains($image, 'uploads/')) {
+                                                $image = 'uploads/products/' . $image;
+                                            }
+                                        }
+
+                                        $price = 0;
+                                        $oldPrice = 0;
+                                        if (!empty($product['sale_price']) && $product['sale_price'] > 0) {
+                                            $price = $product['sale_price'];
+                                            $oldPrice = $product['price'] ?? 0;
+                                        } elseif (!empty($product['price'])) {
+                                            $price = $product['price'];
+                                        }
+
+                                        $category = $product['category'] ?? $product['category_name'] ?? 'Mô hình';
                                 ?>
                                     <div class="col-md-6 col-lg-4 col-xl-3">
                                         <div class="rounded position-relative fruite-item">
 
                                             <div class="fruite-img">
                                                 <img
-                                                    src="assets/client/img/<?php echo $product['img']; ?>"
+                                                    src="<?= htmlspecialchars($image) ?>"
                                                     class="img-fluid w-100 rounded-top"
-                                                    alt="<?php echo $product['name']; ?>">
+                                                    alt="<?= htmlspecialchars($name) ?>">
                                             </div>
 
                                             <div
                                                 class="text-white bg-secondary px-3 py-1 rounded position-absolute"
                                                 style="top: 10px; left: 10px;">
-                                                <?php echo $product['cat']; ?>
+                                                <?= htmlspecialchars($category) ?>
                                             </div>
 
                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <h4><?php echo $product['name']; ?></h4>
+                                                <h4><?= htmlspecialchars($name) ?></h4>
 
                                                 <p>
                                                     Mô hình anime chính hãng, thiết kế sắc nét, phù hợp sưu tầm.
@@ -192,19 +204,29 @@ require_once 'Views/client/layouts/Header.php';
 
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">
-                                                        <?php echo $product['price']; ?>
+                                                        <?= number_format($price, 0, ',', '.') ?>đ
                                                     </p>
 
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                    <button type="button"
+                                                            class="btn border border-secondary rounded-pill px-3 text-primary add-cart-btn"
+                                                            data-id="<?= htmlspecialchars($id) ?>">
                                                         <i class="fa fa-shopping-bag me-2 text-primary"></i>
                                                         Mua ngay
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
 
                                         </div>
                                     </div>
-                                <?php } ?>
+                                <?php
+                                    endforeach;
+                                else:
+                                ?>
+                                    <div class="col-12 text-center py-5">
+                                        <i class="fa fa-search fa-3x text-muted mb-3"></i>
+                                        <p>Không có sản phẩm nổi bật để hiển thị.</p>
+                                    </div>
+                                <?php endif; ?>
 
                             </div>
                         </div>
@@ -414,6 +436,40 @@ require_once 'Views/client/layouts/Header.php';
             </div>
         </div>
         <!-- Fact End -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.add-cart-btn').forEach(function (btn) {
+        btn.addEventListener('click', function (event) {
+            event.preventDefault();
+            var id = this.dataset.id;
+            if (!id) return;
+
+            fetch('index.php?page=cart&action=add&id=' + encodeURIComponent(id))
+                .then(function (res) {
+                    return res.json();
+                })
+                .then(function (data) {
+                    if (data && data.login_required) {
+                        window.location.href = 'index.php?page=login';
+                        return;
+                    }
+
+                    if (data.success) {
+                        var cartCountEl = document.querySelector('#cart-count');
+                        if (cartCountEl) {
+                            cartCountEl.innerText = typeof data.count !== 'undefined' ? data.count : (parseInt(cartCountEl.innerText || '0') + 1);
+                        }
+                    }
+                })
+                .catch(function () {
+                    console.error('Add to cart failed.');
+                });
+        });
+    });
+});
+</script>
+
 <?php
 require_once 'Views/client/layouts/Footer.php';
 ?>
