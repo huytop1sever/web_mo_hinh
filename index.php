@@ -113,4 +113,4 @@ switch ($page) {
         break;
 }
 
-require_once 'Views/client/layouts/footer.php';
+require_once 'Views/client/layouts/Footer.php';

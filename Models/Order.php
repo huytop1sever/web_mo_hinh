@@ -94,10 +94,15 @@ class Order
         $sql = "
             SELECT 
                 od.*,
-                p.title AS product_name
+                p.title AS product_name,
+                p.image AS product_image,
+                pv.variant_name,
+                pv.sku
             FROM order_detail od
             LEFT JOIN products p ON od.product_id = p.id
+            LEFT JOIN product_variants pv ON od.product_variant_id = pv.id
             WHERE od.order_id = ?
+            ORDER BY od.id ASC
         ";
 
         $stmt = $this->pdo->prepare($sql);
