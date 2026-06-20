@@ -96,24 +96,15 @@ $fallbackImage = 'uploads/products/1781846482_gojo.webp';
                         <?php foreach ($products as $product): ?>
                             <?php
                             $id = $product['id'] ?? 0;
-                            $name = $product['name'] ?? '';
+                            $name = $product['name'] ?? $product['title'] ?? '';
 
-                            $price = 0;
-                            $oldPrice = 0;
-
-                            if (!empty($product['sale_price']) && $product['sale_price'] > 0) {
-                                $price = $product['sale_price'];
-                                $oldPrice = $product['price'] ?? 0;
-                            } elseif (!empty($product['price'])) {
-                                $price = $product['price'];
-                            }
+                            $price = $product['price'] ?? 0;
+                            $salePrice = $product['sale_price'] ?? 0;
 
                             $image = $fallbackImage;
-
                             if (!empty($product['image'])) {
                                 $image = $product['image'];
-
-                                if (!str_contains($image, 'uploads/')) {
+                                if (!str_contains($image, 'uploads/') && !str_contains($image, 'assets/') && !str_contains($image, 'http')) {
                                     $image = 'uploads/products/' . $image;
                                 }
                             }
@@ -126,27 +117,27 @@ $fallbackImage = 'uploads/products/1781846482_gojo.webp';
                             ?>
 
                             <div class="col-md-6 col-xl-4">
-                                <div class="product-card position-relative">
+                                <div class="product-card">
 
                                     <a href="index.php?page=product-detail&id=<?= htmlspecialchars($id) ?>"
                                        class="product-click-link">
 
                                         <div class="product-img">
-                                            <img
-                                                src="<?= htmlspecialchars($image) ?>"
-                                                alt="<?= htmlspecialchars($name) ?>"
-                                                onerror="this.src='<?= $fallbackImage ?>'">
+                                            <img src="<?= htmlspecialchars($image) ?>"
+                                                 alt="<?= htmlspecialchars($name) ?>"
+                                                 onerror="this.src='<?= $fallbackImage ?>'">
 
                                             <span><?= htmlspecialchars($product['category'] ?? 'Mô hình') ?></span>
                                         </div>
 
                                         <div class="product-content">
+
                                             <div class="product-top">
                                                 <b class="<?= htmlspecialchars($statusClass) ?>">
                                                     <?= htmlspecialchars($statusText) ?>
                                                 </b>
 
-                                                <div>
+                                                <div class="product-stars">
                                                     <i class="fas fa-star"></i>
                                                     <i class="fas fa-star"></i>
                                                     <i class="fas fa-star"></i>
@@ -159,15 +150,24 @@ $fallbackImage = 'uploads/products/1781846482_gojo.webp';
                                                 <?= htmlspecialchars($name) ?>
                                             </h4>
 
-                                            <p><?= htmlspecialchars($product['description'] ?? '') ?></p>
+                                            <div class="product-price">
+                                                <?php if (!empty($salePrice) && $salePrice > 0): ?>
+                                                    <div class="old-price">
+                                                        <?= number_format($price, 0, ',', '.') ?>đ
+                                                    </div>
 
-                                            <h3>
-                                                <?php if (!empty($oldPrice)): ?>
-                                                    <del><?= number_format($oldPrice, 0, ',', '.') ?>đ</del>
+                                                    <div class="new-price">
+                                                        <?= number_format($salePrice, 0, ',', '.') ?>đ
+                                                    </div>
+                                                <?php else: ?>
+                                                    <div class="old-price empty-price">&nbsp;</div>
+
+                                                    <div class="new-price">
+                                                        <?= number_format($price, 0, ',', '.') ?>đ
+                                                    </div>
                                                 <?php endif; ?>
+                                            </div>
 
-                                                <?= number_format($price, 0, ',', '.') ?>đ
-                                            </h3>
                                         </div>
                                     </a>
 
@@ -237,8 +237,71 @@ $fallbackImage = 'uploads/products/1781846482_gojo.webp';
 </div>
 
 <style>
+.product-shop {
+    background: #fff;
+}
+
+.product-filter {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 26px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.04);
+}
+
+.product-filter h4 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #3f5557;
+    margin-bottom: 20px;
+}
+
+.product-filter input,
+.product-filter select {
+    width: 100%;
+    height: 42px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 0 12px;
+    margin-bottom: 12px;
+}
+
+.product-filter a {
+    display: flex;
+    justify-content: space-between;
+    color: #666;
+    padding: 12px 0;
+    border-bottom: 1px solid #e5e7eb;
+    text-decoration: none;
+}
+
+.product-filter a.active,
+.product-filter a:hover {
+    color: #81c408;
+}
+
+.product-card {
+    height: 100%;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ffb524;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    transition: .3s;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 35px rgba(0,0,0,.12);
+}
+
 .product-click-link {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     color: inherit;
     text-decoration: none;
 }
@@ -248,81 +311,137 @@ $fallbackImage = 'uploads/products/1781846482_gojo.webp';
     text-decoration: none;
 }
 
+.product-img {
+    height: 270px;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-img span {
+    position: absolute;
+    left: 18px;
+    bottom: 16px;
+    background: #81c408;
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-weight: 700;
+}
+
+.product-content {
+    padding: 24px 28px 10px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.product-stars i {
+    color: #ffb524;
+}
+
+.product-title {
+    font-size: 24px;
+    color: #3f5557;
+    margin-bottom: 18px;
+    min-height: 58px;
+    line-height: 1.25;
+}
+
+.product-price {
+    margin-top: auto;
+    min-height: 58px;
+}
+
+.old-price {
+    height: 22px;
+    font-size: 16px;
+    color: #999;
+    text-decoration: line-through;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.empty-price {
+    text-decoration: none;
+    visibility: hidden;
+}
+
+.new-price {
+    font-size: 26px;
+    font-weight: 700;
+    color: #81c408;
+    line-height: 1.2;
+}
+
 .product-actions {
+    display: flex;
+    gap: 10px;
+    padding: 18px 28px 28px;
     position: relative;
     z-index: 5;
+}
+
+.product-actions button,
+.product-actions a {
+    flex: 1;
+    border: 1px solid #ffb524;
+    background: #fff;
+    color: #81c408;
+    border-radius: 24px;
+    padding: 10px 12px;
+    text-align: center;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.product-actions button:hover,
+.product-actions a:hover {
+    background: #81c408;
+    color: #fff;
+}
+
+.product-actions button.disabled {
+    color: #dc3545;
+    cursor: not-allowed;
+}
+
+.product-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    list-style: none;
+    padding-left: 0;
+}
+
+.product-pagination a {
+    display: block;
+    padding: 8px 14px;
+    border: 1px solid #ffb524;
+    border-radius: 8px;
+    color: #81c408;
+    text-decoration: none;
+}
+
+.product-pagination .active a,
+.product-pagination a:hover {
+    background: #81c408;
+    color: #fff;
 }
 </style>
 
 <div id="toast"></div>
 
-<script>
-function showToast(message, type = 'success') {
-    const toast = document.getElementById('toast');
-
-    if (!toast) return;
-
-    const item = document.createElement('div');
-    item.className = 'toast-item toast-' + type;
-    item.innerHTML = message;
-
-    toast.appendChild(item);
-
-    setTimeout(() => {
-        item.remove();
-    }, 3000);
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    const filterForm = document.querySelector('.product-filter');
-    const sortSelect = document.querySelector('select[name="sort"]');
-    const priceRangeSelect = document.querySelector('select[name="price_range"]');
-
-    if (sortSelect && filterForm) {
-        sortSelect.addEventListener('change', function () {
-            filterForm.submit();
-        });
-    }
-
-    if (priceRangeSelect && filterForm) {
-        priceRangeSelect.addEventListener('change', function () {
-            filterForm.submit();
-        });
-    }
-
-    document.querySelectorAll('.add-cart-btn').forEach(btn => {
-        btn.addEventListener('click', function (event) {
-            event.preventDefault();
-            event.stopPropagation();
-
-            let id = this.dataset.id;
-
-            fetch('index.php?page=cart&action=add&id=' + id)
-                .then(res => res.json())
-                .then(data => {
-                    if (data && data.login_required) {
-                        window.location.href = 'index.php?page=login';
-                        return;
-                    }
-
-                    if (data.success) {
-                        showToast('✓ Đã thêm sản phẩm vào giỏ hàng', 'success');
-                        const cartCountEl = document.querySelector('#cart-count');
-                        if (cartCountEl) {
-                            if (typeof data.count !== 'undefined') {
-                                cartCountEl.innerText = data.count;
-                            } else {
-                                cartCountEl.innerText = parseInt(cartCountEl.innerText || '0') + 1;
-                            }
-                        }
-                    } else {
-                        showToast('✕ Thêm vào giỏ hàng thất bại', 'error');
-                    }
-                })
-                .catch(() => {
-                    showToast('✕ Thêm vào giỏ hàng thất bại', 'error');
-                });
-        });
-    });
-});
-</script>
+<script src="assets/client/js/product.js"></script>
