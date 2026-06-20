@@ -76,6 +76,12 @@ public function index()
             $productModel->saveVariants($productId, $_POST['variants']);
         }
 
+        // Upload ảnh phụ
+        $subImages = $this->uploadSubImages();
+        if (!empty($subImages)) {
+            $productModel->saveImages($productId, $subImages);
+        }
+
         header('Location: index.php?page=products');
         exit;
     }
@@ -117,6 +123,13 @@ public function index()
         $variants = $_POST['variants'] ?? [];
         $productModel->updateVariants($_POST['id'], $variants);
 
+        // Upload ảnh phụ (thay mới nếu có upload)
+        $subImages = $this->uploadSubImages();
+        if (!empty($subImages)) {
+            $productModel->deleteImages((int)$_POST['id']);
+            $productModel->saveImages((int)$_POST['id'], $subImages);
+        }
+
         header('Location: index.php?page=products');
         exit;
     }
@@ -154,6 +167,49 @@ public function index()
 
         return '';
     }
-    
-    };
+
+    private function uploadSubImages(): array
+    {
+        if (
+            empty($_FILES['sub_images']) ||
+            empty($_FILES['sub_images']['name']) ||
+            !is_array($_FILES['sub_images']['name'])
+        ) {
+            return [];
+        }
+
+        $uploadDir = '../uploads/products/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        $allowTypes = ['jpg', 'jpeg', 'png', 'webp'];
+        $paths = [];
+
+        foreach ($_FILES['sub_images']['name'] as $index => $originalName) {
+            if (empty($originalName)) {
+                continue;
+            }
+
+            $tmpName = $_FILES['sub_images']['tmp_name'][$index] ?? '';
+            if (empty($tmpName)) {
+                continue;
+            }
+
+            $fileExt = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+            if (!in_array($fileExt, $allowTypes)) {
+                continue;
+            }
+
+            $fileName = time() . '_' . $index . '_' . basename($originalName);
+            $targetPath = $uploadDir . $fileName;
+
+            if (move_uploaded_file($tmpName, $targetPath)) {
+                $paths[] = 'uploads/products/' . $fileName;
+            }
+        }
+
+        return $paths;
+    }
+}
 ?>

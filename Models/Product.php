@@ -10,6 +10,14 @@ class Product
         $this->pdo = $conn;
     }
 
+    public function getAllTotal(): int
+    {
+        $stmt = $this->pdo->query("SELECT COUNT(*) AS total FROM products");
+        $row = $stmt ? $stmt->fetch() : null;
+        return (int) ($row['total'] ?? 0);
+    }
+
+
     public function getAll($keyword = '', $categoryId = '', $limit = 10, $offset = 0, $priceRange = '', $sort = '')
     {
         $sql = "
@@ -388,6 +396,36 @@ class Product
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteImages($productId)
+    {
+        $sql = "DELETE FROM product_images WHERE product_id = :product_id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':product_id', $productId, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function saveImages($productId, array $imagePaths)
+    {
+        if (empty($imagePaths)) {
+            return;
+        }
+
+        // created_at/updated_at có thể không tồn tại trong DB (tùy schema)
+        // vì vậy chỉ insert các cột bắt buộc.
+        $sql = "
+            INSERT INTO product_images (product_id, image)
+            VALUES (:product_id, :image)
+        ";
+
+        $stmt = $this->pdo->prepare($sql);
+        foreach ($imagePaths as $path) {
+            if (empty($path)) continue;
+            $stmt->bindValue(':product_id', $productId, PDO::PARAM_INT);
+            $stmt->bindValue(':image', $path);
+            $stmt->execute();
+        }
     }
 
 }

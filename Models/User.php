@@ -10,12 +10,20 @@ class User
         $this->pdo = $conn;
     }
 
+    public function getAllTotal(): int
+    {
+        $stmt = $this->pdo->query("SELECT COUNT(*) AS total FROM users");
+        $row = $stmt ? $stmt->fetch() : null;
+        return (int) ($row['total'] ?? 0);
+    }
+
     public function getAll()
     {
         $sql = "SELECT * FROM users ORDER BY id DESC";
         $stmt = $this->pdo->query($sql);
         return $stmt->fetchAll();
     }
+
 
     public function find($id)
     {
