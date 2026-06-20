@@ -89,17 +89,14 @@ class Order
             SELECT 
                 od.*,
                 p.title AS product_name,
-                pv.id AS variant_id,
-                pv.price AS variant_price,
-                pv.sale_price AS variant_sale_price,
-                pv.stock AS variant_stock,
-                pv.status AS variant_status
+                p.image AS product_image,
+                pv.variant_name,
+                pv.sku
             FROM order_detail od
-            LEFT JOIN products p 
-                ON od.product_id = p.id
-            LEFT JOIN product_variants pv 
-                ON od.product_variant_id = pv.id
+            LEFT JOIN products p ON od.product_id = p.id
+            LEFT JOIN product_variants pv ON od.product_variant_id = pv.id
             WHERE od.order_id = ?
+            ORDER BY od.id ASC
         ";
 
         $stmt = $this->pdo->prepare($sql);

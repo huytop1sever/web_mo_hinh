@@ -254,8 +254,14 @@ class AuthController
     $orders = $orderModel->getByUserId($user['id']);
     $totalOrders = $orderModel->countByUserId($user['id']);
 
-    require_once 'Views/auth/profile/index.php';
-}
+        // Fetch order details for each order
+        foreach ($orders as &$order) {
+            $order['items'] = $orderModel->getOrderDetails($order['id']);
+        }
+        unset($order);
+
+        require_once 'Views/auth/profile/index.php';
+    }
 
     public function logout()
     {
