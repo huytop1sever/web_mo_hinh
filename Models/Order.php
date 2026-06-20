@@ -10,35 +10,30 @@ class Order
         $this->pdo = $conn;
     }
 
-    // Tổng doanh thu (tính từ order_detail)
     public function getTotalRevenue(): float
     {
         $sql = "
-            SELECT
-                COALESCE(SUM(od.qty * od.price), 0) AS total
+            SELECT COALESCE(SUM(od.qty * od.price), 0) AS total
             FROM order_detail od
-
             INNER JOIN orders o ON o.id = od.order_id
         ";
 
-
         $stmt = $this->pdo->query($sql);
-        $row = $stmt ? $stmt->fetch() : null;
+        $row = $stmt ? $stmt->fetch(PDO::FETCH_ASSOC) : null;
 
-        return (float) (($row['total'] ?? 0));
+        return (float) ($row['total'] ?? 0);
     }
 
     public function countOrders(): int
     {
         $stmt = $this->pdo->query("SELECT COUNT(*) AS total FROM orders");
-        $row = $stmt ? $stmt->fetch() : null;
+        $row = $stmt ? $stmt->fetch(PDO::FETCH_ASSOC) : null;
+
         return (int) ($row['total'] ?? 0);
     }
 
     public function getNewOrders(int $limit = 10): array
     {
-        // Lấy các order mới nhất kèm tên khách hàng.
-        // Tùy schema của DB, cột tên có thể là: name hoặc customer_name.
         $sql = "
             SELECT
                 o.id,
@@ -48,7 +43,6 @@ class Order
                 o.created_at,
                 u.name AS customer_name,
                 COALESCE(SUM(od.qty * od.price), 0) AS total_price
-
             FROM orders o
             LEFT JOIN users u ON u.id = o.user_id
             LEFT JOIN order_detail od ON od.order_id = o.id
@@ -58,12 +52,12 @@ class Order
         ";
 
         $stmt = $this->pdo->query($sql);
+
         return $stmt ? $stmt->fetchAll(PDO::FETCH_ASSOC) : [];
     }
 
     public function getPaidOrdersCount(): int
     {
-        // payment_status tùy schema có thể là 1/0 hoặc paid/unpaid
         $sql = "
             SELECT COUNT(*) AS total
             FROM orders
@@ -71,7 +65,8 @@ class Order
         ";
 
         $stmt = $this->pdo->query($sql);
-        $row = $stmt ? $stmt->fetch() : null;
+        $row = $stmt ? $stmt->fetch(PDO::FETCH_ASSOC) : null;
+
         return (int) ($row['total'] ?? 0);
     }
 
@@ -80,13 +75,12 @@ class Order
         return $this->getTotalRevenue();
     }
 
-
-
     public function getAll()
     {
         $sql = "SELECT * FROM orders ORDER BY id DESC";
         $stmt = $this->pdo->query($sql);
-        return $stmt->fetchAll();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getOrderDetails($orderId)
@@ -94,16 +88,24 @@ class Order
         $sql = "
             SELECT 
                 od.*,
-                p.title AS product_name
+                p.title AS product_name,
+                pv.id AS variant_id,
+                pv.price AS variant_price,
+                pv.sale_price AS variant_sale_price,
+                pv.stock AS variant_stock,
+                pv.status AS variant_status
             FROM order_detail od
-            LEFT JOIN products p ON od.product_id = p.id
+            LEFT JOIN products p 
+                ON od.product_id = p.id
+            LEFT JOIN product_variants pv 
+                ON od.product_variant_id = pv.id
             WHERE od.order_id = ?
         ";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$orderId]);
 
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function find($id)
@@ -111,13 +113,15 @@ class Order
         $sql = "SELECT * FROM orders WHERE id = ?";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$id]);
-        return $stmt->fetch();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function updateStatus($id, $status)
     {
-        $sql = "UPDATE orders SET status = ? WHERE id = ?";
+        $sql = "UPDATE orders SET status = ?, updated_at = NOW() WHERE id = ?";
         $stmt = $this->pdo->prepare($sql);
+
         return $stmt->execute([$status, $id]);
     }
 
@@ -125,36 +129,41 @@ class Order
     {
         $sql = "DELETE FROM orders WHERE id = ?";
         $stmt = $this->pdo->prepare($sql);
+
         return $stmt->execute([$id]);
     }
 
     public function getByUserId($userId)
-{
-    $sql = "SELECT * FROM orders WHERE user_id = ? ORDER BY id DESC";
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute([$userId]);
+    {
+        $sql = "SELECT * FROM orders WHERE user_id = ? ORDER BY id DESC";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$userId]);
 
-    return $stmt->fetchAll();
-}
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-public function countByUserId($userId)
-{
-    $sql = "SELECT COUNT(*) AS total FROM orders WHERE user_id = ?";
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute([$userId]);
+    public function countByUserId($userId)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM orders WHERE user_id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$userId]);
 
-    $row = $stmt->fetch();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    return $row['total'] ?? 0;
-}
+        return (int) ($row['total'] ?? 0);
+    }
 
     public function createOrderWithItems($orderData, $items)
     {
         try {
             $this->pdo->beginTransaction();
 
-            $sql = "INSERT INTO orders (user_id, name, phone, address, total_price, payment_method, payment_status, status, note, created_at, updated_at)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+            $sql = "
+                INSERT INTO orders 
+                    (user_id, name, phone, address, total_price, payment_method, payment_status, status, note, created_at, updated_at)
+                VALUES 
+                    (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+            ";
 
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([
@@ -171,36 +180,80 @@ public function countByUserId($userId)
 
             $orderId = $this->pdo->lastInsertId();
 
-            $detailSql = "INSERT INTO order_detail (order_id, product_id, product_variant_id, qty, price, total_price, created_at, updated_at)
-                          VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())";
+            $detailSql = "
+                INSERT INTO order_detail 
+                    (order_id, product_id, product_variant_id, qty, price, total_price, created_at, updated_at)
+                VALUES 
+                    (?, ?, ?, ?, ?, ?, NOW(), NOW())
+            ";
+
             $detailStmt = $this->pdo->prepare($detailSql);
 
-            foreach ($items as $productId => $item) {
-                $productId = (int)$productId;
+            foreach ($items as $key => $item) {
                 if (is_array($item)) {
-                    $qty = (int)($item['qty'] ?? 0);
-                    $price = isset($item['price']) ? (float)$item['price'] : null;
+                    $productId = (int) ($item['product_id'] ?? $key);
+                    $qty = (int) ($item['qty'] ?? 0);
+                    $price = isset($item['price']) ? (float) $item['price'] : null;
+
+                    $variantId = $item['product_variant_id']
+                        ?? $item['variant_id']
+                        ?? null;
+
+                    $variantId = $variantId ? (int) $variantId : null;
                 } else {
-                    $qty = (int)$item;
+                    $productId = (int) $key;
+                    $qty = (int) $item;
                     $price = null;
+                    $variantId = null;
+                }
+
+                if ($qty <= 0) {
+                    continue;
                 }
 
                 if ($price === null) {
-                    $pstmt = $this->pdo->prepare("SELECT price, sale_price FROM products WHERE id = ?");
-                    $pstmt->execute([$productId]);
-                    $prow = $pstmt->fetch();
-                    $price = ($prow && isset($prow['sale_price']) && $prow['sale_price'] > 0) ? $prow['sale_price'] : ($prow['price'] ?? 0);
+                    if ($variantId) {
+                        $pstmt = $this->pdo->prepare("
+                            SELECT price, sale_price 
+                            FROM product_variants 
+                            WHERE id = ?
+                        ");
+                        $pstmt->execute([$variantId]);
+                    } else {
+                        $pstmt = $this->pdo->prepare("
+                            SELECT price, sale_price 
+                            FROM products 
+                            WHERE id = ?
+                        ");
+                        $pstmt->execute([$productId]);
+                    }
+
+                    $prow = $pstmt->fetch(PDO::FETCH_ASSOC);
+
+                    $price = ($prow && !empty($prow['sale_price']) && $prow['sale_price'] > 0)
+                        ? (float) $prow['sale_price']
+                        : (float) ($prow['price'] ?? 0);
                 }
 
                 $totalPrice = $price * $qty;
-                $detailStmt->execute([$orderId, $productId, null, $qty, $price, $totalPrice]);
+
+                $detailStmt->execute([
+                    $orderId,
+                    $productId,
+                    $variantId,
+                    $qty,
+                    $price,
+                    $totalPrice
+                ]);
             }
 
             $this->pdo->commit();
+
             return $orderId;
         } catch (Exception $e) {
             $this->pdo->rollBack();
             error_log('Create order error: ' . $e->getMessage());
+
             return false;
         }
     }

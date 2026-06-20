@@ -41,15 +41,39 @@ class OrderController
         $id = $_POST['id'] ?? 0;
         $status = $_POST['status'] ?? '';
 
-        if ($id && $status !== '') {
-            $orderModel = new Order();
-            $orderModel->updateStatus($id, $status);
+        $steps = ['pending', 'confirmed', 'shipping', 'delivered', 'cancelled'];
 
-            header('Location: index.php?page=order-detail&id=' . $id . '&msg=updated');
+        if (!$id || !in_array($status, $steps, true)) {
+            header('Location: index.php?page=orders&msg=error');
             exit;
         }
 
-        header('Location: index.php?page=orders&msg=error');
+        $orderModel = new Order();
+        $order = $orderModel->find($id);
+
+        if (!$order) {
+            header('Location: index.php?page=orders&msg=error');
+            exit;
+        }
+
+        $currentStatus = $order['status'];
+
+        $allowNext = [
+            'pending' => ['confirmed', 'cancelled'],
+            'confirmed' => ['shipping', 'cancelled'],
+            'shipping' => ['delivered'],
+            'delivered' => ['delivered'],
+            'cancelled' => ['cancelled'],
+        ];
+
+        if (!in_array($status, $allowNext[$currentStatus] ?? [], true)) {
+            header('Location: index.php?page=order-detail&id=' . $id . '&msg=error');
+            exit;
+        }
+
+        $orderModel->updateStatus($id, $status);
+
+        header('Location: index.php?page=order-detail&id=' . $id . '&msg=updated');
         exit;
     }
 
