@@ -228,6 +228,16 @@
     line-height: 1.35;
 }
 
+.post-title-text {
+    display: inline-block;
+    max-width: 280px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+} 
+
+
 .post-cell-info small {
     color: #9ca3af;
     font-size: 12px;
@@ -239,6 +249,37 @@
     font-size: 13px;
     line-height: 1.45;
 }
+
+.excerpt-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.btn-excerpt-toggle {
+    align-self: flex-start;
+    background: #f59e0b;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-excerpt-toggle:hover {
+    background: #d97706;
+}
+
+.excerpt-full {
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.55;
+    word-break: break-word;
+}
+
 
 .featured-badge,
 .category-pill {

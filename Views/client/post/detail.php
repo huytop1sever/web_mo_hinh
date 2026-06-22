@@ -82,6 +82,35 @@ $postImage = postImagePath($post['image'] ?? '');
                             </div>
                         <?php endif; ?>
 
+                        <?php if (!empty($post['content'])): ?>
+                            <?php
+                                $contentRaw = is_string($post['content']) ? $post['content'] : '';
+                                $contentMaxLen = 350;
+                                $contentShow = mb_strlen($contentRaw, 'UTF-8') > $contentMaxLen
+                                    ? mb_substr($contentRaw, 0, $contentMaxLen, 'UTF-8') . '...'
+                                    : $contentRaw;
+                                $contentIsLong = mb_strlen($contentRaw, 'UTF-8') > $contentMaxLen;
+                            ?>
+
+                            <div class="post-content-excerpt" data-post-content="<?= htmlspecialchars($contentRaw) ?>">
+                                <div class="post-content-short">
+                                    <?= nl2br(htmlspecialchars($contentShow)) ?>
+                                </div>
+
+                                <?php if ($contentIsLong): ?>
+                                    <button type="button" class="btn-content-toggle" data-action="show" aria-expanded="false">
+                                        ...
+                                    </button>
+
+
+                                    <div class="post-content-full" style="display:none;">
+
+                                        <?= nl2br(htmlspecialchars($contentRaw)) ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
+
                         <?php if (!empty($post['image'])): ?>
                             <div class="post-main-image-container mb-5">
                                 <img src="<?= htmlspecialchars($postImage) ?>"
@@ -90,11 +119,12 @@ $postImage = postImagePath($post['image'] ?? '');
                             </div>
                         <?php endif; ?>
 
-                        <div class="post-content-text">
+                        <div class="post-content-text" style="display:none;">
                             <?= nl2br($post['content'] ?? '') ?>
                         </div>
 
                     </div>
+
 
                     <div class="border-top border-bottom py-3 my-5 d-flex justify-content-between align-items-center flex-wrap gap-3">
                         <div class="tags">
@@ -223,4 +253,66 @@ $postImage = postImagePath($post['image'] ?? '');
 .related-posts .card-title a:hover{
     color:#81c408!important;
 }
+
+.post-content-excerpt .btn-content-toggle{
+    background:#f59e0b;
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    padding:8px 14px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.2s ease;
+}
+
+.post-content-excerpt .btn-content-toggle:hover{
+    background:#d97706;
+}
+
+.post-content-excerpt .post-content-full{
+    color:#2d3748;
+}
+
+ .post-content-excerpt .post-content-short{
+    color:#2d3748;
+}
+
+.post-content-excerpt .modern-excerpt-readmore{
+    display:inline-block;
+    margin-top:8px;
+    font-size:13px;
+    color:#81c408;
+    font-weight:700;
+}
 </style>
+
+
+<script>
+(function(){
+  function onClick(e){
+    var btn = e.target.closest('.btn-content-toggle');
+    if(!btn) return;
+    var wrap = btn.closest('.post-content-excerpt');
+    if(!wrap) return;
+    var full = wrap.querySelector('.post-content-full');
+    if(!full) return;
+
+    var action = btn.getAttribute('data-action') || 'show';
+    if(action === 'show'){
+      full.style.display = 'block';
+      btn.setAttribute('data-action','hide');
+      btn.setAttribute('aria-expanded','true');
+      btn.textContent = 'Ẩn';
+    }else{
+      full.style.display = 'none';
+      btn.setAttribute('data-action','show');
+      btn.setAttribute('aria-expanded','false');
+      btn.textContent = 'Show';
+    }
+
+
+  }
+  document.addEventListener('click', onClick);
+})();
+</script>
+

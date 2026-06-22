@@ -177,9 +177,11 @@ $featuredPosts = $featuredPosts ?? 0;
 
                                     <div class="post-title-line">
 
-                                        <strong>
+                                        <strong class="post-title-text" title="<?= htmlspecialchars($post['title']) ?>">
                                             <?= htmlspecialchars($post['title']) ?>
                                         </strong>
+
+
 
                                         <?php if (!empty($post['featured'])): ?>
                                             <span class="featured-badge">
@@ -194,9 +196,35 @@ $featuredPosts = $featuredPosts ?? 0;
                                         /<?= htmlspecialchars($post['slug']) ?>
                                     </small>
 
-                                    <p>
-                                        <?= htmlspecialchars($post['excerpt']) ?>
-                                    </p>
+                                    <?php
+                                        $excerpt = $post['excerpt'] ?? '';
+                                        $excerpt = is_string($excerpt) ? $excerpt : '';
+                                        $excerptMaxLen = 120; // giới hạn độ dài hiển thị
+                                        $excerptShow = mb_strlen($excerpt, 'UTF-8') > $excerptMaxLen
+                                            ? mb_substr($excerpt, 0, $excerptMaxLen, 'UTF-8') . '...'
+                                            : $excerpt;
+                                    ?>
+
+                                    <div class="excerpt-wrap" data-post-excerpt="<?= htmlspecialchars($excerpt) ?>">
+                                        <p class="excerpt-short" title="<?= htmlspecialchars($excerpt) ?>">
+                                            <?= htmlspecialchars($excerptShow) ?>
+                                        </p>
+
+                                        <?php $excerptIsLong = mb_strlen($excerpt, 'UTF-8') > $excerptMaxLen; ?>
+                                        <?php if ($excerptIsLong): ?>
+                                            <button type="button" class="btn-excerpt-toggle" data-action="show">
+                                                Show
+                                            </button>
+
+                                            <div class="excerpt-full" style="display:none;">
+                                                <?= nl2br(htmlspecialchars($excerpt)) ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+
+
+
+
 
                                 </div>
 
@@ -232,7 +260,7 @@ $featuredPosts = $featuredPosts ?? 0;
 
                             <div class="table-actions">
 
-                                <a href="../index.php?page=post-detail&id=<?= (int)$post['id'] ?>"
+<a href="../index.php?page=post-detail&slug=<?= urlencode($post['slug'] ?? '') ?>"
                                    target="_blank"
                                    class="action-btn view">
                                     <i class='bx bx-show'></i>
@@ -264,6 +292,6 @@ $featuredPosts = $featuredPosts ?? 0;
     </div>
 
 </div>
-```
+<script src="../assets/admin/js/posts-excerpt.js"></script>
 
-</div>
+
