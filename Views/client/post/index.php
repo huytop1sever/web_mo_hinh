@@ -53,8 +53,17 @@ $posts = $posts ?? [];
 
                 $title = $item['title'] ?? '';
 
-                $excerpt = $item['excerpt']
-                    ?? mb_substr(strip_tags($item['content'] ?? ''), 0, 120) . '...';
+                $excerpt = $item['excerpt'] ?? '';
+                if ($excerpt === '') {
+                    $excerpt = mb_substr(strip_tags($item['content'] ?? ''), 0, 120) . '...';
+                } else {
+                    // Nếu excerpt do admin nhập có sẵn dấu 3 chấm cuối, giữ nguyên; còn lại sẽ cắt ngắn và thêm ...
+                    $excerpt = is_string($excerpt) ? $excerpt : '';
+                    $excerptMaxLen = 120;
+                    $excerpt = mb_strlen($excerpt, 'UTF-8') > $excerptMaxLen
+                        ? mb_substr($excerpt, 0, $excerptMaxLen, 'UTF-8') . '...'
+                        : $excerpt;
+                }
 
                 $createdAt = $item['created_at'] ?? date('Y-m-d');
                 ?>
@@ -65,7 +74,7 @@ $posts = $posts ?? [];
 
                         <div class="position-relative">
 
-                            <a href="index.php?page=post-detail&id=<?= $item['id'] ?>">
+<a href="index.php?page=post-detail&slug=<?= urlencode($item['slug'] ?? '') ?>">
                                 <img src="<?= htmlspecialchars($image) ?>"
                                      class="card-img-top post-image"
                                      alt="<?= htmlspecialchars($title) ?>">
@@ -87,7 +96,7 @@ $posts = $posts ?? [];
 
                             <h5 class="card-title mb-3">
 
-                                <a href="index.php?page=post-detail&id=<?= $item['id'] ?>"
+<a href="index.php?page=post-detail&slug=<?= urlencode($item['slug'] ?? '') ?>"
                                    class="post-title-link">
 
                                     <?= htmlspecialchars($title) ?>
@@ -102,7 +111,7 @@ $posts = $posts ?? [];
 
                             </p>
 
-                            <a href="index.php?page=post-detail&id=<?= $item['id'] ?>"
+<a href="index.php?page=post-detail&slug=<?= urlencode($item['slug'] ?? '') ?>"
                                class="read-more-link">
 
                                 Xem chi tiết

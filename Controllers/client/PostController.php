@@ -15,15 +15,15 @@ class PostController
 
     public function detail()
     {
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $slug = isset($_GET['slug']) ? trim((string)$_GET['slug']) : '';
 
-        if ($id <= 0) {
+        if ($slug === '') {
             header('Location: index.php?page=post');
             exit;
         }
 
         $postModel = new Post();
-        $post = $postModel->find($id);
+        $post = $postModel->findBySlug($slug);
 
         if (!$post) {
             header('Location: index.php?page=post');
@@ -31,9 +31,10 @@ class PostController
         }
 
         // Tăng lượt xem và lấy bài viết liên quan
-        $postModel->increaseView($id);
-        $relatedPosts = $postModel->getRelated($id, 3);
+        $postModel->increaseView((int) $post['id']);
+        $relatedPosts = $postModel->getRelated((int) $post['id'], 3);
 
         require_once 'Views/client/post/detail.php';
     }
 }
+

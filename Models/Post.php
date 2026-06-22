@@ -46,12 +46,22 @@ class Post
         return $stmt->fetch();
     }
 
+    public function findBySlug(string $slug)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM posts WHERE slug = ? AND status = 'published' LIMIT 1");
+        $stmt->execute([$slug]);
+
+        return $stmt->fetch();
+    }
+
+
     public function increaseView($id): void
     {
         $sql = "UPDATE posts SET views = views + 1 WHERE id = ?";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$id]);
+        $stmt->execute([(int)$id]);
     }
+
 
     public function create(array $data): bool
     {
