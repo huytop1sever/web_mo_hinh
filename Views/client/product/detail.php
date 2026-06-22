@@ -352,11 +352,10 @@ document.addEventListener('DOMContentLoaded', function () {
             let variantId = this.dataset.variantId || '';
             let qty = document.getElementById('quantityInput')?.value || 1;
 
-            let url = 'index.php?page=cart&action=add&id=' + id + '&qty=' + qty;
-
-            if (variantId !== '') {
-                url += '&variant_id=' + variantId;
-            }
+            let url = 'index.php?page=cart&action=add'
+            + '&id=' + encodeURIComponent(id)
+            + '&qty=' + encodeURIComponent(qty)
+            + '&product_variant_id=' + encodeURIComponent(variantId);
 
             fetch(url)
                 .then(res => res.json())

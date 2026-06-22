@@ -235,9 +235,8 @@ $toast = isset($_GET['msg'], $toastMap[$_GET['msg']]) ? $toastMap[$_GET['msg']] 
 
                             <td><?= htmlspecialchars($displayDate) ?></td>
 
-                            <td>
+                            <td style="text-align:center;">
                                 <div class="table-actions">
-
                                     <a
                                         class="action-btn view"
                                         href="index.php?page=order-detail&id=<?= urlencode((string) ($order['id'] ?? '')) ?>"
@@ -245,16 +244,6 @@ $toast = isset($_GET['msg'], $toastMap[$_GET['msg']]) ? $toastMap[$_GET['msg']] 
                                     >
                                         <i class='bx bx-show'></i>
                                     </a>
-
-                                    <a
-                                        class="action-btn delete"
-                                        href="index.php?page=order-delete&id=<?= urlencode((string) ($order['id'] ?? '')) ?>"
-                                        onclick="return openOrderConfirmModal(this)"
-                                        title="Xóa đơn hàng"
-                                    >
-                                        <i class='bx bx-trash'></i>
-                                    </a>
-
                                 </div>
                             </td>
                         </tr>

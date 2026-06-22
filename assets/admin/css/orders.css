@@ -891,3 +891,13 @@
     border-color: #dc2626;
     color: #fff;
 }
+.orders-page td:last-child {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.orders-page .table-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

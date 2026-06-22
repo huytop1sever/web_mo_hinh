@@ -1,4 +1,12 @@
-<?php require_once 'Views/client/layouts/Header.php'; ?>
+<?php
+require_once 'Models/Cart.php';
+require_once 'Models/Product.php';
+
+$cartModel = new Cart();
+$cartItems = $cartModel->getItems();
+
+$subtotal = 0;
+?>
 
 <div class="container-fluid page-header py-5">
     <h1 class="text-center text-white display-6">Giỏ hàng</h1>
@@ -15,6 +23,7 @@
                     <tr>
                         <th>Sản phẩm</th>
                         <th>Tên</th>
+                        <th>Biến thể</th>
                         <th>Giá</th>
                         <th>Số lượng</th>
                         <th>Tổng</th>
@@ -23,40 +32,51 @@
                 </thead>
 
                 <tbody>
-                    <?php
-                    require_once 'Models/Cart.php';
-                    $cartModel = new Cart();
-                    $cartItems = $cartModel->getItems();
-                    $productModel = new Product();
+                    <?php if (!empty($cartItems)): ?>
+                        <?php foreach ($cartItems as $item): ?>
+                            <?php
+                            $productId = (int)($item['product_id'] ?? 0);
+                            $variantId = $item['product_variant_id'] ?? null;
+                            $qty = (int)($item['qty'] ?? 0);
 
-                    if (!empty($cartItems)):
-                        foreach ($cartItems as $productId => $quantity):
-                            $product = $productModel->find($productId);
-                            if (!$product) continue;
-                            // Normalize quantity (support either int or ['qty'=>int] storage)
-                            if (is_array($quantity)) {
-                                $qty = isset($quantity['qty']) ? (int)$quantity['qty'] : 0;
-                            } else {
-                                $qty = (int)$quantity;
+                            if ($qty <= 0) {
+                                continue;
                             }
 
-                            $price = (isset($product['sale_price']) && $product['sale_price'] > 0) ? $product['sale_price'] : $product['price'];
-                            $price = (int)$price;
+                            $price = !empty($item['sale_price']) && $item['sale_price'] > 0
+                                ? (float)$item['sale_price']
+                                : (float)($item['price'] ?? 0);
+
+                            $lineTotal = $price * $qty;
+                            $subtotal += $lineTotal;
                             ?>
 
-                            <tr class="cart-item" data-id="<?= htmlspecialchars($product['id']) ?>">
+                            <tr class="cart-item"
+                                data-id="<?= $productId ?>"
+                                data-variant-id="<?= htmlspecialchars((string)$variantId) ?>">
+
                                 <td>
-                                    <img src="<?= htmlspecialchars($product['image'] ?? 'assets/client/img/no-image.png') ?>"
+                                    <img src="<?= htmlspecialchars($item['product_image'] ?? $item['image'] ?? 'assets/client/img/no-image.png') ?>"
                                          class="img-fluid rounded"
                                          style="width:90px;height:90px;object-fit:cover;">
                                 </td>
 
                                 <td>
-                                    <p class="mb-0"><?= htmlspecialchars($product['title'] ?? $product['name'] ?? '') ?></p>
+                                    <p class="mb-0">
+                                        <?= htmlspecialchars($item['product_name'] ?? $item['title'] ?? $item['name'] ?? '') ?>
+                                    </p>
                                 </td>
 
                                 <td>
-                                    <p class="mb-0 item-price" data-price="<?= (int)$price ?>"><?= number_format($price, 0, ',', '.') ?>đ</p>
+                                    <p class="mb-0">
+                                        <?= htmlspecialchars($item['variant_name'] ?? 'Không có') ?>
+                                    </p>
+                                </td>
+
+                                <td>
+                                    <p class="mb-0 item-price" data-price="<?= (int)$price ?>">
+                                        <?= number_format($price, 0, ',', '.') ?>đ
+                                    </p>
                                 </td>
 
                                 <td>
@@ -67,9 +87,10 @@
 
                                         <input type="text"
                                                class="form-control form-control-sm text-center border-0 quantity-input"
-                                               value="<?= (int)$qty ?>"
+                                               value="<?= $qty ?>"
                                                readonly
-                                               data-id="<?= htmlspecialchars($product['id']) ?>">
+                                               data-id="<?= $productId ?>"
+                                               data-variant-id="<?= htmlspecialchars((string)$variantId) ?>">
 
                                         <button type="button" class="btn btn-sm btn-plus rounded-circle bg-light border">
                                             <i class="fa fa-plus"></i>
@@ -78,26 +99,29 @@
                                 </td>
 
                                 <td>
-                                    <p class="mb-0 item-total"><?= number_format($price * $qty, 0, ',', '.') ?>đ</p>
+                                    <p class="mb-0 item-total">
+                                        <?= number_format($lineTotal, 0, ',', '.') ?>đ
+                                    </p>
                                 </td>
 
                                 <td>
-                                    <button type="button" class="btn btn-md rounded-circle bg-light border remove-item" data-id="<?= htmlspecialchars($product['id']) ?>">
+                                    <button type="button"
+                                            class="btn btn-md rounded-circle bg-light border remove-item"
+                                            data-id="<?= $productId ?>"
+                                            data-variant-id="<?= htmlspecialchars((string)$variantId) ?>">
                                         <i class="fa fa-times text-danger"></i>
                                     </button>
                                 </td>
                             </tr>
-
-                        <?php endforeach; else: ?>
-
+                        <?php endforeach; ?>
+                    <?php else: ?>
                         <tr>
-                            <td colspan="6" class="text-center py-5">
+                            <td colspan="7" class="text-center py-5">
                                 <i class="fa fa-shopping-cart fa-3x text-muted mb-3"></i>
                                 <p class="mb-0">Giỏ hàng của bạn đang trống.</p>
                                 <a href="index.php?page=product" class="btn btn-primary mt-2">Xem sản phẩm</a>
                             </td>
                         </tr>
-
                     <?php endif; ?>
                 </tbody>
             </table>
@@ -105,27 +129,24 @@
 
         <div class="row g-4 justify-content-end mt-4">
             <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
-
                 <div class="bg-light rounded">
                     <div class="p-4">
-
                         <h1 class="display-6 mb-4">Tổng giỏ hàng</h1>
 
                         <div class="d-flex justify-content-between mb-4">
                             <h5 class="mb-0">Tạm tính:</h5>
-                            <p class="mb-0" id="subtotal">4.350.000đ</p>
+                            <p class="mb-0" id="subtotal"><?= number_format($subtotal, 0, ',', '.') ?>đ</p>
                         </div>
 
                         <div class="d-flex justify-content-between">
                             <h5 class="mb-0">Phí vận chuyển:</h5>
                             <p class="mb-0">Miễn phí</p>
                         </div>
-
                     </div>
 
                     <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                         <h5 class="mb-0 ps-4">Tổng cộng</h5>
-                        <p class="mb-0 pe-4 fw-bold" id="grand-total">4.350.000đ</p>
+                        <p class="mb-0 pe-4 fw-bold" id="grand-total"><?= number_format($subtotal, 0, ',', '.') ?>đ</p>
                     </div>
 
                     <a href="index.php?page=checkout"
@@ -133,7 +154,6 @@
                         Tiến hành thanh toán
                     </a>
                 </div>
-
             </div>
         </div>
 
@@ -201,7 +221,6 @@ function updateCartTotal() {
         let itemTotal = price * quantity;
 
         row.querySelector('.item-total').innerText = formatMoney(itemTotal);
-
         total += itemTotal;
     });
 
@@ -224,73 +243,71 @@ function showCartToast(message, type = 'success') {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-
     document.querySelectorAll('.cart-item').forEach(function(row) {
         const minus = row.querySelector('.btn-minus');
         const plus = row.querySelector('.btn-plus');
         const input = row.querySelector('.quantity-input');
 
+        function updateQty(newQty) {
+            fetch('index.php?page=cart&action=update', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    id: input.dataset.id,
+                    product_variant_id: input.dataset.variantId,
+                    qty: newQty
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    input.value = newQty;
+                    updateCartTotal();
+                } else {
+                    showCartToast('✕ Cập nhật thất bại', 'error');
+                }
+            })
+            .catch(() => showCartToast('✕ Cập nhật thất bại', 'error'));
+        }
+
         minus.addEventListener('click', function() {
             let qty = parseInt(input.value);
-            if (qty > 1) {
-                let newQty = qty - 1;
 
-                fetch('index.php?page=cart&action=update', {
-                    method: 'POST',
-                    body: new URLSearchParams({ id: input.dataset.id, qty: newQty })
-                }).then(res => res.json())
-                  .then(data => {
-                      if (data.success) {
-                          input.value = newQty;
-                          updateCartTotal();
-                      } else {
-                          showCartToast('✕ Cập nhật thất bại', 'error');
-                      }
-                  }).catch(() => showCartToast('✕ Cập nhật thất bại', 'error'));
+            if (qty > 1) {
+                updateQty(qty - 1);
             }
         });
 
         plus.addEventListener('click', function() {
             let qty = parseInt(input.value);
-            let newQty = qty + 1;
-
-            fetch('index.php?page=cart&action=update', {
-                method: 'POST',
-                body: new URLSearchParams({ id: input.dataset.id, qty: newQty })
-            }).then(res => res.json())
-              .then(data => {
-                  if (data.success) {
-                      input.value = newQty;
-                      updateCartTotal();
-                  } else {
-                      showCartToast('✕ Cập nhật thất bại', 'error');
-                  }
-              }).catch(() => showCartToast('✕ Cập nhật thất bại', 'error'));
+            updateQty(qty + 1);
         });
     });
 
     document.querySelectorAll('.remove-item').forEach(function(btn) {
         btn.addEventListener('click', function() {
             const id = this.dataset.id;
+            const variantId = this.dataset.variantId;
             const row = this.closest('.cart-item');
 
-            fetch('index.php?page=cart&action=remove&id=' + encodeURIComponent(id))
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        row.remove();
-                        updateCartTotal();
-                        showCartToast('✓ Đã xóa sản phẩm khỏi giỏ hàng', 'success');
+            fetch(
+                'index.php?page=cart&action=remove&id=' + encodeURIComponent(id)
+                + '&product_variant_id=' + encodeURIComponent(variantId)
+            )
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    row.remove();
+                    updateCartTotal();
+                    showCartToast('✓ Đã xóa sản phẩm khỏi giỏ hàng', 'success');
 
-                        if (document.querySelectorAll('.cart-item').length === 0) {
-                            // reload to show empty cart message
-                            location.reload();
-                        }
-                    } else {
-                        showCartToast('✕ Xóa thất bại', 'error');
+                    if (document.querySelectorAll('.cart-item').length === 0) {
+                        location.reload();
                     }
-                })
-                .catch(() => showCartToast('✕ Xóa thất bại', 'error'));
+                } else {
+                    showCartToast('✕ Xóa thất bại', 'error');
+                }
+            })
+            .catch(() => showCartToast('✕ Xóa thất bại', 'error'));
         });
     });
 
@@ -307,5 +324,3 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCartTotal();
 });
 </script>
-
-<?php require_once 'Views/client/layouts/Footer.php'; ?>

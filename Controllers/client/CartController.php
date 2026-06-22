@@ -25,11 +25,16 @@ class CartController
         require_once 'Models/Cart.php';
 
         $id = $_GET['id'] ?? $_POST['id'] ?? null;
-        $variantId = $_GET['variant_id']
-            ?? $_GET['product_variant_id']
-            ?? $_POST['variant_id']
+
+        $variantId = $_GET['product_variant_id']
+            ?? $_GET['variant_id']
             ?? $_POST['product_variant_id']
+            ?? $_POST['variant_id']
             ?? null;
+
+        $qty = isset($_GET['qty'])
+            ? (int) $_GET['qty']
+            : (isset($_POST['qty']) ? (int) $_POST['qty'] : 1);
 
         if (!$id) {
             echo json_encode([
@@ -39,8 +44,26 @@ class CartController
             return;
         }
 
+        if ($qty < 1) {
+            $qty = 1;
+        }
+
         $cart = new Cart();
-        $cart->add($id, 1, $variantId);
+        $ok = $cart->add($id, $qty, $variantId);
+
+        if (!$ok) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Không insert được vào bảng carts',
+                'debug' => [
+                    'user_id' => $_SESSION['user']['id'] ?? null,
+                    'product_id' => $id,
+                    'product_variant_id' => $variantId,
+                    'qty' => $qty
+                ]
+            ]);
+            return;
+        }
 
         echo json_encode([
             'success' => true,
