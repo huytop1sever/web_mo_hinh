@@ -90,8 +90,15 @@ class Order
                 od.*,
                 p.title AS product_name,
                 p.image AS product_image,
+
+                pv.id AS variant_id,
                 pv.variant_name,
-                pv.sku
+                pv.sku,
+                pv.price AS variant_price,
+                pv.sale_price AS variant_sale_price,
+                pv.stock AS variant_stock,
+                pv.status AS variant_status
+
             FROM order_detail od
             LEFT JOIN products p ON od.product_id = p.id
             LEFT JOIN product_variants pv ON od.product_variant_id = pv.id
@@ -104,7 +111,6 @@ class Order
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
     public function find($id)
     {
         $sql = "SELECT * FROM orders WHERE id = ?";

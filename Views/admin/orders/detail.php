@@ -246,7 +246,7 @@ $toast = isset($_GET['msg'], $toastMap[$_GET['msg']]) ? $toastMap[$_GET['msg']] 
                                 $price = (float) ($item['price'] ?? 0);
                                 $itemTotal = (float) ($item['total_price'] ?? ($price * $qty));
 
-                                $variantId = $item['product_variant_id'] ?? $item['variant_id'] ?? null;
+                                $variantName = $item['variant_name'] ?? '';
 
                                 $variantPrice = (float) (
                                     !empty($item['variant_sale_price']) && $item['variant_sale_price'] > 0
@@ -263,13 +263,14 @@ $toast = isset($_GET['msg'], $toastMap[$_GET['msg']]) ? $toastMap[$_GET['msg']] 
                                     </td>
 
                                     <td>
-                                        <?php if (!empty($variantId)): ?>
-                                            <strong>Biến thể #<?= htmlspecialchars((string) $variantId) ?></strong>
+                                        <?php if (!empty($variantName)): ?>
+                                            <strong><?= htmlspecialchars($variantName) ?></strong>
 
                                             <?php if ($variantPrice > 0): ?>
                                                 <br>
                                                 <small>Giá biến thể: <?= $formatMoney($variantPrice) ?></small>
                                             <?php endif; ?>
+
                                         <?php else: ?>
                                             Không có biến thể
                                         <?php endif; ?>
