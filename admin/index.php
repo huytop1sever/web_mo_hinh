@@ -46,6 +46,10 @@ switch ($page) {
     case 'product-update':
         (new ProductController())->update();
         break;
+    
+    case 'product-delete':
+        (new ProductController())->delete($_GET['id'] ?? 0);
+        break;
 
     case 'categories':
         (new CategoryController())->index();
@@ -113,6 +117,18 @@ switch ($page) {
 
     case 'users':
         (new UserController())->index();
+        break;
+
+    case 'user-lock':
+        (new UserController())->lock();
+        break;
+
+    case 'user-unlock':
+        (new UserController())->unlock();
+        break;
+
+    case 'user-delete':
+        (new UserController())->delete();
         break;
 
     default:
